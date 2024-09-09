@@ -1,0 +1,1406 @@
+apiVersion: v1
+items:
+- apiVersion: v1
+  kind: Pod
+  metadata:
+    annotations:
+      ProviderCreate: done
+      k8s.aliyun.com/cluster-dns: 172.16.0.10
+      k8s.aliyun.com/cluster-domain: cluster.local
+      k8s.aliyun.com/dns-cache-enable: "false"
+      k8s.aliyun.com/eci-client-token: 1460f6b6-fd93-4d1b-b7cd-a43fca7fd8b7
+      k8s.aliyun.com/eci-container-exit-priority: '{}'
+      k8s.aliyun.com/eci-created-by-template: "true"
+      k8s.aliyun.com/eci-drop-apiserver-interactive-caps: ""
+      k8s.aliyun.com/eci-instance-cpu: "2.0"
+      k8s.aliyun.com/eci-instance-id: eci-wz9ezqubp4hv12muxx53
+      k8s.aliyun.com/eci-instance-mem: "4.0"
+      k8s.aliyun.com/eci-instance-spec: 2.0-4.0Gi
+      k8s.aliyun.com/eci-instance-zone: cn-shenzhen-e
+      k8s.aliyun.com/eci-kube-proxy-enabled: "true"
+      k8s.aliyun.com/eci-matched-image-cache: imc-wz9hqu7g6rwo35mstqxt
+      k8s.aliyun.com/eci-platform-version: 1.1.0
+      k8s.aliyun.com/eci-request-id: 26EA7366-AC38-5444-A701-899AC00E8800
+      k8s.aliyun.com/eci-schedule-result: finished
+      k8s.aliyun.com/eci-security-group: sg-wz99qqr9drbgsgu4kndk
+      k8s.aliyun.com/eci-vpc: vpc-wz9rf0gfnfruu6j4pseda
+      k8s.aliyun.com/eci-vswitch: vsw-wz9rsj59hpuq9jtg7w9tt
+      k8s.aliyun.com/eni-instance-id: eni-wz9j0m6cho3yglzich47
+      k8s.aliyun.com/k8s-version: v1.30.1-aliyun.1
+      k8s.aliyun.com/product-on-eci-mode: NA
+      k8s.aliyun.com/vk-version: v2.12.0-2024-08-02-09-53-UTC
+      kubernetes.io/pod-stream-port: "10250"
+      prometheus.io/path: /metrics
+      prometheus.io/port: "9153"
+      prometheus.io/scrape: "true"
+    creationTimestamp: "2024-08-20T01:11:42Z"
+    generateName: coredns-56966dd7b4-
+    labels:
+      k8s-app: kube-dns
+      pod-template-hash: 56966dd7b4
+    name: coredns-56966dd7b4-bwpdm
+    namespace: kube-system
+    ownerReferences:
+    - apiVersion: apps/v1
+      blockOwnerDeletion: true
+      controller: true
+      kind: ReplicaSet
+      name: coredns-56966dd7b4
+      uid: 71ce07ad-3c37-46a7-b279-63466988e649
+    resourceVersion: "3915379532"
+    uid: cdcea1b4-c6bc-456a-ba74-aa08b530a915
+  spec:
+    containers:
+    - args:
+      - -conf
+      - /etc/coredns/Corefile
+      env:
+      - name: COREDNS_POD_NAME
+        valueFrom:
+          fieldRef:
+            apiVersion: v1
+            fieldPath: metadata.name
+      - name: COREDNS_NAMESPACE
+        valueFrom:
+          fieldRef:
+            apiVersion: v1
+            fieldPath: metadata.namespace
+      image: registry-cn-shenzhen-vpc.ack.aliyuncs.com/acs/coredns:v1.9.3.16-4341f22f-aliyun
+      imagePullPolicy: IfNotPresent
+      livenessProbe:
+        failureThreshold: 5
+        httpGet:
+          path: /health
+          port: 8080
+          scheme: HTTP
+        initialDelaySeconds: 60
+        periodSeconds: 10
+        successThreshold: 1
+        timeoutSeconds: 5
+      name: coredns
+      ports:
+      - containerPort: 53
+        name: dns
+        protocol: UDP
+      - containerPort: 53
+        name: dns-tcp
+        protocol: TCP
+      - containerPort: 9153
+        name: metrics
+        protocol: TCP
+      readinessProbe:
+        failureThreshold: 3
+        httpGet:
+          path: /ready
+          port: 8181
+          scheme: HTTP
+        periodSeconds: 10
+        successThreshold: 1
+        timeoutSeconds: 1
+      resources:
+        limits:
+          cpu: "2"
+          memory: 4Gi
+        requests:
+          cpu: 500m
+          memory: 1Gi
+      securityContext:
+        allowPrivilegeEscalation: false
+        capabilities:
+          add:
+          - NET_BIND_SERVICE
+          drop:
+          - all
+        readOnlyRootFilesystem: true
+      terminationMessagePath: /dev/termination-log
+      terminationMessagePolicy: File
+      volumeMounts:
+      - mountPath: /etc/coredns
+        name: config-volume
+        readOnly: true
+      - mountPath: /var/run/secrets/kubernetes.io/serviceaccount
+        name: kube-api-access-nm9ws
+        readOnly: true
+    dnsPolicy: Default
+    enableServiceLinks: true
+    nodeName: virtual-kubelet-cn-shenzhen-e
+    nodeSelector:
+      kubernetes.io/os: linux
+    preemptionPolicy: PreemptLowerPriority
+    priority: 2000000000
+    priorityClassName: system-cluster-critical
+    restartPolicy: Always
+    schedulerName: default-scheduler
+    securityContext: {}
+    serviceAccount: coredns
+    serviceAccountName: coredns
+    terminationGracePeriodSeconds: 30
+    tolerations:
+    - effect: NoExecute
+      key: node.kubernetes.io/not-ready
+      operator: Exists
+    - effect: NoExecute
+      key: node.kubernetes.io/unreachable
+      operator: Exists
+    volumes:
+    - configMap:
+        defaultMode: 420
+        items:
+        - key: Corefile
+          path: Corefile
+        name: coredns
+      name: config-volume
+    - name: kube-api-access-nm9ws
+      projected:
+        defaultMode: 420
+        sources:
+        - serviceAccountToken:
+            expirationSeconds: 3607
+            path: token
+        - configMap:
+            items:
+            - key: ca.crt
+              path: ca.crt
+            name: kube-root-ca.crt
+        - downwardAPI:
+            items:
+            - fieldRef:
+                apiVersion: v1
+                fieldPath: metadata.namespace
+              path: namespace
+  status:
+    conditions:
+    - lastProbeTime: null
+      lastTransitionTime: "2024-08-20T01:11:48Z"
+      status: "True"
+      type: ContainerInstanceCreated
+    - lastProbeTime: null
+      lastTransitionTime: "2024-08-20T01:12:02Z"
+      status: "True"
+      type: PodReadyToStartContainers
+    - lastProbeTime: null
+      lastTransitionTime: "2024-08-20T01:12:01Z"
+      status: "True"
+      type: Initialized
+    - lastProbeTime: null
+      lastTransitionTime: "2024-08-20T01:12:07Z"
+      status: "True"
+      type: Ready
+    - lastProbeTime: null
+      lastTransitionTime: "2024-08-20T01:12:07Z"
+      status: "True"
+      type: ContainersReady
+    - lastProbeTime: null
+      lastTransitionTime: "2024-08-20T01:11:49Z"
+      status: "True"
+      type: PodScheduled
+    - lastProbeTime: null
+      lastTransitionTime: "2024-08-20T01:12:01Z"
+      status: "True"
+      type: ContainerHasSufficientDisk
+    containerStatuses:
+    - containerID: containerd://5f17d0752fa07d2a0ea294546d80a1451cdd88522ebb7a3ff11a218fe11a9bbd
+      image: registry-cn-shenzhen-vpc.ack.aliyuncs.com/acs/coredns:v1.9.3.16-4341f22f-aliyun
+      imageID: registry-cn-shenzhen-vpc.ack.aliyuncs.com/acs/coredns@sha256:4be0824324b95f1437f4d1a79e4107de0140e125ee48c1bc25cd5d2abce46348
+      lastState: {}
+      name: coredns
+      ready: true
+      restartCount: 0
+      started: true
+      state:
+        running:
+          startedAt: "2024-08-20T01:12:02Z"
+    hostIP: 192.168.5.60
+    phase: Running
+    podIP: 192.168.5.60
+    podIPs:
+    - ip: 192.168.5.60
+    qosClass: Burstable
+    startTime: "2024-08-20T01:12:01Z"
+- apiVersion: v1
+  kind: Pod
+  metadata:
+    annotations:
+      ProviderCreate: done
+      k8s.aliyun.com/cluster-dns: 172.16.0.10
+      k8s.aliyun.com/cluster-domain: cluster.local
+      k8s.aliyun.com/dns-cache-enable: "false"
+      k8s.aliyun.com/eci-client-token: 5bfe3c44-7702-4d58-a4a3-3b1bafa7a80d
+      k8s.aliyun.com/eci-container-exit-priority: '{}'
+      k8s.aliyun.com/eci-created-by-template: "true"
+      k8s.aliyun.com/eci-drop-apiserver-interactive-caps: ""
+      k8s.aliyun.com/eci-instance-cpu: "2.0"
+      k8s.aliyun.com/eci-instance-id: eci-wz9ibswt46962c25sptj
+      k8s.aliyun.com/eci-instance-mem: "4.0"
+      k8s.aliyun.com/eci-instance-spec: 2.0-4.0Gi
+      k8s.aliyun.com/eci-instance-zone: cn-shenzhen-e
+      k8s.aliyun.com/eci-kube-proxy-enabled: "true"
+      k8s.aliyun.com/eci-matched-image-cache: imc-wz9hqu7g6rwo35mstqxt
+      k8s.aliyun.com/eci-platform-version: 1.1.0
+      k8s.aliyun.com/eci-request-id: CCC82DE3-F800-5DF7-A730-14FC2A1C7F83
+      k8s.aliyun.com/eci-schedule-result: finished
+      k8s.aliyun.com/eci-security-group: sg-wz99qqr9drbgsgu4kndk
+      k8s.aliyun.com/eci-vpc: vpc-wz9rf0gfnfruu6j4pseda
+      k8s.aliyun.com/eci-vswitch: vsw-wz9rsj59hpuq9jtg7w9tt
+      k8s.aliyun.com/eni-instance-id: eni-wz9emefp37j5h4qitpn3
+      k8s.aliyun.com/k8s-version: v1.30.1-aliyun.1
+      k8s.aliyun.com/product-on-eci-mode: NA
+      k8s.aliyun.com/vk-version: v2.12.0-2024-08-02-09-53-UTC
+      kubernetes.io/pod-stream-port: "10250"
+      prometheus.io/path: /metrics
+      prometheus.io/port: "9153"
+      prometheus.io/scrape: "true"
+    creationTimestamp: "2024-08-20T01:11:42Z"
+    generateName: coredns-56966dd7b4-
+    labels:
+      k8s-app: kube-dns
+      pod-template-hash: 56966dd7b4
+    name: coredns-56966dd7b4-fdmj8
+    namespace: kube-system
+    ownerReferences:
+    - apiVersion: apps/v1
+      blockOwnerDeletion: true
+      controller: true
+      kind: ReplicaSet
+      name: coredns-56966dd7b4
+      uid: 71ce07ad-3c37-46a7-b279-63466988e649
+    resourceVersion: "3915379303"
+    uid: 9c5b73a6-50b2-4f0b-b956-8bd9a2aa14ea
+  spec:
+    containers:
+    - args:
+      - -conf
+      - /etc/coredns/Corefile
+      env:
+      - name: COREDNS_POD_NAME
+        valueFrom:
+          fieldRef:
+            apiVersion: v1
+            fieldPath: metadata.name
+      - name: COREDNS_NAMESPACE
+        valueFrom:
+          fieldRef:
+            apiVersion: v1
+            fieldPath: metadata.namespace
+      image: registry-cn-shenzhen-vpc.ack.aliyuncs.com/acs/coredns:v1.9.3.16-4341f22f-aliyun
+      imagePullPolicy: IfNotPresent
+      livenessProbe:
+        failureThreshold: 5
+        httpGet:
+          path: /health
+          port: 8080
+          scheme: HTTP
+        initialDelaySeconds: 60
+        periodSeconds: 10
+        successThreshold: 1
+        timeoutSeconds: 5
+      name: coredns
+      ports:
+      - containerPort: 53
+        name: dns
+        protocol: UDP
+      - containerPort: 53
+        name: dns-tcp
+        protocol: TCP
+      - containerPort: 9153
+        name: metrics
+        protocol: TCP
+      readinessProbe:
+        failureThreshold: 3
+        httpGet:
+          path: /ready
+          port: 8181
+          scheme: HTTP
+        periodSeconds: 10
+        successThreshold: 1
+        timeoutSeconds: 1
+      resources:
+        limits:
+          cpu: "2"
+          memory: 4Gi
+        requests:
+          cpu: 500m
+          memory: 1Gi
+      securityContext:
+        allowPrivilegeEscalation: false
+        capabilities:
+          add:
+          - NET_BIND_SERVICE
+          drop:
+          - all
+        readOnlyRootFilesystem: true
+      terminationMessagePath: /dev/termination-log
+      terminationMessagePolicy: File
+      volumeMounts:
+      - mountPath: /etc/coredns
+        name: config-volume
+        readOnly: true
+      - mountPath: /var/run/secrets/kubernetes.io/serviceaccount
+        name: kube-api-access-4svzr
+        readOnly: true
+    dnsPolicy: Default
+    enableServiceLinks: true
+    nodeName: virtual-kubelet-cn-shenzhen-e
+    nodeSelector:
+      kubernetes.io/os: linux
+    preemptionPolicy: PreemptLowerPriority
+    priority: 2000000000
+    priorityClassName: system-cluster-critical
+    restartPolicy: Always
+    schedulerName: default-scheduler
+    securityContext: {}
+    serviceAccount: coredns
+    serviceAccountName: coredns
+    terminationGracePeriodSeconds: 30
+    tolerations:
+    - effect: NoExecute
+      key: node.kubernetes.io/not-ready
+      operator: Exists
+    - effect: NoExecute
+      key: node.kubernetes.io/unreachable
+      operator: Exists
+    volumes:
+    - configMap:
+        defaultMode: 420
+        items:
+        - key: Corefile
+          path: Corefile
+        name: coredns
+      name: config-volume
+    - name: kube-api-access-4svzr
+      projected:
+        defaultMode: 420
+        sources:
+        - serviceAccountToken:
+            expirationSeconds: 3607
+            path: token
+        - configMap:
+            items:
+            - key: ca.crt
+              path: ca.crt
+            name: kube-root-ca.crt
+        - downwardAPI:
+            items:
+            - fieldRef:
+                apiVersion: v1
+                fieldPath: metadata.namespace
+              path: namespace
+  status:
+    conditions:
+    - lastProbeTime: null
+      lastTransitionTime: "2024-08-20T01:11:48Z"
+      status: "True"
+      type: ContainerInstanceCreated
+    - lastProbeTime: null
+      lastTransitionTime: "2024-08-20T01:12:03Z"
+      status: "True"
+      type: PodReadyToStartContainers
+    - lastProbeTime: null
+      lastTransitionTime: "2024-08-20T01:12:01Z"
+      status: "True"
+      type: Initialized
+    - lastProbeTime: null
+      lastTransitionTime: "2024-08-20T01:12:03Z"
+      status: "True"
+      type: Ready
+    - lastProbeTime: null
+      lastTransitionTime: "2024-08-20T01:12:03Z"
+      status: "True"
+      type: ContainersReady
+    - lastProbeTime: null
+      lastTransitionTime: "2024-08-20T01:11:49Z"
+      status: "True"
+      type: PodScheduled
+    - lastProbeTime: null
+      lastTransitionTime: "2024-08-20T01:12:01Z"
+      status: "True"
+      type: ContainerHasSufficientDisk
+    containerStatuses:
+    - containerID: containerd://5aa414596ca7d62175bf1496e21adf04159182080536caa54335c4e5a1277034
+      image: registry-cn-shenzhen-vpc.ack.aliyuncs.com/acs/coredns:v1.9.3.16-4341f22f-aliyun
+      imageID: registry-cn-shenzhen-vpc.ack.aliyuncs.com/acs/coredns@sha256:4be0824324b95f1437f4d1a79e4107de0140e125ee48c1bc25cd5d2abce46348
+      lastState: {}
+      name: coredns
+      ready: true
+      restartCount: 0
+      started: true
+      state:
+        running:
+          startedAt: "2024-08-20T01:12:02Z"
+    hostIP: 192.168.5.61
+    phase: Running
+    podIP: 192.168.5.61
+    podIPs:
+    - ip: 192.168.5.61
+    qosClass: Burstable
+    startTime: "2024-08-20T01:12:01Z"
+- apiVersion: v1
+  kind: Pod
+  metadata:
+    annotations:
+      ProviderCreate: done
+      k8s.aliyun.com/cluster-dns: 172.16.0.10
+      k8s.aliyun.com/cluster-domain: cluster.local
+      k8s.aliyun.com/dns-cache-enable: "false"
+      k8s.aliyun.com/eci-client-token: 6cbc9a74-9a1f-4cff-b088-3efa20002484
+      k8s.aliyun.com/eci-container-exit-priority: '{}'
+      k8s.aliyun.com/eci-created-by-template: "true"
+      k8s.aliyun.com/eci-drop-apiserver-interactive-caps: ""
+      k8s.aliyun.com/eci-instance-cpu: "2.0"
+      k8s.aliyun.com/eci-instance-id: eci-wz9ezqubp4hv0yospt4k
+      k8s.aliyun.com/eci-instance-mem: "6.0"
+      k8s.aliyun.com/eci-instance-spec: 2.0-6.0Gi
+      k8s.aliyun.com/eci-instance-zone: cn-shenzhen-e
+      k8s.aliyun.com/eci-kube-proxy-enabled: "true"
+      k8s.aliyun.com/eci-matched-image-cache: imc-wz9a7hmxyoia0kzzsck7
+      k8s.aliyun.com/eci-platform-version: 1.1.0
+      k8s.aliyun.com/eci-request-id: 992803F6-8EEF-5646-864F-DDFAACC85F36
+      k8s.aliyun.com/eci-schedule-result: finished
+      k8s.aliyun.com/eci-security-group: sg-wz99qqr9drbgsgu4kndk
+      k8s.aliyun.com/eci-vpc: vpc-wz9rf0gfnfruu6j4pseda
+      k8s.aliyun.com/eci-vswitch: vsw-wz9rsj59hpuq9jtg7w9tt
+      k8s.aliyun.com/eni-instance-id: eni-wz93cwhpxi5rfb0l3w39
+      k8s.aliyun.com/k8s-version: v1.30.1-aliyun.1
+      k8s.aliyun.com/product-on-eci-mode: NA
+      k8s.aliyun.com/vk-version: v2.12.0-2024-08-02-09-53-UTC
+      kubernetes.io/pod-stream-port: "10250"
+    creationTimestamp: "2024-08-20T01:02:06Z"
+    generateName: csi-provisioner-5bf4d64dcd-
+    labels:
+      app: csi-provisioner
+      pod-template-hash: 5bf4d64dcd
+    name: csi-provisioner-5bf4d64dcd-hmqcg
+    namespace: kube-system
+    ownerReferences:
+    - apiVersion: apps/v1
+      blockOwnerDeletion: true
+      controller: true
+      kind: ReplicaSet
+      name: csi-provisioner-5bf4d64dcd
+      uid: d53b4573-1a14-43e3-8740-818415492ea9
+    resourceVersion: "3915353988"
+    uid: 9789546c-bb58-4f8e-a5b2-94bd5bd612f8
+  spec:
+    affinity:
+      nodeAffinity:
+        preferredDuringSchedulingIgnoredDuringExecution:
+        - preference:
+            matchExpressions:
+            - key: node-role.kubernetes.io/master
+              operator: Exists
+          weight: 1
+      podAntiAffinity:
+        preferredDuringSchedulingIgnoredDuringExecution:
+        - podAffinityTerm:
+            labelSelector:
+              matchExpressions:
+              - key: app
+                operator: In
+                values:
+                - csi-provisioner
+            topologyKey: kubernetes.io/hostname
+          weight: 100
+    containers:
+    - args:
+      - --csi-address=$(ADDRESS)
+      - --feature-gates=Topology=True
+      - --volume-name-prefix=disk
+      - --strict-topology=true
+      - --timeout=150s
+      - --leader-election=true
+      - --retry-interval-start=500ms
+      - --extra-create-metadata=true
+      - --default-fstype=ext4
+      - --v=5
+      env:
+      - name: ADDRESS
+        value: /var/lib/kubelet/csi-provisioner/diskplugin.csi.alibabacloud.com/csi.sock
+      image: registry-cn-shenzhen-vpc.ack.aliyuncs.com/acs/csi-provisioner:v3.5.0-e7da67e-aliyun
+      imagePullPolicy: IfNotPresent
+      name: external-disk-provisioner
+      resources:
+        limits:
+          cpu: 250m
+          memory: 500Mi
+        requests:
+          cpu: 10m
+          memory: 16Mi
+      terminationMessagePath: /dev/termination-log
+      terminationMessagePolicy: File
+      volumeMounts:
+      - mountPath: /var/lib/kubelet/csi-provisioner/diskplugin.csi.alibabacloud.com
+        name: disk-provisioner-dir
+      - mountPath: /var/run/secrets/kubernetes.io/serviceaccount
+        name: kube-api-access-6jfmz
+        readOnly: true
+    - args:
+      - --v=5
+      - --csi-address=$(ADDRESS)
+      - --leader-election=true
+      env:
+      - name: ADDRESS
+        value: /var/lib/kubelet/csi-provisioner/diskplugin.csi.alibabacloud.com/csi.sock
+      image: registry-cn-shenzhen-vpc.ack.aliyuncs.com/acs/csi-attacher:v3.3-72dd428b-aliyun
+      imagePullPolicy: IfNotPresent
+      name: external-disk-attacher
+      resources:
+        limits:
+          cpu: 250m
+          memory: 500Mi
+        requests:
+          cpu: 10m
+          memory: 16Mi
+      terminationMessagePath: /dev/termination-log
+      terminationMessagePolicy: File
+      volumeMounts:
+      - mountPath: /var/lib/kubelet/csi-provisioner/diskplugin.csi.alibabacloud.com
+        name: disk-provisioner-dir
+      - mountPath: /var/run/secrets/kubernetes.io/serviceaccount
+        name: kube-api-access-6jfmz
+        readOnly: true
+    - args:
+      - --v=5
+      - --csi-address=$(ADDRESS)
+      - --leader-election
+      - --handle-volume-inuse-error=false
+      env:
+      - name: ADDRESS
+        value: /var/lib/kubelet/csi-provisioner/diskplugin.csi.alibabacloud.com/csi.sock
+      image: registry-cn-shenzhen-vpc.ack.aliyuncs.com/acs/csi-resizer:v1.3-e48d981-aliyun
+      imagePullPolicy: IfNotPresent
+      name: external-disk-resizer
+      resources:
+        limits:
+          cpu: 250m
+          memory: 500Mi
+        requests:
+          cpu: 10m
+          memory: 16Mi
+      terminationMessagePath: /dev/termination-log
+      terminationMessagePolicy: File
+      volumeMounts:
+      - mountPath: /var/lib/kubelet/csi-provisioner/diskplugin.csi.alibabacloud.com
+        name: disk-provisioner-dir
+      - mountPath: /var/run/secrets/kubernetes.io/serviceaccount
+        name: kube-api-access-6jfmz
+        readOnly: true
+    - args:
+      - --csi-address=$(ADDRESS)
+      - --volume-name-prefix=nas
+      - --timeout=150s
+      - --leader-election=true
+      - --retry-interval-start=500ms
+      - --default-fstype=nfs
+      - --v=5
+      env:
+      - name: ADDRESS
+        value: /var/lib/kubelet/csi-provisioner/nasplugin.csi.alibabacloud.com/csi.sock
+      image: registry-cn-shenzhen-vpc.ack.aliyuncs.com/acs/csi-provisioner:v3.5.0-e7da67e-aliyun
+      imagePullPolicy: IfNotPresent
+      name: external-nas-provisioner
+      resources:
+        limits:
+          cpu: 250m
+          memory: 500Mi
+        requests:
+          cpu: 10m
+          memory: 16Mi
+      terminationMessagePath: /dev/termination-log
+      terminationMessagePolicy: File
+      volumeMounts:
+      - mountPath: /var/lib/kubelet/csi-provisioner/nasplugin.csi.alibabacloud.com
+        name: nas-provisioner-dir
+      - mountPath: /var/run/secrets/kubernetes.io/serviceaccount
+        name: kube-api-access-6jfmz
+        readOnly: true
+    - args:
+      - --v=5
+      - --csi-address=$(ADDRESS)
+      - --leader-election
+      - --handle-volume-inuse-error=false
+      env:
+      - name: ADDRESS
+        value: /var/lib/kubelet/csi-provisioner/nasplugin.csi.alibabacloud.com/csi.sock
+      image: registry-cn-shenzhen-vpc.ack.aliyuncs.com/acs/csi-resizer:v1.3-e48d981-aliyun
+      imagePullPolicy: IfNotPresent
+      name: external-nas-resizer
+      resources:
+        limits:
+          cpu: 250m
+          memory: 500Mi
+        requests:
+          cpu: 10m
+          memory: 16Mi
+      terminationMessagePath: /dev/termination-log
+      terminationMessagePolicy: File
+      volumeMounts:
+      - mountPath: /var/lib/kubelet/csi-provisioner/nasplugin.csi.alibabacloud.com
+        name: nas-provisioner-dir
+      - mountPath: /var/run/secrets/kubernetes.io/serviceaccount
+        name: kube-api-access-6jfmz
+        readOnly: true
+    - args:
+      - --v=5
+      - --csi-address=$(ADDRESS)
+      - --leader-election=true
+      - --extra-create-metadata=true
+      env:
+      - name: ADDRESS
+        value: /csi/csi.sock
+      image: registry-cn-shenzhen-vpc.ack.aliyuncs.com/acs/csi-snapshotter:v4.0.0-a230d5b-aliyun
+      imagePullPolicy: IfNotPresent
+      name: external-csi-snapshotter
+      resources:
+        limits:
+          cpu: 250m
+          memory: 1Gi
+        requests:
+          cpu: 10m
+          memory: 16Mi
+      terminationMessagePath: /dev/termination-log
+      terminationMessagePolicy: File
+      volumeMounts:
+      - mountPath: /csi
+        name: disk-provisioner-dir
+      - mountPath: /var/run/secrets/kubernetes.io/serviceaccount
+        name: kube-api-access-6jfmz
+        readOnly: true
+    - args:
+      - --v=5
+      - --leader-election=true
+      image: registry-cn-shenzhen-vpc.ack.aliyuncs.com/acs/snapshot-controller:v4.0.0-a230d5b-aliyun
+      imagePullPolicy: IfNotPresent
+      name: external-snapshot-controller
+      resources:
+        limits:
+          cpu: 250m
+          memory: 1Gi
+        requests:
+          cpu: 10m
+          memory: 16Mi
+      terminationMessagePath: /dev/termination-log
+      terminationMessagePolicy: File
+      volumeMounts:
+      - mountPath: /var/run/secrets/kubernetes.io/serviceaccount
+        name: kube-api-access-6jfmz
+        readOnly: true
+    - args:
+      - --endpoint=$(CSI_ENDPOINT)
+      - --v=2
+      - --driver=nas,disk,oss
+      env:
+      - name: CSI_ENDPOINT
+        value: unix://var/lib/kubelet/csi-provisioner/driverplugin.csi.alibabacloud.com-replace/csi.sock
+      - name: MAX_VOLUMES_PERNODE
+        value: "15"
+      - name: SERVICE_TYPE
+        value: provisioner
+      - name: KUBE_NODE_NAME
+        valueFrom:
+          fieldRef:
+            apiVersion: v1
+            fieldPath: spec.nodeName
+      image: registry-cn-shenzhen-vpc.ack.aliyuncs.com/acs/csi-plugin:v1.30.2-f51279d-aliyun
+      imagePullPolicy: IfNotPresent
+      livenessProbe:
+        failureThreshold: 5
+        httpGet:
+          path: /healthz
+          port: healthz
+          scheme: HTTP
+        initialDelaySeconds: 10
+        periodSeconds: 30
+        successThreshold: 1
+        timeoutSeconds: 5
+      name: csi-provisioner
+      ports:
+      - containerPort: 11270
+        name: healthz
+        protocol: TCP
+      readinessProbe:
+        failureThreshold: 3
+        httpGet:
+          path: /healthz
+          port: healthz
+          scheme: HTTP
+        initialDelaySeconds: 5
+        periodSeconds: 20
+        successThreshold: 1
+        timeoutSeconds: 1
+      resources:
+        limits:
+          cpu: 250m
+          memory: 500Mi
+        requests:
+          cpu: 100m
+          memory: 128Mi
+      terminationMessagePath: /dev/termination-log
+      terminationMessagePolicy: File
+      volumeMounts:
+      - mountPath: /var/lib/kubelet/csi-provisioner/diskplugin.csi.alibabacloud.com
+        name: disk-provisioner-dir
+      - mountPath: /var/lib/kubelet/csi-provisioner/nasplugin.csi.alibabacloud.com
+        name: nas-provisioner-dir
+      - mountPath: /var/lib/kubelet/csi-provisioner/ossplugin.csi.alibabacloud.com
+        name: oss-provisioner-dir
+      - mountPath: /var/addon
+        name: addon-token
+        readOnly: true
+      - mountPath: /var/run/secrets/kubernetes.io/serviceaccount
+        name: kube-api-access-6jfmz
+        readOnly: true
+    dnsPolicy: ClusterFirst
+    enableServiceLinks: true
+    nodeName: virtual-kubelet-cn-shenzhen-e
+    preemptionPolicy: PreemptLowerPriority
+    priority: 2000001000
+    priorityClassName: system-node-critical
+    restartPolicy: Always
+    schedulerName: default-scheduler
+    securityContext: {}
+    serviceAccount: csi-admin
+    serviceAccountName: csi-admin
+    terminationGracePeriodSeconds: 30
+    tolerations:
+    - effect: NoSchedule
+      key: node-role.kubernetes.io/master
+      operator: Exists
+    - effect: NoSchedule
+      key: node.cloudprovider.kubernetes.io/uninitialized
+      operator: Exists
+    - effect: NoExecute
+      key: node.kubernetes.io/not-ready
+      operator: Exists
+    - effect: NoExecute
+      key: node.kubernetes.io/unreachable
+      operator: Exists
+    volumes:
+    - emptyDir: {}
+      name: disk-provisioner-dir
+    - emptyDir: {}
+      name: nas-provisioner-dir
+    - emptyDir: {}
+      name: oss-provisioner-dir
+    - name: addon-token
+      secret:
+        defaultMode: 420
+        items:
+        - key: addon.token.config
+          path: token-config
+        optional: true
+        secretName: addon.csi.token
+    - name: kube-api-access-6jfmz
+      projected:
+        defaultMode: 420
+        sources:
+        - serviceAccountToken:
+            expirationSeconds: 3607
+            path: token
+        - configMap:
+            items:
+            - key: ca.crt
+              path: ca.crt
+            name: kube-root-ca.crt
+        - downwardAPI:
+            items:
+            - fieldRef:
+                apiVersion: v1
+                fieldPath: metadata.namespace
+              path: namespace
+  status:
+    conditions:
+    - lastProbeTime: null
+      lastTransitionTime: "2024-08-20T01:02:15Z"
+      status: "True"
+      type: ContainerInstanceCreated
+    - lastProbeTime: null
+      lastTransitionTime: "2024-08-20T01:02:35Z"
+      status: "True"
+      type: PodReadyToStartContainers
+    - lastProbeTime: null
+      lastTransitionTime: "2024-08-20T01:02:31Z"
+      status: "True"
+      type: Initialized
+    - lastProbeTime: null
+      lastTransitionTime: "2024-08-20T01:02:40Z"
+      status: "True"
+      type: Ready
+    - lastProbeTime: null
+      lastTransitionTime: "2024-08-20T01:02:40Z"
+      status: "True"
+      type: ContainersReady
+    - lastProbeTime: null
+      lastTransitionTime: "2024-08-20T01:02:16Z"
+      status: "True"
+      type: PodScheduled
+    - lastProbeTime: null
+      lastTransitionTime: "2024-08-20T01:02:31Z"
+      status: "True"
+      type: ContainerHasSufficientDisk
+    containerStatuses:
+    - containerID: containerd://f1043da7b119a9e77c2160be75bd580b483cc4375649042e761719095a49a021
+      image: registry-cn-shenzhen-vpc.ack.aliyuncs.com/acs/csi-plugin:v1.30.2-f51279d-aliyun
+      imageID: registry-cn-shenzhen-vpc.ack.aliyuncs.com/acs/csi-plugin@sha256:9e62fd87396296de8310ab1ce2c95d162cce476cf1acb69045e42dbbe013ffb4
+      lastState: {}
+      name: csi-provisioner
+      ready: true
+      restartCount: 0
+      started: true
+      state:
+        running:
+          startedAt: "2024-08-20T01:02:34Z"
+    - containerID: containerd://e451895cdd718aedebb3a14578c34f166fc56afb617ff56653c79cbff4cb2e75
+      image: registry-cn-shenzhen-vpc.ack.aliyuncs.com/acs/csi-snapshotter:v4.0.0-a230d5b-aliyun
+      imageID: registry-cn-shenzhen-vpc.ack.aliyuncs.com/acs/csi-snapshotter@sha256:96bd23c472a92a5beceb1a36ff5871d2837bf4e52918da882105e802e8fdca89
+      lastState: {}
+      name: external-csi-snapshotter
+      ready: true
+      restartCount: 0
+      started: true
+      state:
+        running:
+          startedAt: "2024-08-20T01:02:33Z"
+    - containerID: containerd://dc3cb9abebf705d5b8c2666104deb862951c7a2f3b22932479fdcd5a39f94e38
+      image: registry-cn-shenzhen-vpc.ack.aliyuncs.com/acs/csi-attacher:v3.3-72dd428b-aliyun
+      imageID: registry-cn-shenzhen-vpc.ack.aliyuncs.com/acs/csi-attacher@sha256:6aab8a9e3905d9eab76066961abbd16dc4bdadc9d43d9feb6856fcdf7cbff8b0
+      lastState: {}
+      name: external-disk-attacher
+      ready: true
+      restartCount: 0
+      started: true
+      state:
+        running:
+          startedAt: "2024-08-20T01:02:32Z"
+    - containerID: containerd://202faea7d37fe98ee663223567a019e768dffae952fc84fd28bff486e143152c
+      image: registry-cn-shenzhen-vpc.ack.aliyuncs.com/acs/csi-provisioner:v3.5.0-e7da67e-aliyun
+      imageID: registry-cn-shenzhen-vpc.ack.aliyuncs.com/acs/csi-provisioner@sha256:eb0f7a78014cef5138e82bf9e6200ff869f993bfd71fb8b7b55dbf9ba44099c2
+      lastState: {}
+      name: external-disk-provisioner
+      ready: true
+      restartCount: 0
+      started: true
+      state:
+        running:
+          startedAt: "2024-08-20T01:02:32Z"
+    - containerID: containerd://4e444434f5c78e53a3a5b8501335b9f3214cc0d544eedb04a66565191a511152
+      image: registry-cn-shenzhen-vpc.ack.aliyuncs.com/acs/csi-resizer:v1.3-e48d981-aliyun
+      imageID: registry-cn-shenzhen-vpc.ack.aliyuncs.com/acs/csi-resizer@sha256:bb53b9b61b606600e7271152515b328c9898f5bf9f972f999c344db63f25fce8
+      lastState: {}
+      name: external-disk-resizer
+      ready: true
+      restartCount: 0
+      started: true
+      state:
+        running:
+          startedAt: "2024-08-20T01:02:33Z"
+    - containerID: containerd://81c12f250141e1c69ef3228449e8d065f5994b711498d4f68d8720816dc1ebde
+      image: registry-cn-shenzhen-vpc.ack.aliyuncs.com/acs/csi-provisioner:v3.5.0-e7da67e-aliyun
+      imageID: registry-cn-shenzhen-vpc.ack.aliyuncs.com/acs/csi-provisioner@sha256:eb0f7a78014cef5138e82bf9e6200ff869f993bfd71fb8b7b55dbf9ba44099c2
+      lastState: {}
+      name: external-nas-provisioner
+      ready: true
+      restartCount: 0
+      started: true
+      state:
+        running:
+          startedAt: "2024-08-20T01:02:33Z"
+    - containerID: containerd://b282e303bbbb2133c3b6ea072e1dbf267e96c9f937c657151b0de887c6ef8254
+      image: registry-cn-shenzhen-vpc.ack.aliyuncs.com/acs/csi-resizer:v1.3-e48d981-aliyun
+      imageID: registry-cn-shenzhen-vpc.ack.aliyuncs.com/acs/csi-resizer@sha256:bb53b9b61b606600e7271152515b328c9898f5bf9f972f999c344db63f25fce8
+      lastState: {}
+      name: external-nas-resizer
+      ready: true
+      restartCount: 0
+      started: true
+      state:
+        running:
+          startedAt: "2024-08-20T01:02:33Z"
+    - containerID: containerd://adaf642e9f9963a8d0765263df084da98e5fc516d36dd5ea0d9993c3403a93da
+      image: registry-cn-shenzhen-vpc.ack.aliyuncs.com/acs/snapshot-controller:v4.0.0-a230d5b-aliyun
+      imageID: registry-cn-shenzhen-vpc.ack.aliyuncs.com/acs/snapshot-controller@sha256:a11d8070957a9eee41b3e3ab9cdc1b31978f0471802a2a67d437b0f1e39a375c
+      lastState: {}
+      name: external-snapshot-controller
+      ready: true
+      restartCount: 0
+      started: true
+      state:
+        running:
+          startedAt: "2024-08-20T01:02:33Z"
+    hostIP: 192.168.5.59
+    phase: Running
+    podIP: 192.168.5.59
+    podIPs:
+    - ip: 192.168.5.59
+    qosClass: Burstable
+    startTime: "2024-08-20T01:02:31Z"
+- apiVersion: v1
+  kind: Pod
+  metadata:
+    annotations:
+      ProviderCreate: done
+      k8s.aliyun.com/cluster-dns: 172.16.0.10
+      k8s.aliyun.com/cluster-domain: cluster.local
+      k8s.aliyun.com/dns-cache-enable: "false"
+      k8s.aliyun.com/eci-client-token: 7c69bb43-2311-484a-86fc-d7e012491c2d
+      k8s.aliyun.com/eci-container-exit-priority: '{}'
+      k8s.aliyun.com/eci-created-by-template: "true"
+      k8s.aliyun.com/eci-drop-apiserver-interactive-caps: ""
+      k8s.aliyun.com/eci-instance-cpu: "0.5"
+      k8s.aliyun.com/eci-instance-id: eci-wz9hvjdwlsumc0m0b3c7
+      k8s.aliyun.com/eci-instance-mem: "1.0"
+      k8s.aliyun.com/eci-instance-spec: 0.5-1.0Gi
+      k8s.aliyun.com/eci-instance-zone: cn-shenzhen-e
+      k8s.aliyun.com/eci-kube-proxy-enabled: "true"
+      k8s.aliyun.com/eci-matched-image-cache: imc-wz9gukkjm7221yvjdszn
+      k8s.aliyun.com/eci-platform-version: 1.1.0
+      k8s.aliyun.com/eci-request-id: 95566A5D-A319-5566-B10A-C1BDD675E6E9
+      k8s.aliyun.com/eci-schedule-result: finished
+      k8s.aliyun.com/eci-security-group: sg-wz99qqr9drbgsgu4kndk
+      k8s.aliyun.com/eci-vpc: vpc-wz9rf0gfnfruu6j4pseda
+      k8s.aliyun.com/eci-vswitch: vsw-wz9rsj59hpuq9jtg7w9tt
+      k8s.aliyun.com/eni-instance-id: eni-wz925b4paqrfdybfftla
+      k8s.aliyun.com/k8s-version: v1.30.1-aliyun.1
+      k8s.aliyun.com/product-on-eci-mode: NA
+      k8s.aliyun.com/vk-version: v2.12.0-2024-08-02-09-53-UTC
+      kubernetes.io/pod-stream-port: "10250"
+      prometheus.io/port: "10254"
+      prometheus.io/scrape: "true"
+    creationTimestamp: "2024-08-20T01:11:53Z"
+    generateName: nginx-ingress-controller-5d4487b97f-
+    labels:
+      app: ingress-nginx
+      pod-template-hash: 5d4487b97f
+    name: nginx-ingress-controller-5d4487b97f-nb4b8
+    namespace: kube-system
+    ownerReferences:
+    - apiVersion: apps/v1
+      blockOwnerDeletion: true
+      controller: true
+      kind: ReplicaSet
+      name: nginx-ingress-controller-5d4487b97f
+      uid: 5f898012-467e-4e29-b2c9-b99438a2c451
+    resourceVersion: "3915380480"
+    uid: 188a3954-b5e2-42f8-95b4-d8e1437016f8
+  spec:
+    containers:
+    - args:
+      - /nginx-ingress-controller
+      - --election-id=ingress-controller-leader-nginx
+      - --ingress-class=nginx
+      - --watch-ingress-without-class
+      - --controller-class=k8s.io/ingress-nginx
+      - --configmap=$(POD_NAMESPACE)/nginx-configuration
+      - --tcp-services-configmap=$(POD_NAMESPACE)/tcp-services
+      - --udp-services-configmap=$(POD_NAMESPACE)/udp-services
+      - --annotations-prefix=nginx.ingress.kubernetes.io
+      - --publish-service=$(POD_NAMESPACE)/nginx-ingress-lb
+      - --enable-annotation-validation
+      - --shutdown-grace-period=30
+      - --validating-webhook=:8443
+      - --validating-webhook-certificate=/usr/local/certificates/cert
+      - --validating-webhook-key=/usr/local/certificates/key
+      - --v=2
+      env:
+      - name: POD_NAME
+        valueFrom:
+          fieldRef:
+            apiVersion: v1
+            fieldPath: metadata.name
+      - name: POD_NAMESPACE
+        valueFrom:
+          fieldRef:
+            apiVersion: v1
+            fieldPath: metadata.namespace
+      - name: LD_PRELOAD
+        value: /usr/local/lib/libmimalloc.so
+      image: registry-cn-shenzhen-vpc.ack.aliyuncs.com/acs/aliyun-ingress-controller:v1.10.2-aliyun.1
+      imagePullPolicy: IfNotPresent
+      lifecycle:
+        preStop:
+          exec:
+            command:
+            - /wait-shutdown
+      livenessProbe:
+        failureThreshold: 5
+        httpGet:
+          path: /healthz
+          port: 10254
+          scheme: HTTP
+        initialDelaySeconds: 10
+        periodSeconds: 10
+        successThreshold: 1
+        timeoutSeconds: 1
+      name: nginx-ingress-controller
+      ports:
+      - containerPort: 80
+        name: http
+        protocol: TCP
+      - containerPort: 443
+        name: https
+        protocol: TCP
+      - containerPort: 8443
+        name: webhook
+        protocol: TCP
+      readinessProbe:
+        failureThreshold: 3
+        httpGet:
+          path: /healthz
+          port: 10254
+          scheme: HTTP
+        initialDelaySeconds: 10
+        periodSeconds: 10
+        successThreshold: 1
+        timeoutSeconds: 1
+      resources:
+        requests:
+          cpu: 500m
+          memory: 1Gi
+      securityContext:
+        capabilities:
+          add:
+          - NET_BIND_SERVICE
+          drop:
+          - ALL
+        runAsUser: 101
+      terminationMessagePath: /dev/termination-log
+      terminationMessagePolicy: File
+      volumeMounts:
+      - mountPath: /usr/local/certificates/
+        name: webhook-cert
+        readOnly: true
+      - mountPath: /var/run/secrets/kubernetes.io/serviceaccount
+        name: kube-api-access-92kh7
+        readOnly: true
+    dnsPolicy: ClusterFirst
+    enableServiceLinks: true
+    nodeName: virtual-kubelet-cn-shenzhen-e
+    nodeSelector:
+      kubernetes.io/os: linux
+    preemptionPolicy: PreemptLowerPriority
+    priority: 2000001000
+    priorityClassName: system-node-critical
+    restartPolicy: Always
+    schedulerName: default-scheduler
+    securityContext:
+      sysctls:
+      - name: net.core.somaxconn
+        value: "65535"
+    serviceAccount: ingress-nginx
+    serviceAccountName: ingress-nginx
+    terminationGracePeriodSeconds: 300
+    tolerations:
+    - effect: NoExecute
+      key: node.kubernetes.io/not-ready
+      operator: Exists
+    - effect: NoExecute
+      key: node.kubernetes.io/unreachable
+      operator: Exists
+    volumes:
+    - name: webhook-cert
+      secret:
+        defaultMode: 420
+        secretName: ingress-nginx-admission
+    - name: kube-api-access-92kh7
+      projected:
+        defaultMode: 420
+        sources:
+        - serviceAccountToken:
+            expirationSeconds: 3607
+            path: token
+        - configMap:
+            items:
+            - key: ca.crt
+              path: ca.crt
+            name: kube-root-ca.crt
+        - downwardAPI:
+            items:
+            - fieldRef:
+                apiVersion: v1
+                fieldPath: metadata.namespace
+              path: namespace
+  status:
+    conditions:
+    - lastProbeTime: null
+      lastTransitionTime: "2024-08-20T01:12:00Z"
+      status: "True"
+      type: ContainerInstanceCreated
+    - lastProbeTime: null
+      lastTransitionTime: "2024-08-20T01:12:16Z"
+      status: "True"
+      type: PodReadyToStartContainers
+    - lastProbeTime: null
+      lastTransitionTime: "2024-08-20T01:12:14Z"
+      status: "True"
+      type: Initialized
+    - lastProbeTime: null
+      lastTransitionTime: "2024-08-20T01:12:27Z"
+      status: "True"
+      type: Ready
+    - lastProbeTime: null
+      lastTransitionTime: "2024-08-20T01:12:27Z"
+      status: "True"
+      type: ContainersReady
+    - lastProbeTime: null
+      lastTransitionTime: "2024-08-20T01:12:01Z"
+      status: "True"
+      type: PodScheduled
+    - lastProbeTime: null
+      lastTransitionTime: "2024-08-20T01:12:14Z"
+      status: "True"
+      type: ContainerHasSufficientDisk
+    containerStatuses:
+    - containerID: containerd://4ae1c07a74fe7f48dcda2f8314c8ec3f945e58d63bb7d26944a8392121785341
+      image: registry-cn-shenzhen-vpc.ack.aliyuncs.com/acs/aliyun-ingress-controller:v1.10.2-aliyun.1
+      imageID: registry-cn-shenzhen-vpc.ack.aliyuncs.com/acs/aliyun-ingress-controller@sha256:58ffec6909557295ccdbdfe4d21861cf3ec88cfc32e2c155a088a6efc7336970
+      lastState: {}
+      name: nginx-ingress-controller
+      ready: true
+      restartCount: 0
+      started: true
+      state:
+        running:
+          startedAt: "2024-08-20T01:12:15Z"
+    hostIP: 192.168.5.62
+    phase: Running
+    podIP: 192.168.5.62
+    podIPs:
+    - ip: 192.168.5.62
+    qosClass: Burstable
+    startTime: "2024-08-20T01:12:14Z"
+- apiVersion: v1
+  kind: Pod
+  metadata:
+    annotations:
+      ProviderCreate: done
+      k8s.aliyun.com/cluster-dns: 172.16.0.10
+      k8s.aliyun.com/cluster-domain: cluster.local
+      k8s.aliyun.com/dns-cache-enable: "false"
+      k8s.aliyun.com/eci-client-token: 98ef52b0-3a5c-4324-9848-9c79faa62798
+      k8s.aliyun.com/eci-container-exit-priority: '{}'
+      k8s.aliyun.com/eci-created-by-template: "true"
+      k8s.aliyun.com/eci-drop-apiserver-interactive-caps: ""
+      k8s.aliyun.com/eci-instance-cpu: "0.5"
+      k8s.aliyun.com/eci-instance-id: eci-wz9ibswt46962c25sptl
+      k8s.aliyun.com/eci-instance-mem: "1.0"
+      k8s.aliyun.com/eci-instance-spec: 0.5-1.0Gi
+      k8s.aliyun.com/eci-instance-zone: cn-shenzhen-e
+      k8s.aliyun.com/eci-kube-proxy-enabled: "true"
+      k8s.aliyun.com/eci-matched-image-cache: imc-wz9gukkjm7221yvjdszn
+      k8s.aliyun.com/eci-platform-version: 1.1.0
+      k8s.aliyun.com/eci-request-id: 8B88AF6A-01E5-5031-88F6-53A69C5130A2
+      k8s.aliyun.com/eci-schedule-result: finished
+      k8s.aliyun.com/eci-security-group: sg-wz99qqr9drbgsgu4kndk
+      k8s.aliyun.com/eci-vpc: vpc-wz9rf0gfnfruu6j4pseda
+      k8s.aliyun.com/eci-vswitch: vsw-wz9rsj59hpuq9jtg7w9tt
+      k8s.aliyun.com/eni-instance-id: eni-wz9ezvlm85gl3no9pxzr
+      k8s.aliyun.com/k8s-version: v1.30.1-aliyun.1
+      k8s.aliyun.com/product-on-eci-mode: NA
+      k8s.aliyun.com/vk-version: v2.12.0-2024-08-02-09-53-UTC
+      kubernetes.io/pod-stream-port: "10250"
+      prometheus.io/port: "10254"
+      prometheus.io/scrape: "true"
+    creationTimestamp: "2024-08-20T01:11:53Z"
+    generateName: nginx-ingress-controller-5d4487b97f-
+    labels:
+      app: ingress-nginx
+      pod-template-hash: 5d4487b97f
+    name: nginx-ingress-controller-5d4487b97f-v9rwk
+    namespace: kube-system
+    ownerReferences:
+    - apiVersion: apps/v1
+      blockOwnerDeletion: true
+      controller: true
+      kind: ReplicaSet
+      name: nginx-ingress-controller-5d4487b97f
+      uid: 5f898012-467e-4e29-b2c9-b99438a2c451
+    resourceVersion: "3915380500"
+    uid: 44c68e32-53b4-4da1-a913-74f453b67ace
+  spec:
+    containers:
+    - args:
+      - /nginx-ingress-controller
+      - --election-id=ingress-controller-leader-nginx
+      - --ingress-class=nginx
+      - --watch-ingress-without-class
+      - --controller-class=k8s.io/ingress-nginx
+      - --configmap=$(POD_NAMESPACE)/nginx-configuration
+      - --tcp-services-configmap=$(POD_NAMESPACE)/tcp-services
+      - --udp-services-configmap=$(POD_NAMESPACE)/udp-services
+      - --annotations-prefix=nginx.ingress.kubernetes.io
+      - --publish-service=$(POD_NAMESPACE)/nginx-ingress-lb
+      - --enable-annotation-validation
+      - --shutdown-grace-period=30
+      - --validating-webhook=:8443
+      - --validating-webhook-certificate=/usr/local/certificates/cert
+      - --validating-webhook-key=/usr/local/certificates/key
+      - --v=2
+      env:
+      - name: POD_NAME
+        valueFrom:
+          fieldRef:
+            apiVersion: v1
+            fieldPath: metadata.name
+      - name: POD_NAMESPACE
+        valueFrom:
+          fieldRef:
+            apiVersion: v1
+            fieldPath: metadata.namespace
+      - name: LD_PRELOAD
+        value: /usr/local/lib/libmimalloc.so
+      image: registry-cn-shenzhen-vpc.ack.aliyuncs.com/acs/aliyun-ingress-controller:v1.10.2-aliyun.1
+      imagePullPolicy: IfNotPresent
+      lifecycle:
+        preStop:
+          exec:
+            command:
+            - /wait-shutdown
+      livenessProbe:
+        failureThreshold: 5
+        httpGet:
+          path: /healthz
+          port: 10254
+          scheme: HTTP
+        initialDelaySeconds: 10
+        periodSeconds: 10
+        successThreshold: 1
+        timeoutSeconds: 1
+      name: nginx-ingress-controller
+      ports:
+      - containerPort: 80
+        name: http
+        protocol: TCP
+      - containerPort: 443
+        name: https
+        protocol: TCP
+      - containerPort: 8443
+        name: webhook
+        protocol: TCP
+      readinessProbe:
+        failureThreshold: 3
+        httpGet:
+          path: /healthz
+          port: 10254
+          scheme: HTTP
+        initialDelaySeconds: 10
+        periodSeconds: 10
+        successThreshold: 1
+        timeoutSeconds: 1
+      resources:
+        requests:
+          cpu: 500m
+          memory: 1Gi
+      securityContext:
+        capabilities:
+          add:
+          - NET_BIND_SERVICE
+          drop:
+          - ALL
+        runAsUser: 101
+      terminationMessagePath: /dev/termination-log
+      terminationMessagePolicy: File
+      volumeMounts:
+      - mountPath: /usr/local/certificates/
+        name: webhook-cert
+        readOnly: true
+      - mountPath: /var/run/secrets/kubernetes.io/serviceaccount
+        name: kube-api-access-4d4t5
+        readOnly: true
+    dnsPolicy: ClusterFirst
+    enableServiceLinks: true
+    nodeName: virtual-kubelet-cn-shenzhen-e
+    nodeSelector:
+      kubernetes.io/os: linux
+    preemptionPolicy: PreemptLowerPriority
+    priority: 2000001000
+    priorityClassName: system-node-critical
+    restartPolicy: Always
+    schedulerName: default-scheduler
+    securityContext:
+      sysctls:
+      - name: net.core.somaxconn
+        value: "65535"
+    serviceAccount: ingress-nginx
+    serviceAccountName: ingress-nginx
+    terminationGracePeriodSeconds: 300
+    tolerations:
+    - effect: NoExecute
+      key: node.kubernetes.io/not-ready
+      operator: Exists
+    - effect: NoExecute
+      key: node.kubernetes.io/unreachable
+      operator: Exists
+    volumes:
+    - name: webhook-cert
+      secret:
+        defaultMode: 420
+        secretName: ingress-nginx-admission
+    - name: kube-api-access-4d4t5
+      projected:
+        defaultMode: 420
+        sources:
+        - serviceAccountToken:
+            expirationSeconds: 3607
+            path: token
+        - configMap:
+            items:
+            - key: ca.crt
+              path: ca.crt
+            name: kube-root-ca.crt
+        - downwardAPI:
+            items:
+            - fieldRef:
+                apiVersion: v1
+                fieldPath: metadata.namespace
+              path: namespace
+  status:
+    conditions:
+    - lastProbeTime: null
+      lastTransitionTime: "2024-08-20T01:12:02Z"
+      status: "True"
+      type: ContainerInstanceCreated
+    - lastProbeTime: null
+      lastTransitionTime: "2024-08-20T01:12:16Z"
+      status: "True"
+      type: PodReadyToStartContainers
+    - lastProbeTime: null
+      lastTransitionTime: "2024-08-20T01:12:14Z"
+      status: "True"
+      type: Initialized
+    - lastProbeTime: null
+      lastTransitionTime: "2024-08-20T01:12:27Z"
+      status: "True"
+      type: Ready
+    - lastProbeTime: null
+      lastTransitionTime: "2024-08-20T01:12:27Z"
+      status: "True"
+      type: ContainersReady
+    - lastProbeTime: null
+      lastTransitionTime: "2024-08-20T01:12:03Z"
+      status: "True"
+      type: PodScheduled
+    - lastProbeTime: null
+      lastTransitionTime: "2024-08-20T01:12:14Z"
+      status: "True"
+      type: ContainerHasSufficientDisk
+    containerStatuses:
+    - containerID: containerd://7169a137f1d8643c1da89f8c5842b47648937e81fe160e30049ba75faac821bd
+      image: registry-cn-shenzhen-vpc.ack.aliyuncs.com/acs/aliyun-ingress-controller:v1.10.2-aliyun.1
+      imageID: registry-cn-shenzhen-vpc.ack.aliyuncs.com/acs/aliyun-ingress-controller@sha256:58ffec6909557295ccdbdfe4d21861cf3ec88cfc32e2c155a088a6efc7336970
+      lastState: {}
+      name: nginx-ingress-controller
+      ready: true
+      restartCount: 0
+      started: true
+      state:
+        running:
+          startedAt: "2024-08-20T01:12:16Z"
+    hostIP: 192.168.5.63
+    phase: Running
+    podIP: 192.168.5.63
+    podIPs:
+    - ip: 192.168.5.63
+    qosClass: Burstable
+    startTime: "2024-08-20T01:12:14Z"
+kind: List
+metadata:
+  resourceVersion: ""

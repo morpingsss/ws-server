@@ -1,0 +1,122 @@
+apiVersion: v1
+items:
+- addressType: IPv4
+  apiVersion: discovery.k8s.io/v1
+  endpoints:
+  - addresses:
+    - 192.168.5.67
+    conditions:
+      ready: true
+      serving: true
+      terminating: false
+    hostname: etcd-1
+    nodeName: virtual-kubelet-cn-shenzhen-e
+    targetRef:
+      kind: Pod
+      name: etcd-1
+      namespace: ws
+      uid: cef3cda4-b59b-4fec-98e5-f2dbf68b0300
+    zone: cn-shenzhen-e
+  - addresses:
+    - 192.168.5.68
+    conditions:
+      ready: true
+      serving: true
+      terminating: false
+    hostname: etcd-0
+    nodeName: virtual-kubelet-cn-shenzhen-e
+    targetRef:
+      kind: Pod
+      name: etcd-0
+      namespace: ws
+      uid: 3662eefc-f1dc-4347-8d08-5b57c94af254
+    zone: cn-shenzhen-e
+  kind: EndpointSlice
+  metadata:
+    annotations:
+      endpoints.kubernetes.io/last-change-trigger-time: "2024-08-20T01:15:05Z"
+    creationTimestamp: "2024-08-10T18:43:25Z"
+    generateName: etcd-
+    generation: 25
+    labels:
+      endpointslice.kubernetes.io/managed-by: endpointslice-controller.k8s.io
+      kubernetes.io/service-name: etcd
+      service.kubernetes.io/headless: ""
+    name: etcd-hjzjt
+    namespace: ws
+    ownerReferences:
+    - apiVersion: v1
+      blockOwnerDeletion: true
+      controller: true
+      kind: Service
+      name: etcd
+      uid: 2e911d63-92e0-499a-8d93-00b93d407179
+    resourceVersion: "3915387802"
+    uid: 7f899526-9dc9-4ba5-809c-c0ef0a315aec
+  ports:
+  - name: client
+    port: 2379
+    protocol: TCP
+  - name: peer
+    port: 2380
+    protocol: TCP
+- addressType: IPv4
+  apiVersion: discovery.k8s.io/v1
+  endpoints:
+  - addresses:
+    - 192.168.5.64
+    conditions:
+      ready: true
+      serving: true
+      terminating: false
+    nodeName: virtual-kubelet-cn-shenzhen-e
+    targetRef:
+      kind: Pod
+      name: websocket-deployment-5c757775f9-7pndf
+      namespace: ws
+      uid: 89d850fa-e65f-4f9d-a191-7d383fa50279
+    zone: cn-shenzhen-e
+  - addresses:
+    - 192.168.5.65
+    conditions:
+      ready: true
+      serving: true
+      terminating: false
+    nodeName: virtual-kubelet-cn-shenzhen-e
+    targetRef:
+      kind: Pod
+      name: websocket-deployment-5c757775f9-6qnq7
+      namespace: ws
+      uid: 7fde82fb-0b66-47a4-b372-3fcf1a9b72ff
+    zone: cn-shenzhen-e
+  kind: EndpointSlice
+  metadata:
+    annotations:
+      endpoints.kubernetes.io/last-change-trigger-time: "2024-08-20T01:12:54Z"
+    creationTimestamp: "2024-08-11T14:10:57Z"
+    generateName: websocket-service-
+    generation: 22
+    labels:
+      endpointslice.kubernetes.io/managed-by: endpointslice-controller.k8s.io
+      kubernetes.io/service-name: websocket-service
+    name: websocket-service-thlrg
+    namespace: ws
+    ownerReferences:
+    - apiVersion: v1
+      blockOwnerDeletion: true
+      controller: true
+      kind: Service
+      name: websocket-service
+      uid: 66be5d98-dd3b-4c59-9522-79ce3820a757
+    resourceVersion: "3915381782"
+    uid: ebb46f79-312b-45f2-8fcd-31ca5f94113f
+  ports:
+  - name: websocket-service-7900-7900
+    port: 7900
+    protocol: TCP
+  - name: websocket-service-7800-7800
+    port: 7800
+    protocol: TCP
+kind: List
+metadata:
+  resourceVersion: ""

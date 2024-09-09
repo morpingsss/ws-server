@@ -1,0 +1,178 @@
+apiVersion: v1
+items:
+- addressType: IPv4
+  apiVersion: discovery.k8s.io/v1
+  endpoints:
+  - addresses:
+    - 192.168.5.62
+    conditions:
+      ready: true
+      serving: true
+      terminating: false
+    nodeName: virtual-kubelet-cn-shenzhen-e
+    targetRef:
+      kind: Pod
+      name: nginx-ingress-controller-5d4487b97f-nb4b8
+      namespace: kube-system
+      uid: 188a3954-b5e2-42f8-95b4-d8e1437016f8
+    zone: cn-shenzhen-e
+  - addresses:
+    - 192.168.5.63
+    conditions:
+      ready: true
+      serving: true
+      terminating: false
+    nodeName: virtual-kubelet-cn-shenzhen-e
+    targetRef:
+      kind: Pod
+      name: nginx-ingress-controller-5d4487b97f-v9rwk
+      namespace: kube-system
+      uid: 44c68e32-53b4-4da1-a913-74f453b67ace
+    zone: cn-shenzhen-e
+  kind: EndpointSlice
+  metadata:
+    creationTimestamp: "2024-08-11T16:42:17Z"
+    generateName: ingress-nginx-controller-admission-
+    generation: 15
+    labels:
+      endpointslice.kubernetes.io/managed-by: endpointslice-controller.k8s.io
+      kubernetes.io/service-name: ingress-nginx-controller-admission
+    name: ingress-nginx-controller-admission-gnqtx
+    namespace: kube-system
+    ownerReferences:
+    - apiVersion: v1
+      blockOwnerDeletion: true
+      controller: true
+      kind: Service
+      name: ingress-nginx-controller-admission
+      uid: fe5b2629-5ec1-4ffc-b62f-ed78ec048017
+    resourceVersion: "3915382540"
+    uid: 87ad093f-40e9-4a9d-80d6-4b88a6a9fc3d
+  ports:
+  - name: https-webhook
+    port: 8443
+    protocol: TCP
+- addressType: IPv4
+  apiVersion: discovery.k8s.io/v1
+  endpoints:
+  - addresses:
+    - 192.168.5.61
+    conditions:
+      ready: true
+      serving: true
+      terminating: false
+    nodeName: virtual-kubelet-cn-shenzhen-e
+    targetRef:
+      kind: Pod
+      name: coredns-56966dd7b4-fdmj8
+      namespace: kube-system
+      uid: 9c5b73a6-50b2-4f0b-b956-8bd9a2aa14ea
+    zone: cn-shenzhen-e
+  - addresses:
+    - 192.168.5.60
+    conditions:
+      ready: true
+      serving: true
+      terminating: false
+    nodeName: virtual-kubelet-cn-shenzhen-e
+    targetRef:
+      kind: Pod
+      name: coredns-56966dd7b4-bwpdm
+      namespace: kube-system
+      uid: cdcea1b4-c6bc-456a-ba74-aa08b530a915
+    zone: cn-shenzhen-e
+  kind: EndpointSlice
+  metadata:
+    annotations:
+      endpoints.kubernetes.io/last-change-trigger-time: "2024-08-20T01:12:20Z"
+    creationTimestamp: "2024-08-10T16:44:41Z"
+    generateName: kube-dns-
+    generation: 13
+    labels:
+      endpointslice.kubernetes.io/managed-by: endpointslice-controller.k8s.io
+      k8s-app: kube-dns
+      kubernetes.io/cluster-service: "true"
+      kubernetes.io/name: KubeDNS
+      kubernetes.io/service-name: kube-dns
+    name: kube-dns-hkjq5
+    namespace: kube-system
+    ownerReferences:
+    - apiVersion: v1
+      blockOwnerDeletion: true
+      controller: true
+      kind: Service
+      name: kube-dns
+      uid: 41fe80e9-c9ab-4137-94e3-dde1582bbfa7
+    resourceVersion: "3915380140"
+    uid: 54586ab8-ed6f-4429-a1dc-0acf8594f24b
+  ports:
+  - name: metrics
+    port: 9153
+    protocol: TCP
+  - name: dns
+    port: 53
+    protocol: UDP
+  - name: dns-tcp
+    port: 53
+    protocol: TCP
+- addressType: IPv4
+  apiVersion: discovery.k8s.io/v1
+  endpoints:
+  - addresses:
+    - 192.168.5.62
+    conditions:
+      ready: true
+      serving: true
+      terminating: false
+    nodeName: virtual-kubelet-cn-shenzhen-e
+    targetRef:
+      kind: Pod
+      name: nginx-ingress-controller-5d4487b97f-nb4b8
+      namespace: kube-system
+      uid: 188a3954-b5e2-42f8-95b4-d8e1437016f8
+    zone: cn-shenzhen-e
+  - addresses:
+    - 192.168.5.63
+    conditions:
+      ready: true
+      serving: true
+      terminating: false
+    nodeName: virtual-kubelet-cn-shenzhen-e
+    targetRef:
+      kind: Pod
+      name: nginx-ingress-controller-5d4487b97f-v9rwk
+      namespace: kube-system
+      uid: 44c68e32-53b4-4da1-a913-74f453b67ace
+    zone: cn-shenzhen-e
+  kind: EndpointSlice
+  metadata:
+    creationTimestamp: "2024-08-11T17:07:35Z"
+    generateName: nginx-ingress-lb-
+    generation: 12
+    labels:
+      app: nginx-ingress-lb
+      endpointslice.kubernetes.io/managed-by: endpointslice-controller.k8s.io
+      kubernetes.io/service-name: nginx-ingress-lb
+      service.beta.kubernetes.io/hash: d326606d013c81e6836cae7f6d1a483a16eca0ad78e3bf711136244f
+      service.k8s.alibaba/loadbalancer-id: lb-wz9pdomv58ife11v6ttuo
+    name: nginx-ingress-lb-cjzjv
+    namespace: kube-system
+    ownerReferences:
+    - apiVersion: v1
+      blockOwnerDeletion: true
+      controller: true
+      kind: Service
+      name: nginx-ingress-lb
+      uid: e21b7eac-6b1d-4b9b-a5e7-fcb1005e5037
+    resourceVersion: "3915382541"
+    uid: aad5751c-a115-4cdc-bf10-ceeb06b43d94
+  ports:
+  - name: http
+    port: 80
+    protocol: TCP
+  - name: https
+    port: 443
+    protocol: TCP
+kind: List
+metadata:
+  resourceVersion: ""

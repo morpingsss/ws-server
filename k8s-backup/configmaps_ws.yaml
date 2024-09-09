@@ -1,0 +1,60 @@
+apiVersion: v1
+items:
+- apiVersion: v1
+  data:
+    ca.crt: |
+      -----BEGIN CERTIFICATE-----
+      MIIDTjCCAjagAwIBAgIUP/X5ZgyHJ/o/icFQfijJnlyVb88wDQYJKoZIhvcNAQEL
+      BQAwPjEnMA8GA1UEChMIaGFuZ3pob3UwFAYDVQQKEw1hbGliYWJhIGNsb3VkMRMw
+      EQYDVQQDEwprdWJlcm5ldGVzMCAXDTI0MDgxMDE2MzgwMFoYDzIwNTQwODAzMTYz
+      ODAwWjA+MScwDwYDVQQKEwhoYW5nemhvdTAUBgNVBAoTDWFsaWJhYmEgY2xvdWQx
+      EzARBgNVBAMTCmt1YmVybmV0ZXMwggEiMA0GCSqGSIb3DQEBAQUAA4IBDwAwggEK
+      AoIBAQDbevMLfFyqqsfA6TNVKabAd17nOLRJRJf32AyXURZS1CEmBAdQps7LSXkB
+      kvrqbHdJoi9JnsG2nx/NcJ842MHNeYOkyVcDmcoX/+ASKeQp7yaNuy4R9M10bJdS
+      1cO1+9WBTyVsmcNA9MbXdfL65i2M+UDBztdtPgmzPRq+Yx9CgbEW4gT0DxvQjuBH
+      99YH8oalIap7mL/Jwrh/uTryA+U1H6LTZvrGkF/YrV8I0C1LZsDwuSyYYjj37Dsy
+      YgB4Air0X0xN5rmP19joRRnuaO3bjT2Zq4tOeAoeWMS6zgXD73mpgbthgYZwhAgE
+      aD36dsL3Eb0+52qi7DlTvxvc5Lq3AgMBAAGjQjBAMA4GA1UdDwEB/wQEAwICrDAP
+      BgNVHRMBAf8EBTADAQH/MB0GA1UdDgQWBBRjPMAM4KSrbIHvqfIRAswgtv/3DzAN
+      BgkqhkiG9w0BAQsFAAOCAQEAHGrfo2u+Y8xI5k4e/+9wJZtN8B9AO7XYVxkQ/XRT
+      EGkug7fZ/ArRWpRfAvocU9aBeFqiV0Rg9+pqAb4GEQ+5mu6HC94VRMCZVffI6bZL
+      ruIDv0O/ZKDxVsjFl0YSKWnI+/2ANiHKb09J4thhl75CE267Q4OXScsnToTm/IOF
+      eLfy9wJCE+l5I/X/6Hi4b1c11hfFrobeWggKWZOtB6p6Ptmz95W9/sHGFs7z41kz
+      tJ9f5fMFOCXOBmqUpuAmJwuZQ0OqnyGkkE1i1a7UEN2ntT2ya3S3lAOqc0EbEsrp
+      sBthNGZt/GxCsozJMzRMK532d188U4krF5v92mC6QP3O/A==
+      -----END CERTIFICATE-----
+  kind: ConfigMap
+  metadata:
+    annotations:
+      kubernetes.io/description: Contains a CA bundle that can be used to verify the
+        kube-apiserver when using internal endpoints such as the internal service
+        IP or kubernetes.default.svc. No other usage is guaranteed across distributions
+        of Kubernetes clusters.
+    creationTimestamp: "2024-08-10T17:21:23Z"
+    name: kube-root-ca.crt
+    namespace: ws
+    resourceVersion: "3879312523"
+    uid: d0322316-f620-463e-a03e-7bde485cb25d
+- apiVersion: v1
+  data:
+    app.cluster.ini: |
+      [common]
+      HttpPort = 7800
+      RPCPort = 7900
+      # 是否集群,单机则设为false
+      Cluster = true
+      # 对称加密key 只允许16、24、32字节长度
+      CryptoKey = Adba723b7fe06819
+
+      [etcd]
+      Endpoints = 192.168.5.46:2379, 192.168.5.47:2379
+  kind: ConfigMap
+  metadata:
+    creationTimestamp: "2024-08-11T14:11:38Z"
+    name: websocket-config
+    namespace: ws
+    resourceVersion: "3882659863"
+    uid: f47d3019-7671-409c-827e-aee4da9051f8
+kind: List
+metadata:
+  resourceVersion: ""

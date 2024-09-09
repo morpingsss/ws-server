@@ -1,0 +1,210 @@
+apiVersion: v1
+items:
+- apiVersion: apps/v1
+  kind: ReplicaSet
+  metadata:
+    annotations:
+      deployment.kubernetes.io/desired-replicas: "2"
+      deployment.kubernetes.io/max-replicas: "3"
+      deployment.kubernetes.io/revision: "4"
+    creationTimestamp: "2024-08-20T01:12:09Z"
+    generation: 2
+    labels:
+      app: websocket
+      pod-template-hash: 5c757775f9
+    name: websocket-deployment-5c757775f9
+    namespace: ws
+    ownerReferences:
+    - apiVersion: apps/v1
+      blockOwnerDeletion: true
+      controller: true
+      kind: Deployment
+      name: websocket-deployment
+      uid: 9e0e17f5-4d54-4a68-bd7f-c09fe5ddfc05
+    resourceVersion: "3915381665"
+    uid: 880291d2-234e-4269-9d58-67a74d21db25
+  spec:
+    replicas: 2
+    selector:
+      matchLabels:
+        app: websocket
+        pod-template-hash: 5c757775f9
+    template:
+      metadata:
+        creationTimestamp: null
+        labels:
+          app: websocket
+          pod-template-hash: 5c757775f9
+      spec:
+        containers:
+        - command:
+          - /data/ws-server/ws-server
+          - -c
+          - /config/app.cluster.ini
+          image: registry-vpc.cn-shenzhen.aliyuncs.com/morpingsss/ws-server-amd64:1.1.0
+          imagePullPolicy: IfNotPresent
+          name: websocket-container
+          ports:
+          - containerPort: 6000
+            protocol: TCP
+          resources:
+            requests:
+              cpu: "1"
+              memory: 2Gi
+          terminationMessagePath: /dev/termination-log
+          terminationMessagePolicy: File
+          volumeMounts:
+          - mountPath: /config
+            name: config-volume
+        dnsPolicy: ClusterFirst
+        restartPolicy: Always
+        schedulerName: default-scheduler
+        securityContext: {}
+        terminationGracePeriodSeconds: 30
+        volumes:
+        - configMap:
+            defaultMode: 420
+            name: websocket-config
+          name: config-volume
+  status:
+    availableReplicas: 2
+    fullyLabeledReplicas: 2
+    observedGeneration: 2
+    readyReplicas: 2
+    replicas: 2
+- apiVersion: apps/v1
+  kind: ReplicaSet
+  metadata:
+    annotations:
+      deployment.kubernetes.io/desired-replicas: "2"
+      deployment.kubernetes.io/max-replicas: "3"
+      deployment.kubernetes.io/revision: "2"
+    creationTimestamp: "2024-08-16T18:44:42Z"
+    generation: 2
+    labels:
+      app: websocket
+      pod-template-hash: 69d4c9fd4f
+    name: websocket-deployment-69d4c9fd4f
+    namespace: ws
+    ownerReferences:
+    - apiVersion: apps/v1
+      blockOwnerDeletion: true
+      controller: true
+      kind: Deployment
+      name: websocket-deployment
+      uid: 9e0e17f5-4d54-4a68-bd7f-c09fe5ddfc05
+    resourceVersion: "3902753949"
+    uid: 18ac42d4-c561-4d61-a48c-af7548ac6a45
+  spec:
+    replicas: 0
+    selector:
+      matchLabels:
+        app: websocket
+        pod-template-hash: 69d4c9fd4f
+    template:
+      metadata:
+        creationTimestamp: null
+        labels:
+          app: websocket
+          pod-template-hash: 69d4c9fd4f
+      spec:
+        containers:
+        - command:
+          - /data/ws-server/ws-server
+          - -c
+          - /config/app.cluster.ini
+          image: registry-vpc.cn-shenzhen.aliyuncs.com/morpingsss/ws-server-amd64:1.2.0
+          imagePullPolicy: IfNotPresent
+          name: websocket-container
+          ports:
+          - containerPort: 6000
+            protocol: TCP
+          resources: {}
+          terminationMessagePath: /dev/termination-log
+          terminationMessagePolicy: File
+          volumeMounts:
+          - mountPath: /config
+            name: config-volume
+        dnsPolicy: ClusterFirst
+        restartPolicy: Always
+        schedulerName: default-scheduler
+        securityContext: {}
+        terminationGracePeriodSeconds: 30
+        volumes:
+        - configMap:
+            defaultMode: 420
+            name: websocket-config
+          name: config-volume
+  status:
+    observedGeneration: 2
+    replicas: 0
+- apiVersion: apps/v1
+  kind: ReplicaSet
+  metadata:
+    annotations:
+      deployment.kubernetes.io/desired-replicas: "2"
+      deployment.kubernetes.io/max-replicas: "3"
+      deployment.kubernetes.io/revision: "3"
+      deployment.kubernetes.io/revision-history: "1"
+    creationTimestamp: "2024-08-11T14:20:30Z"
+    generation: 4
+    labels:
+      app: websocket
+      pod-template-hash: 6d5f58f6b
+    name: websocket-deployment-6d5f58f6b
+    namespace: ws
+    ownerReferences:
+    - apiVersion: apps/v1
+      blockOwnerDeletion: true
+      controller: true
+      kind: Deployment
+      name: websocket-deployment
+      uid: 9e0e17f5-4d54-4a68-bd7f-c09fe5ddfc05
+    resourceVersion: "3915381678"
+    uid: 90181b07-9795-4cc7-82f4-b65119c427e2
+  spec:
+    replicas: 0
+    selector:
+      matchLabels:
+        app: websocket
+        pod-template-hash: 6d5f58f6b
+    template:
+      metadata:
+        creationTimestamp: null
+        labels:
+          app: websocket
+          pod-template-hash: 6d5f58f6b
+      spec:
+        containers:
+        - command:
+          - /data/ws-server/ws-server
+          - -c
+          - /config/app.cluster.ini
+          image: registry-vpc.cn-shenzhen.aliyuncs.com/morpingsss/ws-server-amd64:1.1.0
+          imagePullPolicy: IfNotPresent
+          name: websocket-container
+          ports:
+          - containerPort: 6000
+            protocol: TCP
+          resources: {}
+          terminationMessagePath: /dev/termination-log
+          terminationMessagePolicy: File
+          volumeMounts:
+          - mountPath: /config
+            name: config-volume
+        dnsPolicy: ClusterFirst
+        restartPolicy: Always
+        schedulerName: default-scheduler
+        securityContext: {}
+        terminationGracePeriodSeconds: 30
+        volumes:
+        - configMap:
+            defaultMode: 420
+            name: websocket-config
+          name: config-volume
+  status:
+    observedGeneration: 4
+    replicas: 0
+kind: List
+metadata:
+  resourceVersion: ""

@@ -1,0 +1,631 @@
+apiVersion: v1
+items:
+- apiVersion: apps/v1
+  kind: Deployment
+  metadata:
+    annotations:
+      deployment.kubernetes.io/revision: "2"
+      kubectl.kubernetes.io/last-applied-configuration: |
+        {"apiVersion":"apps/v1","kind":"Deployment","metadata":{"annotations":{},"labels":{"k8s-app":"kube-dns"},"name":"coredns","namespace":"kube-system"},"spec":{"replicas":2,"selector":{"matchLabels":{"k8s-app":"kube-dns"}},"strategy":{"rollingUpdate":{"maxUnavailable":1},"type":"RollingUpdate"},"template":{"metadata":{"annotations":{"prometheus.io/path":"/metrics","prometheus.io/port":"9153","prometheus.io/scrape":"true"},"labels":{"k8s-app":"kube-dns"}},"spec":{"containers":[{"args":["-conf","/etc/coredns/Corefile"],"env":[{"name":"COREDNS_POD_NAME","valueFrom":{"fieldRef":{"apiVersion":"v1","fieldPath":"metadata.name"}}},{"name":"COREDNS_NAMESPACE","valueFrom":{"fieldRef":{"apiVersion":"v1","fieldPath":"metadata.namespace"}}}],"image":"registry-cn-shenzhen-vpc.ack.aliyuncs.com/acs/coredns:v1.9.3.16-4341f22f-aliyun","imagePullPolicy":"IfNotPresent","livenessProbe":{"failureThreshold":5,"httpGet":{"path":"/health","port":8080,"scheme":"HTTP"},"initialDelaySeconds":60,"successThreshold":1,"timeoutSeconds":5},"name":"coredns","ports":[{"containerPort":53,"name":"dns","protocol":"UDP"},{"containerPort":53,"name":"dns-tcp","protocol":"TCP"},{"containerPort":9153,"name":"metrics","protocol":"TCP"}],"readinessProbe":{"httpGet":{"path":"/ready","port":8181,"scheme":"HTTP"}},"resources":{"limits":{"cpu":2,"memory":"4Gi"},"requests":{"cpu":2,"memory":"4Gi"}},"securityContext":{"allowPrivilegeEscalation":false,"capabilities":{"add":["NET_BIND_SERVICE"],"drop":["all"]},"readOnlyRootFilesystem":true},"volumeMounts":[{"mountPath":"/etc/coredns","name":"config-volume","readOnly":true}]}],"dnsPolicy":"Default","nodeSelector":{"kubernetes.io/os":"linux"},"priorityClassName":"system-cluster-critical","serviceAccountName":"coredns","tolerations":null,"volumes":[{"configMap":{"items":[{"key":"Corefile","path":"Corefile"}],"name":"coredns"},"name":"config-volume"}]}}}}
+    creationTimestamp: "2024-08-10T16:44:41Z"
+    generation: 2
+    labels:
+      k8s-app: kube-dns
+    name: coredns
+    namespace: kube-system
+    resourceVersion: "3915379543"
+    uid: 0b98559d-fd80-4624-8e48-a4776ee62d5c
+  spec:
+    progressDeadlineSeconds: 600
+    replicas: 2
+    revisionHistoryLimit: 10
+    selector:
+      matchLabels:
+        k8s-app: kube-dns
+    strategy:
+      rollingUpdate:
+        maxSurge: 25%
+        maxUnavailable: 1
+      type: RollingUpdate
+    template:
+      metadata:
+        annotations:
+          prometheus.io/path: /metrics
+          prometheus.io/port: "9153"
+          prometheus.io/scrape: "true"
+        creationTimestamp: null
+        labels:
+          k8s-app: kube-dns
+      spec:
+        containers:
+        - args:
+          - -conf
+          - /etc/coredns/Corefile
+          env:
+          - name: COREDNS_POD_NAME
+            valueFrom:
+              fieldRef:
+                apiVersion: v1
+                fieldPath: metadata.name
+          - name: COREDNS_NAMESPACE
+            valueFrom:
+              fieldRef:
+                apiVersion: v1
+                fieldPath: metadata.namespace
+          image: registry-cn-shenzhen-vpc.ack.aliyuncs.com/acs/coredns:v1.9.3.16-4341f22f-aliyun
+          imagePullPolicy: IfNotPresent
+          livenessProbe:
+            failureThreshold: 5
+            httpGet:
+              path: /health
+              port: 8080
+              scheme: HTTP
+            initialDelaySeconds: 60
+            periodSeconds: 10
+            successThreshold: 1
+            timeoutSeconds: 5
+          name: coredns
+          ports:
+          - containerPort: 53
+            name: dns
+            protocol: UDP
+          - containerPort: 53
+            name: dns-tcp
+            protocol: TCP
+          - containerPort: 9153
+            name: metrics
+            protocol: TCP
+          readinessProbe:
+            failureThreshold: 3
+            httpGet:
+              path: /ready
+              port: 8181
+              scheme: HTTP
+            periodSeconds: 10
+            successThreshold: 1
+            timeoutSeconds: 1
+          resources:
+            limits:
+              cpu: "2"
+              memory: 4Gi
+            requests:
+              cpu: 500m
+              memory: 1Gi
+          securityContext:
+            allowPrivilegeEscalation: false
+            capabilities:
+              add:
+              - NET_BIND_SERVICE
+              drop:
+              - all
+            readOnlyRootFilesystem: true
+          terminationMessagePath: /dev/termination-log
+          terminationMessagePolicy: File
+          volumeMounts:
+          - mountPath: /etc/coredns
+            name: config-volume
+            readOnly: true
+        dnsPolicy: Default
+        nodeSelector:
+          kubernetes.io/os: linux
+        priorityClassName: system-cluster-critical
+        restartPolicy: Always
+        schedulerName: default-scheduler
+        securityContext: {}
+        serviceAccount: coredns
+        serviceAccountName: coredns
+        terminationGracePeriodSeconds: 30
+        volumes:
+        - configMap:
+            defaultMode: 420
+            items:
+            - key: Corefile
+              path: Corefile
+            name: coredns
+          name: config-volume
+  status:
+    availableReplicas: 2
+    conditions:
+    - lastTransitionTime: "2024-08-10T16:45:07Z"
+      lastUpdateTime: "2024-08-10T16:45:07Z"
+      message: Deployment has minimum availability.
+      reason: MinimumReplicasAvailable
+      status: "True"
+      type: Available
+    - lastTransitionTime: "2024-08-10T16:44:41Z"
+      lastUpdateTime: "2024-08-20T01:12:08Z"
+      message: ReplicaSet "coredns-56966dd7b4" has successfully progressed.
+      reason: NewReplicaSetAvailable
+      status: "True"
+      type: Progressing
+    observedGeneration: 2
+    readyReplicas: 2
+    replicas: 2
+    updatedReplicas: 2
+- apiVersion: apps/v1
+  kind: Deployment
+  metadata:
+    annotations:
+      deployment.kubernetes.io/revision: "2"
+      kubectl.kubernetes.io/last-applied-configuration: |
+        {"apiVersion":"apps/v1","kind":"Deployment","metadata":{"annotations":{},"name":"csi-provisioner","namespace":"kube-system"},"spec":{"replicas":1,"selector":{"matchLabels":{"app":"csi-provisioner"}},"strategy":{"rollingUpdate":{"maxSurge":0,"maxUnavailable":1},"type":"RollingUpdate"},"template":{"metadata":{"labels":{"app":"csi-provisioner"}},"spec":{"affinity":{"nodeAffinity":{"preferredDuringSchedulingIgnoredDuringExecution":[{"preference":{"matchExpressions":[{"key":"node-role.kubernetes.io/master","operator":"Exists"}]},"weight":1}]},"podAntiAffinity":{"preferredDuringSchedulingIgnoredDuringExecution":[{"podAffinityTerm":{"labelSelector":{"matchExpressions":[{"key":"app","operator":"In","values":["csi-provisioner"]}]},"topologyKey":"kubernetes.io/hostname"},"weight":100}]}},"containers":[{"args":["--csi-address=$(ADDRESS)","--feature-gates=Topology=True","--volume-name-prefix=disk","--strict-topology=true","--timeout=150s","--leader-election=true","--retry-interval-start=500ms","--extra-create-metadata=true","--default-fstype=ext4","--v=5"],"env":[{"name":"ADDRESS","value":"/var/lib/kubelet/csi-provisioner/diskplugin.csi.alibabacloud.com/csi.sock"}],"image":"registry-cn-shenzhen-vpc.ack.aliyuncs.com/acs/csi-provisioner:v3.5.0-e7da67e-aliyun","name":"external-disk-provisioner","resources":{"limits":{"cpu":"500m","memory":"1024Mi"},"requests":{"cpu":"10m","memory":"16Mi"}},"volumeMounts":[{"mountPath":"/var/lib/kubelet/csi-provisioner/diskplugin.csi.alibabacloud.com","name":"disk-provisioner-dir"}]},{"args":["--v=5","--csi-address=$(ADDRESS)","--leader-election=true"],"env":[{"name":"ADDRESS","value":"/var/lib/kubelet/csi-provisioner/diskplugin.csi.alibabacloud.com/csi.sock"}],"image":"registry-cn-shenzhen-vpc.ack.aliyuncs.com/acs/csi-attacher:v3.3-72dd428b-aliyun","name":"external-disk-attacher","resources":{"limits":{"cpu":"500m","memory":"1024Mi"},"requests":{"cpu":"10m","memory":"16Mi"}},"volumeMounts":[{"mountPath":"/var/lib/kubelet/csi-provisioner/diskplugin.csi.alibabacloud.com","name":"disk-provisioner-dir"}]},{"args":["--v=5","--csi-address=$(ADDRESS)","--leader-election","--handle-volume-inuse-error=false"],"env":[{"name":"ADDRESS","value":"/var/lib/kubelet/csi-provisioner/diskplugin.csi.alibabacloud.com/csi.sock"}],"image":"registry-cn-shenzhen-vpc.ack.aliyuncs.com/acs/csi-resizer:v1.3-e48d981-aliyun","name":"external-disk-resizer","resources":{"limits":{"cpu":"500m","memory":"500Mi"},"requests":{"cpu":"10m","memory":"16Mi"}},"volumeMounts":[{"mountPath":"/var/lib/kubelet/csi-provisioner/diskplugin.csi.alibabacloud.com","name":"disk-provisioner-dir"}]},{"args":["--csi-address=$(ADDRESS)","--volume-name-prefix=nas","--timeout=150s","--leader-election=true","--retry-interval-start=500ms","--default-fstype=nfs","--v=5"],"env":[{"name":"ADDRESS","value":"/var/lib/kubelet/csi-provisioner/nasplugin.csi.alibabacloud.com/csi.sock"}],"image":"registry-cn-shenzhen-vpc.ack.aliyuncs.com/acs/csi-provisioner:v3.5.0-e7da67e-aliyun","name":"external-nas-provisioner","resources":{"limits":{"cpu":"500m","memory":"1024Mi"},"requests":{"cpu":"10m","memory":"16Mi"}},"volumeMounts":[{"mountPath":"/var/lib/kubelet/csi-provisioner/nasplugin.csi.alibabacloud.com","name":"nas-provisioner-dir"}]},{"args":["--v=5","--csi-address=$(ADDRESS)","--leader-election","--handle-volume-inuse-error=false"],"env":[{"name":"ADDRESS","value":"/var/lib/kubelet/csi-provisioner/nasplugin.csi.alibabacloud.com/csi.sock"}],"image":"registry-cn-shenzhen-vpc.ack.aliyuncs.com/acs/csi-resizer:v1.3-e48d981-aliyun","name":"external-nas-resizer","resources":{"limits":{"cpu":"500m","memory":"500Mi"},"requests":{"cpu":"10m","memory":"16Mi"}},"volumeMounts":[{"mountPath":"/var/lib/kubelet/csi-provisioner/nasplugin.csi.alibabacloud.com","name":"nas-provisioner-dir"}]},{"args":["--v=5","--csi-address=$(ADDRESS)","--leader-election=true","--extra-create-metadata=true"],"env":[{"name":"ADDRESS","value":"/csi/csi.sock"}],"image":"registry-cn-shenzhen-vpc.ack.aliyuncs.com/acs/csi-snapshotter:v4.0.0-a230d5b-aliyun","name":"external-csi-snapshotter","resources":{"limits":{"cpu":"500m","memory":"1024Mi"},"requests":{"cpu":"10m","memory":"16Mi"}},"volumeMounts":[{"mountPath":"/csi","name":"disk-provisioner-dir"}]},{"args":["--v=5","--leader-election=true"],"image":"registry-cn-shenzhen-vpc.ack.aliyuncs.com/acs/snapshot-controller:v4.0.0-a230d5b-aliyun","name":"external-snapshot-controller","resources":{"limits":{"cpu":"500m","memory":"1024Mi"},"requests":{"cpu":"10m","memory":"16Mi"}}},{"args":["--endpoint=$(CSI_ENDPOINT)","--v=2","--driver=nas,disk,oss"],"env":[{"name":"CSI_ENDPOINT","value":"unix://var/lib/kubelet/csi-provisioner/driverplugin.csi.alibabacloud.com-replace/csi.sock"},{"name":"MAX_VOLUMES_PERNODE","value":"15"},{"name":"SERVICE_TYPE","value":"provisioner"},{"name":"KUBE_NODE_NAME","valueFrom":{"fieldRef":{"apiVersion":"v1","fieldPath":"spec.nodeName"}}}],"image":"registry-cn-shenzhen-vpc.ack.aliyuncs.com/acs/csi-plugin:v1.30.2-f51279d-aliyun","livenessProbe":{"failureThreshold":5,"httpGet":{"path":"/healthz","port":"healthz","scheme":"HTTP"},"initialDelaySeconds":10,"periodSeconds":30,"timeoutSeconds":5},"name":"csi-provisioner","ports":[{"containerPort":11270,"name":"healthz"}],"readinessProbe":{"httpGet":{"path":"/healthz","port":"healthz"},"initialDelaySeconds":5,"periodSeconds":20},"resources":{"limits":{"cpu":"500m","memory":"1024Mi"},"requests":{"cpu":"100m","memory":"128Mi"}},"volumeMounts":[{"mountPath":"/var/lib/kubelet/csi-provisioner/diskplugin.csi.alibabacloud.com","name":"disk-provisioner-dir"},{"mountPath":"/var/lib/kubelet/csi-provisioner/nasplugin.csi.alibabacloud.com","name":"nas-provisioner-dir"},{"mountPath":"/var/lib/kubelet/csi-provisioner/ossplugin.csi.alibabacloud.com","name":"oss-provisioner-dir"},{"mountPath":"/var/addon","name":"addon-token","readOnly":true}]}],"priorityClassName":"system-node-critical","serviceAccount":"csi-admin","tolerations":[{"effect":"NoSchedule","key":"node-role.kubernetes.io/master","operator":"Exists"},{"effect":"NoSchedule","key":"node.cloudprovider.kubernetes.io/uninitialized","operator":"Exists"}],"volumes":[{"emptyDir":{},"name":"disk-provisioner-dir"},{"emptyDir":{},"name":"nas-provisioner-dir"},{"emptyDir":{},"name":"oss-provisioner-dir"},{"name":"addon-token","secret":{"defaultMode":420,"items":[{"key":"addon.token.config","path":"token-config"}],"optional":true,"secretName":"addon.csi.token"}}]}}}}
+    creationTimestamp: "2024-08-10T17:31:58Z"
+    generation: 2
+    name: csi-provisioner
+    namespace: kube-system
+    resourceVersion: "3915353996"
+    uid: f272fe5f-c314-4025-b81e-813c056922c2
+  spec:
+    progressDeadlineSeconds: 600
+    replicas: 1
+    revisionHistoryLimit: 10
+    selector:
+      matchLabels:
+        app: csi-provisioner
+    strategy:
+      rollingUpdate:
+        maxSurge: 0
+        maxUnavailable: 1
+      type: RollingUpdate
+    template:
+      metadata:
+        creationTimestamp: null
+        labels:
+          app: csi-provisioner
+      spec:
+        affinity:
+          nodeAffinity:
+            preferredDuringSchedulingIgnoredDuringExecution:
+            - preference:
+                matchExpressions:
+                - key: node-role.kubernetes.io/master
+                  operator: Exists
+              weight: 1
+          podAntiAffinity:
+            preferredDuringSchedulingIgnoredDuringExecution:
+            - podAffinityTerm:
+                labelSelector:
+                  matchExpressions:
+                  - key: app
+                    operator: In
+                    values:
+                    - csi-provisioner
+                topologyKey: kubernetes.io/hostname
+              weight: 100
+        containers:
+        - args:
+          - --csi-address=$(ADDRESS)
+          - --feature-gates=Topology=True
+          - --volume-name-prefix=disk
+          - --strict-topology=true
+          - --timeout=150s
+          - --leader-election=true
+          - --retry-interval-start=500ms
+          - --extra-create-metadata=true
+          - --default-fstype=ext4
+          - --v=5
+          env:
+          - name: ADDRESS
+            value: /var/lib/kubelet/csi-provisioner/diskplugin.csi.alibabacloud.com/csi.sock
+          image: registry-cn-shenzhen-vpc.ack.aliyuncs.com/acs/csi-provisioner:v3.5.0-e7da67e-aliyun
+          imagePullPolicy: IfNotPresent
+          name: external-disk-provisioner
+          resources:
+            limits:
+              cpu: 250m
+              memory: 500Mi
+            requests:
+              cpu: 10m
+              memory: 16Mi
+          terminationMessagePath: /dev/termination-log
+          terminationMessagePolicy: File
+          volumeMounts:
+          - mountPath: /var/lib/kubelet/csi-provisioner/diskplugin.csi.alibabacloud.com
+            name: disk-provisioner-dir
+        - args:
+          - --v=5
+          - --csi-address=$(ADDRESS)
+          - --leader-election=true
+          env:
+          - name: ADDRESS
+            value: /var/lib/kubelet/csi-provisioner/diskplugin.csi.alibabacloud.com/csi.sock
+          image: registry-cn-shenzhen-vpc.ack.aliyuncs.com/acs/csi-attacher:v3.3-72dd428b-aliyun
+          imagePullPolicy: IfNotPresent
+          name: external-disk-attacher
+          resources:
+            limits:
+              cpu: 250m
+              memory: 500Mi
+            requests:
+              cpu: 10m
+              memory: 16Mi
+          terminationMessagePath: /dev/termination-log
+          terminationMessagePolicy: File
+          volumeMounts:
+          - mountPath: /var/lib/kubelet/csi-provisioner/diskplugin.csi.alibabacloud.com
+            name: disk-provisioner-dir
+        - args:
+          - --v=5
+          - --csi-address=$(ADDRESS)
+          - --leader-election
+          - --handle-volume-inuse-error=false
+          env:
+          - name: ADDRESS
+            value: /var/lib/kubelet/csi-provisioner/diskplugin.csi.alibabacloud.com/csi.sock
+          image: registry-cn-shenzhen-vpc.ack.aliyuncs.com/acs/csi-resizer:v1.3-e48d981-aliyun
+          imagePullPolicy: IfNotPresent
+          name: external-disk-resizer
+          resources:
+            limits:
+              cpu: 250m
+              memory: 500Mi
+            requests:
+              cpu: 10m
+              memory: 16Mi
+          terminationMessagePath: /dev/termination-log
+          terminationMessagePolicy: File
+          volumeMounts:
+          - mountPath: /var/lib/kubelet/csi-provisioner/diskplugin.csi.alibabacloud.com
+            name: disk-provisioner-dir
+        - args:
+          - --csi-address=$(ADDRESS)
+          - --volume-name-prefix=nas
+          - --timeout=150s
+          - --leader-election=true
+          - --retry-interval-start=500ms
+          - --default-fstype=nfs
+          - --v=5
+          env:
+          - name: ADDRESS
+            value: /var/lib/kubelet/csi-provisioner/nasplugin.csi.alibabacloud.com/csi.sock
+          image: registry-cn-shenzhen-vpc.ack.aliyuncs.com/acs/csi-provisioner:v3.5.0-e7da67e-aliyun
+          imagePullPolicy: IfNotPresent
+          name: external-nas-provisioner
+          resources:
+            limits:
+              cpu: 250m
+              memory: 500Mi
+            requests:
+              cpu: 10m
+              memory: 16Mi
+          terminationMessagePath: /dev/termination-log
+          terminationMessagePolicy: File
+          volumeMounts:
+          - mountPath: /var/lib/kubelet/csi-provisioner/nasplugin.csi.alibabacloud.com
+            name: nas-provisioner-dir
+        - args:
+          - --v=5
+          - --csi-address=$(ADDRESS)
+          - --leader-election
+          - --handle-volume-inuse-error=false
+          env:
+          - name: ADDRESS
+            value: /var/lib/kubelet/csi-provisioner/nasplugin.csi.alibabacloud.com/csi.sock
+          image: registry-cn-shenzhen-vpc.ack.aliyuncs.com/acs/csi-resizer:v1.3-e48d981-aliyun
+          imagePullPolicy: IfNotPresent
+          name: external-nas-resizer
+          resources:
+            limits:
+              cpu: 250m
+              memory: 500Mi
+            requests:
+              cpu: 10m
+              memory: 16Mi
+          terminationMessagePath: /dev/termination-log
+          terminationMessagePolicy: File
+          volumeMounts:
+          - mountPath: /var/lib/kubelet/csi-provisioner/nasplugin.csi.alibabacloud.com
+            name: nas-provisioner-dir
+        - args:
+          - --v=5
+          - --csi-address=$(ADDRESS)
+          - --leader-election=true
+          - --extra-create-metadata=true
+          env:
+          - name: ADDRESS
+            value: /csi/csi.sock
+          image: registry-cn-shenzhen-vpc.ack.aliyuncs.com/acs/csi-snapshotter:v4.0.0-a230d5b-aliyun
+          imagePullPolicy: IfNotPresent
+          name: external-csi-snapshotter
+          resources:
+            limits:
+              cpu: 250m
+              memory: 1Gi
+            requests:
+              cpu: 10m
+              memory: 16Mi
+          terminationMessagePath: /dev/termination-log
+          terminationMessagePolicy: File
+          volumeMounts:
+          - mountPath: /csi
+            name: disk-provisioner-dir
+        - args:
+          - --v=5
+          - --leader-election=true
+          image: registry-cn-shenzhen-vpc.ack.aliyuncs.com/acs/snapshot-controller:v4.0.0-a230d5b-aliyun
+          imagePullPolicy: IfNotPresent
+          name: external-snapshot-controller
+          resources:
+            limits:
+              cpu: 250m
+              memory: 1Gi
+            requests:
+              cpu: 10m
+              memory: 16Mi
+          terminationMessagePath: /dev/termination-log
+          terminationMessagePolicy: File
+        - args:
+          - --endpoint=$(CSI_ENDPOINT)
+          - --v=2
+          - --driver=nas,disk,oss
+          env:
+          - name: CSI_ENDPOINT
+            value: unix://var/lib/kubelet/csi-provisioner/driverplugin.csi.alibabacloud.com-replace/csi.sock
+          - name: MAX_VOLUMES_PERNODE
+            value: "15"
+          - name: SERVICE_TYPE
+            value: provisioner
+          - name: KUBE_NODE_NAME
+            valueFrom:
+              fieldRef:
+                apiVersion: v1
+                fieldPath: spec.nodeName
+          image: registry-cn-shenzhen-vpc.ack.aliyuncs.com/acs/csi-plugin:v1.30.2-f51279d-aliyun
+          imagePullPolicy: IfNotPresent
+          livenessProbe:
+            failureThreshold: 5
+            httpGet:
+              path: /healthz
+              port: healthz
+              scheme: HTTP
+            initialDelaySeconds: 10
+            periodSeconds: 30
+            successThreshold: 1
+            timeoutSeconds: 5
+          name: csi-provisioner
+          ports:
+          - containerPort: 11270
+            name: healthz
+            protocol: TCP
+          readinessProbe:
+            failureThreshold: 3
+            httpGet:
+              path: /healthz
+              port: healthz
+              scheme: HTTP
+            initialDelaySeconds: 5
+            periodSeconds: 20
+            successThreshold: 1
+            timeoutSeconds: 1
+          resources:
+            limits:
+              cpu: 250m
+              memory: 500Mi
+            requests:
+              cpu: 100m
+              memory: 128Mi
+          terminationMessagePath: /dev/termination-log
+          terminationMessagePolicy: File
+          volumeMounts:
+          - mountPath: /var/lib/kubelet/csi-provisioner/diskplugin.csi.alibabacloud.com
+            name: disk-provisioner-dir
+          - mountPath: /var/lib/kubelet/csi-provisioner/nasplugin.csi.alibabacloud.com
+            name: nas-provisioner-dir
+          - mountPath: /var/lib/kubelet/csi-provisioner/ossplugin.csi.alibabacloud.com
+            name: oss-provisioner-dir
+          - mountPath: /var/addon
+            name: addon-token
+            readOnly: true
+        dnsPolicy: ClusterFirst
+        priorityClassName: system-node-critical
+        restartPolicy: Always
+        schedulerName: default-scheduler
+        securityContext: {}
+        serviceAccount: csi-admin
+        serviceAccountName: csi-admin
+        terminationGracePeriodSeconds: 30
+        tolerations:
+        - effect: NoSchedule
+          key: node-role.kubernetes.io/master
+          operator: Exists
+        - effect: NoSchedule
+          key: node.cloudprovider.kubernetes.io/uninitialized
+          operator: Exists
+        volumes:
+        - emptyDir: {}
+          name: disk-provisioner-dir
+        - emptyDir: {}
+          name: nas-provisioner-dir
+        - emptyDir: {}
+          name: oss-provisioner-dir
+        - name: addon-token
+          secret:
+            defaultMode: 420
+            items:
+            - key: addon.token.config
+              path: token-config
+            optional: true
+            secretName: addon.csi.token
+  status:
+    availableReplicas: 1
+    conditions:
+    - lastTransitionTime: "2024-08-10T17:31:58Z"
+      lastUpdateTime: "2024-08-10T17:31:58Z"
+      message: Deployment has minimum availability.
+      reason: MinimumReplicasAvailable
+      status: "True"
+      type: Available
+    - lastTransitionTime: "2024-08-10T17:31:58Z"
+      lastUpdateTime: "2024-08-20T01:02:40Z"
+      message: ReplicaSet "csi-provisioner-5bf4d64dcd" has successfully progressed.
+      reason: NewReplicaSetAvailable
+      status: "True"
+      type: Progressing
+    observedGeneration: 2
+    readyReplicas: 1
+    replicas: 1
+    updatedReplicas: 1
+- apiVersion: apps/v1
+  kind: Deployment
+  metadata:
+    annotations:
+      component.revision: "1"
+      component.version: 1.10.2
+      deployment.kubernetes.io/revision: "2"
+      kubectl.kubernetes.io/last-applied-configuration: |
+        {"apiVersion":"apps/v1","kind":"Deployment","metadata":{"annotations":{"component.revision":"1","component.version":"1.10.2"},"labels":{"app":"ingress-nginx"},"name":"nginx-ingress-controller","namespace":"kube-system"},"spec":{"minReadySeconds":0,"replicas":2,"revisionHistoryLimit":10,"selector":{"matchLabels":{"app":"ingress-nginx"}},"strategy":{"rollingUpdate":{"maxUnavailable":1},"type":"RollingUpdate"},"template":{"metadata":{"annotations":{"prometheus.io/port":"10254","prometheus.io/scrape":"true"},"labels":{"app":"ingress-nginx"}},"spec":{"containers":[{"args":["/nginx-ingress-controller","--election-id=ingress-controller-leader-nginx","--ingress-class=nginx","--watch-ingress-without-class","--controller-class=k8s.io/ingress-nginx","--configmap=$(POD_NAMESPACE)/nginx-configuration","--tcp-services-configmap=$(POD_NAMESPACE)/tcp-services","--udp-services-configmap=$(POD_NAMESPACE)/udp-services","--annotations-prefix=nginx.ingress.kubernetes.io","--publish-service=$(POD_NAMESPACE)/nginx-ingress-lb","--enable-annotation-validation","--shutdown-grace-period=30","--validating-webhook=:8443","--validating-webhook-certificate=/usr/local/certificates/cert","--validating-webhook-key=/usr/local/certificates/key","--v=2"],"env":[{"name":"POD_NAME","valueFrom":{"fieldRef":{"fieldPath":"metadata.name"}}},{"name":"POD_NAMESPACE","valueFrom":{"fieldRef":{"fieldPath":"metadata.namespace"}}},{"name":"LD_PRELOAD","value":"/usr/local/lib/libmimalloc.so"}],"image":"registry-cn-shenzhen-vpc.ack.aliyuncs.com/acs/aliyun-ingress-controller:v1.10.2-aliyun.1","imagePullPolicy":"IfNotPresent","lifecycle":{"preStop":{"exec":{"command":["/wait-shutdown"]}}},"livenessProbe":{"failureThreshold":5,"httpGet":{"path":"/healthz","port":10254,"scheme":"HTTP"},"initialDelaySeconds":10,"periodSeconds":10,"successThreshold":1,"timeoutSeconds":1},"name":"nginx-ingress-controller","ports":[{"containerPort":80,"name":"http","protocol":"TCP"},{"containerPort":443,"name":"https","protocol":"TCP"},{"containerPort":8443,"name":"webhook","protocol":"TCP"}],"readinessProbe":{"failureThreshold":3,"httpGet":{"path":"/healthz","port":10254,"scheme":"HTTP"},"initialDelaySeconds":10,"periodSeconds":10,"successThreshold":1,"timeoutSeconds":1},"resources":{"requests":{"cpu":1,"memory":"2Gi"}},"securityContext":{"capabilities":{"add":["NET_BIND_SERVICE"],"drop":["ALL"]},"runAsUser":101},"volumeMounts":[{"mountPath":"/usr/local/certificates/","name":"webhook-cert","readOnly":true}]}],"dnsPolicy":"ClusterFirst","nodeSelector":{"kubernetes.io/os":"linux"},"priorityClassName":"system-node-critical","securityContext":{"sysctls":[{"name":"net.core.somaxconn","value":"65535"}]},"serviceAccountName":"ingress-nginx","terminationGracePeriodSeconds":300,"volumes":[{"name":"webhook-cert","secret":{"secretName":"ingress-nginx-admission"}}]}}}}
+    creationTimestamp: "2024-08-11T16:42:17Z"
+    generation: 2
+    labels:
+      app: ingress-nginx
+    name: nginx-ingress-controller
+    namespace: kube-system
+    resourceVersion: "3915380507"
+    uid: 68e020f0-cec6-48f5-bba2-a20c40068873
+  spec:
+    progressDeadlineSeconds: 600
+    replicas: 2
+    revisionHistoryLimit: 10
+    selector:
+      matchLabels:
+        app: ingress-nginx
+    strategy:
+      rollingUpdate:
+        maxSurge: 25%
+        maxUnavailable: 1
+      type: RollingUpdate
+    template:
+      metadata:
+        annotations:
+          prometheus.io/port: "10254"
+          prometheus.io/scrape: "true"
+        creationTimestamp: null
+        labels:
+          app: ingress-nginx
+      spec:
+        containers:
+        - args:
+          - /nginx-ingress-controller
+          - --election-id=ingress-controller-leader-nginx
+          - --ingress-class=nginx
+          - --watch-ingress-without-class
+          - --controller-class=k8s.io/ingress-nginx
+          - --configmap=$(POD_NAMESPACE)/nginx-configuration
+          - --tcp-services-configmap=$(POD_NAMESPACE)/tcp-services
+          - --udp-services-configmap=$(POD_NAMESPACE)/udp-services
+          - --annotations-prefix=nginx.ingress.kubernetes.io
+          - --publish-service=$(POD_NAMESPACE)/nginx-ingress-lb
+          - --enable-annotation-validation
+          - --shutdown-grace-period=30
+          - --validating-webhook=:8443
+          - --validating-webhook-certificate=/usr/local/certificates/cert
+          - --validating-webhook-key=/usr/local/certificates/key
+          - --v=2
+          env:
+          - name: POD_NAME
+            valueFrom:
+              fieldRef:
+                apiVersion: v1
+                fieldPath: metadata.name
+          - name: POD_NAMESPACE
+            valueFrom:
+              fieldRef:
+                apiVersion: v1
+                fieldPath: metadata.namespace
+          - name: LD_PRELOAD
+            value: /usr/local/lib/libmimalloc.so
+          image: registry-cn-shenzhen-vpc.ack.aliyuncs.com/acs/aliyun-ingress-controller:v1.10.2-aliyun.1
+          imagePullPolicy: IfNotPresent
+          lifecycle:
+            preStop:
+              exec:
+                command:
+                - /wait-shutdown
+          livenessProbe:
+            failureThreshold: 5
+            httpGet:
+              path: /healthz
+              port: 10254
+              scheme: HTTP
+            initialDelaySeconds: 10
+            periodSeconds: 10
+            successThreshold: 1
+            timeoutSeconds: 1
+          name: nginx-ingress-controller
+          ports:
+          - containerPort: 80
+            name: http
+            protocol: TCP
+          - containerPort: 443
+            name: https
+            protocol: TCP
+          - containerPort: 8443
+            name: webhook
+            protocol: TCP
+          readinessProbe:
+            failureThreshold: 3
+            httpGet:
+              path: /healthz
+              port: 10254
+              scheme: HTTP
+            initialDelaySeconds: 10
+            periodSeconds: 10
+            successThreshold: 1
+            timeoutSeconds: 1
+          resources:
+            requests:
+              cpu: 500m
+              memory: 1Gi
+          securityContext:
+            capabilities:
+              add:
+              - NET_BIND_SERVICE
+              drop:
+              - ALL
+            runAsUser: 101
+          terminationMessagePath: /dev/termination-log
+          terminationMessagePolicy: File
+          volumeMounts:
+          - mountPath: /usr/local/certificates/
+            name: webhook-cert
+            readOnly: true
+        dnsPolicy: ClusterFirst
+        nodeSelector:
+          kubernetes.io/os: linux
+        priorityClassName: system-node-critical
+        restartPolicy: Always
+        schedulerName: default-scheduler
+        securityContext:
+          sysctls:
+          - name: net.core.somaxconn
+            value: "65535"
+        serviceAccount: ingress-nginx
+        serviceAccountName: ingress-nginx
+        terminationGracePeriodSeconds: 300
+        volumes:
+        - name: webhook-cert
+          secret:
+            defaultMode: 420
+            secretName: ingress-nginx-admission
+  status:
+    availableReplicas: 2
+    conditions:
+    - lastTransitionTime: "2024-08-11T16:42:53Z"
+      lastUpdateTime: "2024-08-11T16:42:53Z"
+      message: Deployment has minimum availability.
+      reason: MinimumReplicasAvailable
+      status: "True"
+      type: Available
+    - lastTransitionTime: "2024-08-11T16:42:17Z"
+      lastUpdateTime: "2024-08-20T01:12:27Z"
+      message: ReplicaSet "nginx-ingress-controller-5d4487b97f" has successfully progressed.
+      reason: NewReplicaSetAvailable
+      status: "True"
+      type: Progressing
+    observedGeneration: 2
+    readyReplicas: 2
+    replicas: 2
+    updatedReplicas: 2
+kind: List
+metadata:
+  resourceVersion: ""

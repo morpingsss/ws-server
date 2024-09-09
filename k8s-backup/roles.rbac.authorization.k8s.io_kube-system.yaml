@@ -1,0 +1,681 @@
+apiVersion: v1
+items:
+- apiVersion: rbac.authorization.k8s.io/v1
+  kind: Role
+  metadata:
+    annotations:
+      kubectl.kubernetes.io/last-applied-configuration: |
+        {"apiVersion":"rbac.authorization.k8s.io/v1","kind":"Role","metadata":{"annotations":{},"name":"alicloud-csi-plugin","namespace":"kube-system"},"rules":[{"apiGroups":[""],"resourceNames":["csi-local-plugin-cert"],"resources":["secrets"],"verbs":["get"]},{"apiGroups":[""],"resources":["secrets"],"verbs":["create"]},{"apiGroups":[""],"resourceNames":["cnfs-cache-ds-service"],"resources":["endpoints"],"verbs":["get"]},{"apiGroups":[""],"resourceNames":["csi-plugin","ack-cluster-profile"],"resources":["configmaps"],"verbs":["get"]}]}
+    creationTimestamp: "2024-08-10T17:31:58Z"
+    name: alicloud-csi-plugin
+    namespace: kube-system
+    resourceVersion: "3879340024"
+    uid: fe263df6-a664-422c-a955-2f41782ee22e
+  rules:
+  - apiGroups:
+    - ""
+    resourceNames:
+    - csi-local-plugin-cert
+    resources:
+    - secrets
+    verbs:
+    - get
+  - apiGroups:
+    - ""
+    resources:
+    - secrets
+    verbs:
+    - create
+  - apiGroups:
+    - ""
+    resourceNames:
+    - cnfs-cache-ds-service
+    resources:
+    - endpoints
+    verbs:
+    - get
+  - apiGroups:
+    - ""
+    resourceNames:
+    - csi-plugin
+    - ack-cluster-profile
+    resources:
+    - configmaps
+    verbs:
+    - get
+- apiVersion: rbac.authorization.k8s.io/v1
+  kind: Role
+  metadata:
+    creationTimestamp: "2024-08-20T01:11:53Z"
+    name: aliyun-role-eci-188a3954-b5e2-42f8-95b4-d8e1437016f8
+    namespace: kube-system
+    resourceVersion: "3915378809"
+    uid: 996ab53d-8117-4207-aae1-7f1eebed1e24
+  rules:
+  - apiGroups:
+    - ""
+    resourceNames:
+    - ingress-nginx
+    resources:
+    - serviceaccounts/token
+    verbs:
+    - create
+  - apiGroups:
+    - ""
+    resourceNames:
+    - nginx-ingress-controller-5d4487b97f-nb4b8
+    resources:
+    - pods/binding
+    verbs:
+    - create
+  - apiGroups:
+    - ""
+    resourceNames:
+    - nginx-ingress-controller-5d4487b97f-nb4b8
+    resources:
+    - pods/status
+    verbs:
+    - patch
+    - update
+  - apiGroups:
+    - ""
+    - events.k8s.io
+    resources:
+    - events
+    verbs:
+    - create
+    - patch
+    - update
+  - apiGroups:
+    - ""
+    resourceNames:
+    - kube-root-ca.crt
+    resources:
+    - configmaps
+    verbs:
+    - get
+    - watch
+    - list
+  - apiGroups:
+    - ""
+    resourceNames:
+    - ingress-nginx-admission
+    resources:
+    - secrets
+    verbs:
+    - get
+    - watch
+    - list
+  - apiGroups:
+    - ""
+    resourceNames:
+    - nginx-ingress-controller-5d4487b97f-nb4b8
+    resources:
+    - pods
+    verbs:
+    - get
+    - watch
+- apiVersion: rbac.authorization.k8s.io/v1
+  kind: Role
+  metadata:
+    creationTimestamp: "2024-08-20T01:11:53Z"
+    name: aliyun-role-eci-44c68e32-53b4-4da1-a913-74f453b67ace
+    namespace: kube-system
+    resourceVersion: "3915378818"
+    uid: 6c79a3e0-b338-46fa-8150-2887e731fc87
+  rules:
+  - apiGroups:
+    - ""
+    resourceNames:
+    - ingress-nginx
+    resources:
+    - serviceaccounts/token
+    verbs:
+    - create
+  - apiGroups:
+    - ""
+    resourceNames:
+    - nginx-ingress-controller-5d4487b97f-v9rwk
+    resources:
+    - pods/binding
+    verbs:
+    - create
+  - apiGroups:
+    - ""
+    resourceNames:
+    - nginx-ingress-controller-5d4487b97f-v9rwk
+    resources:
+    - pods/status
+    verbs:
+    - patch
+    - update
+  - apiGroups:
+    - ""
+    - events.k8s.io
+    resources:
+    - events
+    verbs:
+    - create
+    - patch
+    - update
+  - apiGroups:
+    - ""
+    resourceNames:
+    - kube-root-ca.crt
+    resources:
+    - configmaps
+    verbs:
+    - get
+    - watch
+    - list
+  - apiGroups:
+    - ""
+    resourceNames:
+    - ingress-nginx-admission
+    resources:
+    - secrets
+    verbs:
+    - get
+    - watch
+    - list
+  - apiGroups:
+    - ""
+    resourceNames:
+    - nginx-ingress-controller-5d4487b97f-v9rwk
+    resources:
+    - pods
+    verbs:
+    - get
+    - watch
+- apiVersion: rbac.authorization.k8s.io/v1
+  kind: Role
+  metadata:
+    creationTimestamp: "2024-08-20T01:02:07Z"
+    name: aliyun-role-eci-9789546c-bb58-4f8e-a5b2-94bd5bd612f8
+    namespace: kube-system
+    resourceVersion: "3915352451"
+    uid: 27ae1868-18fb-4645-ade2-798269f7247d
+  rules:
+  - apiGroups:
+    - ""
+    resourceNames:
+    - csi-admin
+    resources:
+    - serviceaccounts/token
+    verbs:
+    - create
+  - apiGroups:
+    - ""
+    resourceNames:
+    - csi-provisioner-5bf4d64dcd-hmqcg
+    resources:
+    - pods/binding
+    verbs:
+    - create
+  - apiGroups:
+    - ""
+    resourceNames:
+    - csi-provisioner-5bf4d64dcd-hmqcg
+    resources:
+    - pods/status
+    verbs:
+    - patch
+    - update
+  - apiGroups:
+    - ""
+    - events.k8s.io
+    resources:
+    - events
+    verbs:
+    - create
+    - patch
+    - update
+  - apiGroups:
+    - ""
+    resourceNames:
+    - kube-root-ca.crt
+    resources:
+    - configmaps
+    verbs:
+    - get
+    - watch
+    - list
+  - apiGroups:
+    - ""
+    resourceNames:
+    - addon.csi.token
+    resources:
+    - secrets
+    verbs:
+    - get
+    - watch
+    - list
+  - apiGroups:
+    - ""
+    resourceNames:
+    - csi-provisioner-5bf4d64dcd-hmqcg
+    resources:
+    - pods
+    verbs:
+    - get
+    - watch
+- apiVersion: rbac.authorization.k8s.io/v1
+  kind: Role
+  metadata:
+    creationTimestamp: "2024-08-20T01:11:42Z"
+    name: aliyun-role-eci-9c5b73a6-50b2-4f0b-b956-8bd9a2aa14ea
+    namespace: kube-system
+    resourceVersion: "3915378278"
+    uid: b2f586ae-333e-46c1-b53e-a109e17e36bd
+  rules:
+  - apiGroups:
+    - ""
+    resourceNames:
+    - coredns
+    resources:
+    - serviceaccounts/token
+    verbs:
+    - create
+  - apiGroups:
+    - ""
+    resourceNames:
+    - coredns-56966dd7b4-fdmj8
+    resources:
+    - pods/binding
+    verbs:
+    - create
+  - apiGroups:
+    - ""
+    resourceNames:
+    - coredns-56966dd7b4-fdmj8
+    resources:
+    - pods/status
+    verbs:
+    - patch
+    - update
+  - apiGroups:
+    - ""
+    - events.k8s.io
+    resources:
+    - events
+    verbs:
+    - create
+    - patch
+    - update
+  - apiGroups:
+    - ""
+    resourceNames:
+    - coredns
+    - kube-root-ca.crt
+    resources:
+    - configmaps
+    verbs:
+    - get
+    - watch
+    - list
+  - apiGroups:
+    - ""
+    resourceNames:
+    - coredns-56966dd7b4-fdmj8
+    resources:
+    - pods
+    verbs:
+    - get
+    - watch
+- apiVersion: rbac.authorization.k8s.io/v1
+  kind: Role
+  metadata:
+    creationTimestamp: "2024-08-20T01:11:42Z"
+    name: aliyun-role-eci-cdcea1b4-c6bc-456a-ba74-aa08b530a915
+    namespace: kube-system
+    resourceVersion: "3915378273"
+    uid: 7d1483e4-2490-459b-b068-3bc8174fd08e
+  rules:
+  - apiGroups:
+    - ""
+    resourceNames:
+    - coredns
+    resources:
+    - serviceaccounts/token
+    verbs:
+    - create
+  - apiGroups:
+    - ""
+    resourceNames:
+    - coredns-56966dd7b4-bwpdm
+    resources:
+    - pods/binding
+    verbs:
+    - create
+  - apiGroups:
+    - ""
+    resourceNames:
+    - coredns-56966dd7b4-bwpdm
+    resources:
+    - pods/status
+    verbs:
+    - patch
+    - update
+  - apiGroups:
+    - ""
+    - events.k8s.io
+    resources:
+    - events
+    verbs:
+    - create
+    - patch
+    - update
+  - apiGroups:
+    - ""
+    resourceNames:
+    - coredns
+    - kube-root-ca.crt
+    resources:
+    - configmaps
+    verbs:
+    - get
+    - watch
+    - list
+  - apiGroups:
+    - ""
+    resourceNames:
+    - coredns-56966dd7b4-bwpdm
+    resources:
+    - pods
+    verbs:
+    - get
+    - watch
+- apiVersion: rbac.authorization.k8s.io/v1
+  kind: Role
+  metadata:
+    annotations:
+      rbac.authorization.kubernetes.io/autoupdate: "true"
+    creationTimestamp: "2024-08-10T16:43:06Z"
+    labels:
+      kubernetes.io/bootstrapping: rbac-defaults
+    name: extension-apiserver-authentication-reader
+    namespace: kube-system
+    resourceVersion: "3879211887"
+    uid: c6875e07-0871-48bc-9e08-a750fab8f7c2
+  rules:
+  - apiGroups:
+    - ""
+    resourceNames:
+    - extension-apiserver-authentication
+    resources:
+    - configmaps
+    verbs:
+    - get
+    - list
+    - watch
+- apiVersion: rbac.authorization.k8s.io/v1
+  kind: Role
+  metadata:
+    annotations:
+      kubectl.kubernetes.io/last-applied-configuration: |
+        {"apiVersion":"rbac.authorization.k8s.io/v1","kind":"Role","metadata":{"annotations":{},"name":"ingress-nginx","namespace":"kube-system"},"rules":[{"apiGroups":[""],"resources":["configmaps","pods","secrets","endpoints"],"verbs":["get","list","watch"]},{"apiGroups":[""],"resources":["services"],"verbs":["get","list","watch"]},{"apiGroups":["networking.k8s.io"],"resources":["ingresses"],"verbs":["get","list","watch"]},{"apiGroups":["networking.k8s.io"],"resources":["ingresses/status"],"verbs":["update"]},{"apiGroups":["networking.k8s.io"],"resources":["ingressclasses"],"verbs":["get","list","watch"]},{"apiGroups":["coordination.k8s.io"],"resourceNames":["ingress-controller-leader-nginx"],"resources":["leases"],"verbs":["get","update"]},{"apiGroups":["coordination.k8s.io"],"resources":["leases"],"verbs":["create"]},{"apiGroups":[""],"resourceNames":["ingress-controller-leader-nginx"],"resources":["configmaps"],"verbs":["get","update"]},{"apiGroups":[""],"resources":["configmaps"],"verbs":["create"]},{"apiGroups":[""],"resources":["events"],"verbs":["create","patch"]},{"apiGroups":["discovery.k8s.io"],"resources":["endpointslices"],"verbs":["list","watch","get"]}]}
+    creationTimestamp: "2024-08-11T16:42:17Z"
+    name: ingress-nginx
+    namespace: kube-system
+    resourceVersion: "3883062976"
+    uid: d7da6310-6e91-4e07-8a14-179ef1759aab
+  rules:
+  - apiGroups:
+    - ""
+    resources:
+    - configmaps
+    - pods
+    - secrets
+    - endpoints
+    verbs:
+    - get
+    - list
+    - watch
+  - apiGroups:
+    - ""
+    resources:
+    - services
+    verbs:
+    - get
+    - list
+    - watch
+  - apiGroups:
+    - networking.k8s.io
+    resources:
+    - ingresses
+    verbs:
+    - get
+    - list
+    - watch
+  - apiGroups:
+    - networking.k8s.io
+    resources:
+    - ingresses/status
+    verbs:
+    - update
+  - apiGroups:
+    - networking.k8s.io
+    resources:
+    - ingressclasses
+    verbs:
+    - get
+    - list
+    - watch
+  - apiGroups:
+    - coordination.k8s.io
+    resourceNames:
+    - ingress-controller-leader-nginx
+    resources:
+    - leases
+    verbs:
+    - get
+    - update
+  - apiGroups:
+    - coordination.k8s.io
+    resources:
+    - leases
+    verbs:
+    - create
+  - apiGroups:
+    - ""
+    resourceNames:
+    - ingress-controller-leader-nginx
+    resources:
+    - configmaps
+    verbs:
+    - get
+    - update
+  - apiGroups:
+    - ""
+    resources:
+    - configmaps
+    verbs:
+    - create
+  - apiGroups:
+    - ""
+    resources:
+    - events
+    verbs:
+    - create
+    - patch
+  - apiGroups:
+    - discovery.k8s.io
+    resources:
+    - endpointslices
+    verbs:
+    - list
+    - watch
+    - get
+- apiVersion: rbac.authorization.k8s.io/v1
+  kind: Role
+  metadata:
+    annotations:
+      kubectl.kubernetes.io/last-applied-configuration: |
+        {"apiVersion":"rbac.authorization.k8s.io/v1","kind":"Role","metadata":{"annotations":{},"name":"ingress-nginx-admission","namespace":"kube-system"},"rules":[{"apiGroups":[""],"resources":["secrets"],"verbs":["get","create"]}]}
+    creationTimestamp: "2024-08-11T16:42:17Z"
+    name: ingress-nginx-admission
+    namespace: kube-system
+    resourceVersion: "3883063025"
+    uid: 362cee80-d859-413a-9e31-55c267a18cc5
+  rules:
+  - apiGroups:
+    - ""
+    resources:
+    - secrets
+    verbs:
+    - get
+    - create
+- apiVersion: rbac.authorization.k8s.io/v1
+  kind: Role
+  metadata:
+    annotations:
+      kubectl.kubernetes.io/last-applied-configuration: |
+        {"apiVersion":"rbac.authorization.k8s.io/v1","kind":"Role","metadata":{"name":"kubeadm:nodes-kubeadm-config","namespace":"kube-system"},"rules":[{"apiGroups":[""],"resourceNames":["kubeadm-config","kubelet-config"],"resources":["configmaps"],"verbs":["get"]}]}
+    creationTimestamp: "2024-08-10T16:43:21Z"
+    name: kubeadm:nodes-kubeadm-config
+    namespace: kube-system
+    resourceVersion: "3879212523"
+    uid: bd7ca07d-3530-426a-bf89-baa3959e84df
+  rules:
+  - apiGroups:
+    - ""
+    resourceNames:
+    - kubeadm-config
+    - kubelet-config
+    resources:
+    - configmaps
+    verbs:
+    - get
+- apiVersion: rbac.authorization.k8s.io/v1
+  kind: Role
+  metadata:
+    annotations:
+      rbac.authorization.kubernetes.io/autoupdate: "true"
+    creationTimestamp: "2024-08-10T16:43:06Z"
+    labels:
+      kubernetes.io/bootstrapping: rbac-defaults
+    name: system::leader-locking-kube-controller-manager
+    namespace: kube-system
+    resourceVersion: "3879211892"
+    uid: a2eff45b-7fa4-43b6-9283-e8ab1e0fc472
+  rules:
+  - apiGroups:
+    - ""
+    resources:
+    - configmaps
+    verbs:
+    - watch
+  - apiGroups:
+    - ""
+    resourceNames:
+    - kube-controller-manager
+    resources:
+    - configmaps
+    verbs:
+    - get
+    - update
+- apiVersion: rbac.authorization.k8s.io/v1
+  kind: Role
+  metadata:
+    annotations:
+      rbac.authorization.kubernetes.io/autoupdate: "true"
+    creationTimestamp: "2024-08-10T16:43:06Z"
+    labels:
+      kubernetes.io/bootstrapping: rbac-defaults
+    name: system::leader-locking-kube-scheduler
+    namespace: kube-system
+    resourceVersion: "3879211893"
+    uid: 4c63e636-1dfc-411c-927a-f642f6a6428b
+  rules:
+  - apiGroups:
+    - ""
+    resources:
+    - configmaps
+    verbs:
+    - watch
+  - apiGroups:
+    - ""
+    resourceNames:
+    - kube-scheduler
+    resources:
+    - configmaps
+    verbs:
+    - get
+    - update
+- apiVersion: rbac.authorization.k8s.io/v1
+  kind: Role
+  metadata:
+    annotations:
+      rbac.authorization.kubernetes.io/autoupdate: "true"
+    creationTimestamp: "2024-08-10T16:43:06Z"
+    labels:
+      kubernetes.io/bootstrapping: rbac-defaults
+    name: system:controller:bootstrap-signer
+    namespace: kube-system
+    resourceVersion: "3879211889"
+    uid: fc58c0eb-b505-434b-8608-0ab65c17a925
+  rules:
+  - apiGroups:
+    - ""
+    resources:
+    - secrets
+    verbs:
+    - get
+    - list
+    - watch
+- apiVersion: rbac.authorization.k8s.io/v1
+  kind: Role
+  metadata:
+    annotations:
+      rbac.authorization.kubernetes.io/autoupdate: "true"
+    creationTimestamp: "2024-08-10T16:43:06Z"
+    labels:
+      kubernetes.io/bootstrapping: rbac-defaults
+    name: system:controller:cloud-provider
+    namespace: kube-system
+    resourceVersion: "3879211890"
+    uid: e6abfb0f-1cde-4acc-9a4c-c2139c9bab7d
+  rules:
+  - apiGroups:
+    - ""
+    resources:
+    - configmaps
+    verbs:
+    - create
+    - get
+    - list
+    - watch
+- apiVersion: rbac.authorization.k8s.io/v1
+  kind: Role
+  metadata:
+    annotations:
+      rbac.authorization.kubernetes.io/autoupdate: "true"
+    creationTimestamp: "2024-08-10T16:43:06Z"
+    labels:
+      kubernetes.io/bootstrapping: rbac-defaults
+    name: system:controller:token-cleaner
+    namespace: kube-system
+    resourceVersion: "3879211891"
+    uid: c75ac585-f3fb-4d5c-8308-166b261b8c7f
+  rules:
+  - apiGroups:
+    - ""
+    resources:
+    - secrets
+    verbs:
+    - delete
+    - get
+    - list
+    - watch
+  - apiGroups:
+    - ""
+    - events.k8s.io
+    resources:
+    - events
+    verbs:
+    - create
+    - patch
+    - update
+kind: List
+metadata:
+  resourceVersion: ""

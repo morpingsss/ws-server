@@ -1,0 +1,67 @@
+apiVersion: v1
+items:
+- apiVersion: v1
+  kind: Service
+  metadata:
+    creationTimestamp: "2024-08-10T18:43:25Z"
+    name: etcd
+    namespace: ws
+    resourceVersion: "3879532105"
+    uid: 2e911d63-92e0-499a-8d93-00b93d407179
+  spec:
+    clusterIP: None
+    clusterIPs:
+    - None
+    internalTrafficPolicy: Cluster
+    ipFamilies:
+    - IPv4
+    ipFamilyPolicy: SingleStack
+    ports:
+    - name: client
+      port: 2379
+      protocol: TCP
+      targetPort: 2379
+    - name: peer
+      port: 2380
+      protocol: TCP
+      targetPort: 2380
+    selector:
+      app: etcd
+    sessionAffinity: None
+    type: ClusterIP
+  status:
+    loadBalancer: {}
+- apiVersion: v1
+  kind: Service
+  metadata:
+    creationTimestamp: "2024-08-11T14:10:57Z"
+    name: websocket-service
+    namespace: ws
+    resourceVersion: "3883104480"
+    uid: 66be5d98-dd3b-4c59-9522-79ce3820a757
+  spec:
+    clusterIP: 172.16.124.184
+    clusterIPs:
+    - 172.16.124.184
+    internalTrafficPolicy: Cluster
+    ipFamilies:
+    - IPv4
+    ipFamilyPolicy: SingleStack
+    ports:
+    - name: websocket-service-7800-7800
+      port: 7800
+      protocol: TCP
+      targetPort: 7800
+    - name: websocket-service-7900-7900
+      port: 7900
+      protocol: TCP
+      targetPort: 7900
+    selector:
+      app: websocket
+    sessionAffinity: None
+    type: ClusterIP
+  status:
+    loadBalancer: {}
+kind: List
+metadata:
+  resourceVersion: ""

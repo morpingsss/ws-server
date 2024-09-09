@@ -1,0 +1,112 @@
+apiVersion: v1
+items:
+- apiVersion: v1
+  kind: Endpoints
+  metadata:
+    annotations:
+      endpoints.kubernetes.io/last-change-trigger-time: "2024-08-20T01:12:27Z"
+    creationTimestamp: "2024-08-11T16:42:17Z"
+    name: ingress-nginx-controller-admission
+    namespace: kube-system
+    resourceVersion: "3915380505"
+    uid: d83b9469-9d1a-4997-bd9b-44ffe63ffd10
+  subsets:
+  - addresses:
+    - ip: 192.168.5.62
+      nodeName: virtual-kubelet-cn-shenzhen-e
+      targetRef:
+        kind: Pod
+        name: nginx-ingress-controller-5d4487b97f-nb4b8
+        namespace: kube-system
+        uid: 188a3954-b5e2-42f8-95b4-d8e1437016f8
+    - ip: 192.168.5.63
+      nodeName: virtual-kubelet-cn-shenzhen-e
+      targetRef:
+        kind: Pod
+        name: nginx-ingress-controller-5d4487b97f-v9rwk
+        namespace: kube-system
+        uid: 44c68e32-53b4-4da1-a913-74f453b67ace
+    ports:
+    - name: https-webhook
+      port: 8443
+      protocol: TCP
+- apiVersion: v1
+  kind: Endpoints
+  metadata:
+    annotations:
+      endpoints.kubernetes.io/last-change-trigger-time: "2024-08-20T01:12:07Z"
+    creationTimestamp: "2024-08-10T16:44:41Z"
+    labels:
+      k8s-app: kube-dns
+      kubernetes.io/cluster-service: "true"
+      kubernetes.io/name: KubeDNS
+    name: kube-dns
+    namespace: kube-system
+    resourceVersion: "3915379538"
+    uid: 4c09d8d3-12e7-4aae-b48d-1d2adaa45ec6
+  subsets:
+  - addresses:
+    - ip: 192.168.5.60
+      nodeName: virtual-kubelet-cn-shenzhen-e
+      targetRef:
+        kind: Pod
+        name: coredns-56966dd7b4-bwpdm
+        namespace: kube-system
+        uid: cdcea1b4-c6bc-456a-ba74-aa08b530a915
+    - ip: 192.168.5.61
+      nodeName: virtual-kubelet-cn-shenzhen-e
+      targetRef:
+        kind: Pod
+        name: coredns-56966dd7b4-fdmj8
+        namespace: kube-system
+        uid: 9c5b73a6-50b2-4f0b-b956-8bd9a2aa14ea
+    ports:
+    - name: dns-tcp
+      port: 53
+      protocol: TCP
+    - name: dns
+      port: 53
+      protocol: UDP
+    - name: metrics
+      port: 9153
+      protocol: TCP
+- apiVersion: v1
+  kind: Endpoints
+  metadata:
+    annotations:
+      endpoints.kubernetes.io/last-change-trigger-time: "2024-08-20T01:12:27Z"
+    creationTimestamp: "2024-08-11T17:07:35Z"
+    labels:
+      app: nginx-ingress-lb
+      service.beta.kubernetes.io/hash: d326606d013c81e6836cae7f6d1a483a16eca0ad78e3bf711136244f
+      service.k8s.alibaba/loadbalancer-id: lb-wz9pdomv58ife11v6ttuo
+    name: nginx-ingress-lb
+    namespace: kube-system
+    resourceVersion: "3915380502"
+    uid: 481bf0b4-8d89-4089-a040-6701030d91aa
+  subsets:
+  - addresses:
+    - ip: 192.168.5.62
+      nodeName: virtual-kubelet-cn-shenzhen-e
+      targetRef:
+        kind: Pod
+        name: nginx-ingress-controller-5d4487b97f-nb4b8
+        namespace: kube-system
+        uid: 188a3954-b5e2-42f8-95b4-d8e1437016f8
+    - ip: 192.168.5.63
+      nodeName: virtual-kubelet-cn-shenzhen-e
+      targetRef:
+        kind: Pod
+        name: nginx-ingress-controller-5d4487b97f-v9rwk
+        namespace: kube-system
+        uid: 44c68e32-53b4-4da1-a913-74f453b67ace
+    ports:
+    - name: https
+      port: 443
+      protocol: TCP
+    - name: http
+      port: 80
+      protocol: TCP
+kind: List
+metadata:
+  resourceVersion: ""

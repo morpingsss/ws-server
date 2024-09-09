@@ -1,0 +1,101 @@
+apiVersion: v1
+items:
+- apiVersion: apps/v1
+  kind: StatefulSet
+  metadata:
+    creationTimestamp: "2024-08-10T18:25:02Z"
+    generation: 4
+    name: etcd
+    namespace: ws
+    resourceVersion: "3915387803"
+    uid: 8ab18da5-5949-42c4-a2a4-5e111016681e
+  spec:
+    persistentVolumeClaimRetentionPolicy:
+      whenDeleted: Retain
+      whenScaled: Retain
+    podManagementPolicy: OrderedReady
+    replicas: 2
+    revisionHistoryLimit: 10
+    selector:
+      matchLabels:
+        app: etcd
+    serviceName: etcd
+    template:
+      metadata:
+        creationTimestamp: null
+        labels:
+          app: etcd
+      spec:
+        containers:
+        - args:
+          - --name=$(POD_NAME)
+          - --data-dir=/var/lib/etcd
+          - --listen-client-urls=http://0.0.0.0:2379
+          - --advertise-client-urls=http://$(POD_NAME).etcd.ws.svc.cluster.local:2379
+          - --listen-peer-urls=http://0.0.0.0:2380
+          - --initial-advertise-peer-urls=http://$(POD_NAME).etcd.ws.svc.cluster.local:2380
+          - --initial-cluster=etcd-0=http://etcd-0.etcd.ws.svc.cluster.local:2380,etcd-1=http://etcd-1.etcd.ws.svc.cluster.local:2380
+          - --initial-cluster-state=new
+          command:
+          - /usr/local/bin/etcd
+          env:
+          - name: POD_NAME
+            valueFrom:
+              fieldRef:
+                apiVersion: v1
+                fieldPath: metadata.name
+          image: registry-vpc.cn-shenzhen.aliyuncs.com/morpingsss/etcd:3.5.4
+          imagePullPolicy: IfNotPresent
+          name: etcd
+          ports:
+          - containerPort: 2379
+            name: client
+            protocol: TCP
+          - containerPort: 2380
+            name: peer
+            protocol: TCP
+          resources:
+            requests:
+              cpu: 500m
+              memory: 1Gi
+          terminationMessagePath: /dev/termination-log
+          terminationMessagePolicy: File
+          volumeMounts:
+          - mountPath: /var/lib/etcd
+            name: disk-ssd
+        dnsPolicy: ClusterFirst
+        restartPolicy: Always
+        schedulerName: default-scheduler
+        securityContext: {}
+        terminationGracePeriodSeconds: 30
+    updateStrategy:
+      type: RollingUpdate
+    volumeClaimTemplates:
+    - apiVersion: v1
+      kind: PersistentVolumeClaim
+      metadata:
+        creationTimestamp: null
+        name: disk-ssd
+      spec:
+        accessModes:
+        - ReadWriteOnce
+        resources:
+          requests:
+            storage: 10Gi
+        storageClassName: alicloud-disk-alltype
+        volumeMode: Filesystem
+      status:
+        phase: Pending
+  status:
+    availableReplicas: 2
+    collisionCount: 0
+    currentReplicas: 2
+    currentRevision: etcd-7464b764f8
+    observedGeneration: 4
+    readyReplicas: 2
+    replicas: 2
+    updateRevision: etcd-7464b764f8
+    updatedReplicas: 2
+kind: List
+metadata:
+  resourceVersion: ""

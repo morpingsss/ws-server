@@ -1,0 +1,330 @@
+apiVersion: v1
+items:
+- apiVersion: v1
+  data:
+    clusterid: cbd3633f3ca5049d1bbff4c653486f9ad
+    ipStack: ipv4
+    podCIDR: ""
+    profile: Serverless
+    resourceGroupId: rg-acfmv3jrmd4dpni
+    security-group: sg-wz99qqr9drbgsgu4kndk
+    serviceCIDR: 172.16.0.0/16
+    timezone: Asia/Hong_Kong
+    uid: "1066718865668021"
+    vpcid: vpc-wz9rf0gfnfruu6j4pseda
+    vsw-zone: vsw-wz9rsj59hpuq9jtg7w9tt:cn-shenzhen-e
+    vswitch: vsw-wz9rsj59hpuq9jtg7w9tt
+  kind: ConfigMap
+  metadata:
+    annotations:
+      kubectl.kubernetes.io/last-applied-configuration: |
+        {"apiVersion":"v1","data":{"clusterid":"cbd3633f3ca5049d1bbff4c653486f9ad","ipStack":"ipv4","podCIDR":"","profile":"Serverless","resourceGroupId":"rg-acfmv3jrmd4dpni","security-group":"sg-wz99qqr9drbgsgu4kndk","serviceCIDR":"172.16.0.0/16","timezone":"Asia/Hong_Kong","uid":"1066718865668021","vpcid":"vpc-wz9rf0gfnfruu6j4pseda","vsw-zone":"vsw-wz9rsj59hpuq9jtg7w9tt:cn-shenzhen-e","vswitch":"vsw-wz9rsj59hpuq9jtg7w9tt"},"kind":"ConfigMap","metadata":{"name":"ack-cluster-profile","namespace":"kube-system"}}
+    creationTimestamp: "2024-08-10T16:43:20Z"
+    name: ack-cluster-profile
+    namespace: kube-system
+    resourceVersion: "3879212500"
+    uid: 2060ed13-d6b8-48f0-9aa9-542952c229da
+- apiVersion: v1
+  data:
+    checkTime: "2024-08-11 00:44:08"
+  kind: ConfigMap
+  metadata:
+    creationTimestamp: "2024-08-10T16:44:08Z"
+    name: ack-controlplane-healthcheck
+    namespace: kube-system
+    resourceVersion: "3879215555"
+    uid: ffe5b566-0e4c-41ff-9398-8cdf3d12824a
+- apiVersion: v1
+  data:
+    Corefile: |
+      .:53 {
+          errors
+          health {
+             lameduck 15s
+          }
+          ready
+          kubeapi
+          k8s_event {
+            level info error warning
+          }
+
+          kubernetes cluster.local in-addr.arpa ip6.arpa {
+
+            pods verified
+            ttl 30
+            fallthrough in-addr.arpa ip6.arpa
+          }
+          prometheus :9153
+          forward . /etc/resolv.conf {
+            prefer_udp
+          }
+          cache 30
+          log
+          loop
+          reload
+          loadbalance
+      }
+  kind: ConfigMap
+  metadata:
+    annotations:
+      kubectl.kubernetes.io/last-applied-configuration: |
+        {"apiVersion":"v1","data":{"Corefile":".:53 {\n    errors\n    health {\n       lameduck 15s\n    }\n    ready\n    kubeapi\n    k8s_event {\n      level info error warning\n    }\n\n    kubernetes cluster.local in-addr.arpa ip6.arpa {\n\n      pods verified\n      ttl 30\n      fallthrough in-addr.arpa ip6.arpa\n    }\n    prometheus :9153\n    forward . /etc/resolv.conf {\n      prefer_udp\n    }\n    cache 30\n    log\n    loop\n    reload\n    loadbalance\n}\n"},"kind":"ConfigMap","metadata":{"annotations":{},"name":"coredns","namespace":"kube-system"}}
+    creationTimestamp: "2024-08-10T16:44:41Z"
+    name: coredns
+    namespace: kube-system
+    resourceVersion: "3879217000"
+    uid: 6a72f0ad-30d4-4733-a650-fc69442865a7
+- apiVersion: v1
+  data:
+    enableClusterIp: "true"
+    enableHybridMode: "false"
+    enableLinuxArm64Node: "false"
+    enableLogController: "false"
+    enablePVCController: "false"
+    enablePrivateZone: "false"
+    enableReuseSSLKey: "false"
+    enableUpdatePodResourceController: "false"
+    enableWindowsAmd64Node: "false"
+    featureGates: ProtectionFinalizers=false
+    resourceGroupId: ""
+    securityGroupId: sg-wz99qqr9drbgsgu4kndk
+    selectors: ""
+    slsMachineGroup: ""
+    vSwitchIds: vsw-wz9rsj59hpuq9jtg7w9tt
+    vpcId: vpc-wz9rf0gfnfruu6j4pseda
+  kind: ConfigMap
+  metadata:
+    creationTimestamp: "2024-08-10T16:43:51Z"
+    name: eci-profile
+    namespace: kube-system
+    resourceVersion: "3879213877"
+    uid: a925fcdd-bbfb-4aaf-94e1-356571b1c544
+- apiVersion: v1
+  data:
+    client-ca-file: |
+      -----BEGIN CERTIFICATE-----
+      MIIDpzCCAxCgAwIBAgIIAIbE7JEAAJswDQYJKoZIhvcNAQELBQAwYjELMAkGA1UE
+      BhMCQ04xETAPBgNVBAgMCFpoZUppYW5nMREwDwYDVQQHDAhIYW5nWmhvdTEQMA4G
+      A1UECgwHQWxpYmFiYTEMMAoGA1UECwwDQUNTMQ0wCwYDVQQDDARyb290MB4XDTI0
+      MDgxMDE2MzcwMFoXDTQ0MDgwNTE2NDIwNVowajEqMCgGA1UEChMhY2JkMzYzM2Yz
+      Y2E1MDQ5ZDFiYmZmNGM2NTM0ODZmOWFkMRAwDgYDVQQLEwdkZWZhdWx0MSowKAYD
+      VQQDEyFjYmQzNjMzZjNjYTUwNDlkMWJiZmY0YzY1MzQ4NmY5YWQwggEiMA0GCSqG
+      SIb3DQEBAQUAA4IBDwAwggEKAoIBAQDSf1NTQETQxgjEt6p5tYs1goz+PnzEvu/l
+      oaKZBW2ynmewS4j3I4aWssUNXCI/FCKBLXW0aOFzWHnUtAqcDWxYWZz+9FXXlVxZ
+      /OyPeDH/sNSl7CMne0oUUjwc2i3021XWuHnngbFlRrJXEZO1cIvxbxUZ+5OLfMFx
+      MvNwHaFg62EOEfUtz0bAhgZtNshKzVW4gVxH7dVdNVU6DqvPuuxZoLUlfH0kjXbS
+      9IAEQ8NhE0NaX/gjQMHYwgkt3K6Pe/OE9Fck+JiRAe4WiRb0+mugefW6weuQh+Kq
+      l1Pk997dIsM4aAfGCg6+voDi3vyj44KrOfCixvVb2R3SBck4c5VxAgMBAAGjgdkw
+      gdYwDgYDVR0PAQH/BAQDAgKsMA8GA1UdEwEB/wQFMAMBAf8wHQYDVR0OBBYEFMZq
+      vG6fcmiP6xkhhKBRsfVj4URKMB8GA1UdIwQYMBaAFIVa/90jzSVvWEFvnm1FOZtY
+      fXX/MDwGCCsGAQUFBwEBBDAwLjAsBggrBgEFBQcwAYYgaHR0cDovL2NlcnRzLmFj
+      cy5hbGl5dW4uY29tL29jc3AwNQYDVR0fBC4wLDAqoCigJoYkaHR0cDovL2NlcnRz
+      LmFjcy5hbGl5dW4uY29tL3Jvb3QuY3JsMA0GCSqGSIb3DQEBCwUAA4GBAC5oMWUF
+      GGIWQUtqxrAVj1MV5ooOkdcazPe7h/YrZHJk4d4F0XYzC6xMX11b8vQJhQCV6UMR
+      hf2BuntCDfJRljzs4u6hTovm4hmc/hFe5HaNyrCzVsUqaN1FnTU6PffP/vIytPRw
+      JbFmYfMyLSC8irDfhqSKzhVp+sE8PC6Ya4iI
+      -----END CERTIFICATE-----
+      -----BEGIN CERTIFICATE-----
+      MIICtTCCAh6gAwIBAgIJAInPdE9X9QHVMA0GCSqGSIb3DQEBCwUAMGoxCzAJBgNV
+      BAYTAkNOMREwDwYDVQQIDAhaaGVKaWFuZzERMA8GA1UEBwwISGFuZ1pob3UxEDAO
+      BgNVBAoMB0FsaWJhYmExDDAKBgNVBAsMA0FDUzEVMBMGA1UEAwwMY29udHJvbC1y
+      b290MB4XDTE1MTIxNjA2NDgzN1oXDTM1MTIxMTA2NDgzN1owajELMAkGA1UEBhMC
+      Q04xETAPBgNVBAgMCFpoZUppYW5nMREwDwYDVQQHDAhIYW5nWmhvdTEQMA4GA1UE
+      CgwHQWxpYmFiYTEMMAoGA1UECwwDQUNTMRUwEwYDVQQDDAxjb250cm9sLXJvb3Qw
+      gZ8wDQYJKoZIhvcNAQEBBQADgY0AMIGJAoGBAL3U+z+QKye5ojLdlG9QoV4nyZuB
+      gxZrZg3LHDOIfGsB0th12Ze6BsCCrn6LHPzjKIx6BsWkuA6vYRqYUVmcLeFcpNsh
+      wOXwIzH//TV2ptHEz/t75J0hNgkSh8xyRICybmhWjxpBl5lPfs9/or66yypPVt0m
+      ka2bRSay3poTN05zAgMBAAGjYzBhMB0GA1UdDgQWBBRKBq6calvsJDWFmZ5ltWop
+      AoDiSDAfBgNVHSMEGDAWgBRKBq6calvsJDWFmZ5ltWopAoDiSDAPBgNVHRMBAf8E
+      BTADAQH/MA4GA1UdDwEB/wQEAwIBhjANBgkqhkiG9w0BAQsFAAOBgQCgE9uBiubF
+      FhzWMrwgZ3/nNW5Htqg/+nYe+EeK3Wg/e5DCJU7Y1/n4pFjjPabmb9uh9rOsmmYC
+      Toul5OjVsl/BoNkqFYUKM0tM/VLF9U1BvXwL9BZJL1EMNQI2YRGODqoOpsQ1o+wj
+      mC29eWJzJUD0KjyC3nECCgl8JpRPLWyKJw==
+      -----END CERTIFICATE-----
+      -----BEGIN CERTIFICATE-----
+      MIIDTjCCAjagAwIBAgIUP/X5ZgyHJ/o/icFQfijJnlyVb88wDQYJKoZIhvcNAQEL
+      BQAwPjEnMA8GA1UEChMIaGFuZ3pob3UwFAYDVQQKEw1hbGliYWJhIGNsb3VkMRMw
+      EQYDVQQDEwprdWJlcm5ldGVzMCAXDTI0MDgxMDE2MzgwMFoYDzIwNTQwODAzMTYz
+      ODAwWjA+MScwDwYDVQQKEwhoYW5nemhvdTAUBgNVBAoTDWFsaWJhYmEgY2xvdWQx
+      EzARBgNVBAMTCmt1YmVybmV0ZXMwggEiMA0GCSqGSIb3DQEBAQUAA4IBDwAwggEK
+      AoIBAQDbevMLfFyqqsfA6TNVKabAd17nOLRJRJf32AyXURZS1CEmBAdQps7LSXkB
+      kvrqbHdJoi9JnsG2nx/NcJ842MHNeYOkyVcDmcoX/+ASKeQp7yaNuy4R9M10bJdS
+      1cO1+9WBTyVsmcNA9MbXdfL65i2M+UDBztdtPgmzPRq+Yx9CgbEW4gT0DxvQjuBH
+      99YH8oalIap7mL/Jwrh/uTryA+U1H6LTZvrGkF/YrV8I0C1LZsDwuSyYYjj37Dsy
+      YgB4Air0X0xN5rmP19joRRnuaO3bjT2Zq4tOeAoeWMS6zgXD73mpgbthgYZwhAgE
+      aD36dsL3Eb0+52qi7DlTvxvc5Lq3AgMBAAGjQjBAMA4GA1UdDwEB/wQEAwICrDAP
+      BgNVHRMBAf8EBTADAQH/MB0GA1UdDgQWBBRjPMAM4KSrbIHvqfIRAswgtv/3DzAN
+      BgkqhkiG9w0BAQsFAAOCAQEAHGrfo2u+Y8xI5k4e/+9wJZtN8B9AO7XYVxkQ/XRT
+      EGkug7fZ/ArRWpRfAvocU9aBeFqiV0Rg9+pqAb4GEQ+5mu6HC94VRMCZVffI6bZL
+      ruIDv0O/ZKDxVsjFl0YSKWnI+/2ANiHKb09J4thhl75CE267Q4OXScsnToTm/IOF
+      eLfy9wJCE+l5I/X/6Hi4b1c11hfFrobeWggKWZOtB6p6Ptmz95W9/sHGFs7z41kz
+      tJ9f5fMFOCXOBmqUpuAmJwuZQ0OqnyGkkE1i1a7UEN2ntT2ya3S3lAOqc0EbEsrp
+      sBthNGZt/GxCsozJMzRMK532d188U4krF5v92mC6QP3O/A==
+      -----END CERTIFICATE-----
+    requestheader-allowed-names: '["front-proxy-client"]'
+    requestheader-client-ca-file: |
+      -----BEGIN CERTIFICATE-----
+      MIIC/DCCAeSgAwIBAgIUYgha2j8YYVf0spHIy5eCUFkVdyowDQYJKoZIhvcNAQEL
+      BQAwFTETMBEGA1UEAxMKa3ViZXJuZXRlczAgFw0yNDA4MTAxNjM4MDBaGA8yMDU0
+      MDgwMzE2MzgwMFowFTETMBEGA1UEAxMKa3ViZXJuZXRlczCCASIwDQYJKoZIhvcN
+      AQEBBQADggEPADCCAQoCggEBAK0FihBEv9UpdVWtf6kHj7bNusMeHnoXhOHtuM2b
+      5sICRAtHsop/6NaDPeGiRvhCoGPcJpKnBxhK/1uI6Bnb0ALWwORQGElfo6azK5Wf
+      A+zAhJWkWIodtMATOevY6xMHG1jqF1brP2eCo3dASzIbbmd1LvEpKxrY6fp6LQg6
+      vD0jJ0a8e+2Q208jvIt1kUoQJ4THun9rmNE1z3qacAgIIIWxr9hAadLqY4T3NrBI
+      x3zUixGzdL455JgPhhYvs/L5oMhdeMWRFmCMGG3uoMGK9vcCgsZnD3EHjsexfbCo
+      zF4UtqrptkvK5bqEFGuKcg/S8RIcCI6Pi5sbm8ijepkoFQECAwEAAaNCMEAwDgYD
+      VR0PAQH/BAQDAgKkMA8GA1UdEwEB/wQFMAMBAf8wHQYDVR0OBBYEFFwYU31eTgBO
+      A4c+YiYWvTALdENVMA0GCSqGSIb3DQEBCwUAA4IBAQBS0APLlGHpKpJkvTPgfqF6
+      7VpGKCdWoX/zWjrAlTGaBJn2RMJ4KM+WLb7JcdOHynImpzVZM5ucv9pYVhfDdbzb
+      +l75EUUQvccF6AXNJqqEYJ8D2UMfE2i9Ad2sHGUKGhBrX15w8NoHNZwaoCFQlztK
+      NomVmV0oYcKelakAEcPjeceXqtxZmkACrSUIFQA5SjheG4j1lrqgjwZwnJoRgvJI
+      pnFtAWCiQl6x6QqqhsleZa20TxzUMQp2lECCTf66nd3eriu3qXqltWO2VK7QvyPh
+      ESJVmQeNnJQQ7LTbTxWYRWC3Bklwd+lWTgcuOAXyWwUJRTWa6rnR8WRPXLbzRb+C
+      -----END CERTIFICATE-----
+    requestheader-extra-headers-prefix: '["X-Remote-Extra-"]'
+    requestheader-group-headers: '["X-Remote-Group"]'
+    requestheader-username-headers: '["X-Remote-User"]'
+  kind: ConfigMap
+  metadata:
+    creationTimestamp: "2024-08-10T16:43:04Z"
+    name: extension-apiserver-authentication
+    namespace: kube-system
+    resourceVersion: "3879211616"
+    uid: 289faf21-3b60-4356-b078-71830a0b204c
+- apiVersion: v1
+  data:
+    since: "2024-08-10"
+  kind: ConfigMap
+  metadata:
+    creationTimestamp: "2024-08-10T16:43:04Z"
+    name: kube-apiserver-legacy-service-account-token-tracking
+    namespace: kube-system
+    resourceVersion: "3879211617"
+    uid: c8154218-5942-42a8-9623-1aa8ea392a78
+- apiVersion: v1
+  data:
+    ca.crt: |
+      -----BEGIN CERTIFICATE-----
+      MIIDTjCCAjagAwIBAgIUP/X5ZgyHJ/o/icFQfijJnlyVb88wDQYJKoZIhvcNAQEL
+      BQAwPjEnMA8GA1UEChMIaGFuZ3pob3UwFAYDVQQKEw1hbGliYWJhIGNsb3VkMRMw
+      EQYDVQQDEwprdWJlcm5ldGVzMCAXDTI0MDgxMDE2MzgwMFoYDzIwNTQwODAzMTYz
+      ODAwWjA+MScwDwYDVQQKEwhoYW5nemhvdTAUBgNVBAoTDWFsaWJhYmEgY2xvdWQx
+      EzARBgNVBAMTCmt1YmVybmV0ZXMwggEiMA0GCSqGSIb3DQEBAQUAA4IBDwAwggEK
+      AoIBAQDbevMLfFyqqsfA6TNVKabAd17nOLRJRJf32AyXURZS1CEmBAdQps7LSXkB
+      kvrqbHdJoi9JnsG2nx/NcJ842MHNeYOkyVcDmcoX/+ASKeQp7yaNuy4R9M10bJdS
+      1cO1+9WBTyVsmcNA9MbXdfL65i2M+UDBztdtPgmzPRq+Yx9CgbEW4gT0DxvQjuBH
+      99YH8oalIap7mL/Jwrh/uTryA+U1H6LTZvrGkF/YrV8I0C1LZsDwuSyYYjj37Dsy
+      YgB4Air0X0xN5rmP19joRRnuaO3bjT2Zq4tOeAoeWMS6zgXD73mpgbthgYZwhAgE
+      aD36dsL3Eb0+52qi7DlTvxvc5Lq3AgMBAAGjQjBAMA4GA1UdDwEB/wQEAwICrDAP
+      BgNVHRMBAf8EBTADAQH/MB0GA1UdDgQWBBRjPMAM4KSrbIHvqfIRAswgtv/3DzAN
+      BgkqhkiG9w0BAQsFAAOCAQEAHGrfo2u+Y8xI5k4e/+9wJZtN8B9AO7XYVxkQ/XRT
+      EGkug7fZ/ArRWpRfAvocU9aBeFqiV0Rg9+pqAb4GEQ+5mu6HC94VRMCZVffI6bZL
+      ruIDv0O/ZKDxVsjFl0YSKWnI+/2ANiHKb09J4thhl75CE267Q4OXScsnToTm/IOF
+      eLfy9wJCE+l5I/X/6Hi4b1c11hfFrobeWggKWZOtB6p6Ptmz95W9/sHGFs7z41kz
+      tJ9f5fMFOCXOBmqUpuAmJwuZQ0OqnyGkkE1i1a7UEN2ntT2ya3S3lAOqc0EbEsrp
+      sBthNGZt/GxCsozJMzRMK532d188U4krF5v92mC6QP3O/A==
+      -----END CERTIFICATE-----
+  kind: ConfigMap
+  metadata:
+    annotations:
+      kubernetes.io/description: Contains a CA bundle that can be used to verify the
+        kube-apiserver when using internal endpoints such as the internal service
+        IP or kubernetes.default.svc. No other usage is guaranteed across distributions
+        of Kubernetes clusters.
+    creationTimestamp: "2024-08-10T16:43:28Z"
+    name: kube-root-ca.crt
+    namespace: kube-system
+    resourceVersion: "3879212867"
+    uid: 56eb90ab-d59a-42a0-9a8a-3892b3af3f65
+- apiVersion: v1
+  data:
+    ClusterConfiguration: |
+      apiVersion: kubeadm.k8s.io/v1beta3
+      kind: ClusterConfiguration
+      kubernetesVersion: v1.30.1-aliyun.1
+  kind: ConfigMap
+  metadata:
+    annotations:
+      kubectl.kubernetes.io/last-applied-configuration: |
+        {"apiVersion":"v1","data":{"ClusterConfiguration":"apiVersion: kubeadm.k8s.io/v1beta3\nkind: ClusterConfiguration\nkubernetesVersion: v1.30.1-aliyun.1\n"},"kind":"ConfigMap","metadata":{"name":"kubeadm-config","namespace":"kube-system"}}
+    creationTimestamp: "2024-08-10T16:43:21Z"
+    name: kubeadm-config
+    namespace: kube-system
+    resourceVersion: "3879212521"
+    uid: a8c15f22-1fd6-488e-be0d-f8f5583fc0d3
+- apiVersion: v1
+  data:
+    kubelet: |
+      apiVersion: kubelet.config.k8s.io/v1beta1
+      kind: KubeletConfiguration
+      address: 0.0.0.0
+      featureGates:
+        MemoryQoS: true
+        CSIVolumeHealth: true
+      memoryThrottlingFactor: 0.8
+      port: 10250
+  kind: ConfigMap
+  metadata:
+    annotations:
+      kubectl.kubernetes.io/last-applied-configuration: |
+        {"apiVersion":"v1","data":{"kubelet":"apiVersion: kubelet.config.k8s.io/v1beta1\nkind: KubeletConfiguration\naddress: 0.0.0.0\nfeatureGates:\n  MemoryQoS: true\n  CSIVolumeHealth: true\nmemoryThrottlingFactor: 0.8\nport: 10250\n"},"kind":"ConfigMap","metadata":{"name":"kubelet-config","namespace":"kube-system"}}
+    creationTimestamp: "2024-08-10T16:43:21Z"
+    name: kubelet-config
+    namespace: kube-system
+    resourceVersion: "3879212522"
+    uid: 87ace789-441d-44dc-902c-7cc991a8a848
+- apiVersion: v1
+  data:
+    allow-backend-server-header: "true"
+    enable-underscores-in-headers: "true"
+    generate-request-id: "true"
+    ignore-invalid-headers: "true"
+    log-format-upstream: \'$remote_addr - [$remote_addr] - $remote_user [$time_local]
+      "$request" $status $body_bytes_sent "$http_referer" "$http_user_agent" $request_length
+      $request_time [$proxy_upstream_name] $upstream_addr $upstream_response_length
+      $upstream_response_time $upstream_status $req_id $host [$proxy_alternative_upstream_name]\'
+    max-worker-connections: "65536"
+    proxy-body-size: 20m
+    proxy-connect-timeout: "10"
+    reuse-port: "true"
+    server-tokens: "false"
+    ssl-redirect: "false"
+    upstream-keepalive-timeout: "900"
+    worker-cpu-affinity: auto
+  kind: ConfigMap
+  metadata:
+    annotations:
+      kubectl.kubernetes.io/last-applied-configuration: |
+        {"apiVersion":"v1","data":{"allow-backend-server-header":"true","enable-underscores-in-headers":"true","generate-request-id":"true","ignore-invalid-headers":"true","log-format-upstream":"\\'$remote_addr - [$remote_addr] - $remote_user [$time_local] \"$request\" $status $body_bytes_sent \"$http_referer\" \"$http_user_agent\" $request_length $request_time [$proxy_upstream_name] $upstream_addr $upstream_response_length $upstream_response_time $upstream_status $req_id $host [$proxy_alternative_upstream_name]\\'","max-worker-connections":"65536","proxy-body-size":"20m","proxy-connect-timeout":"10","reuse-port":"true","server-tokens":"false","ssl-redirect":"false","upstream-keepalive-timeout":"900","worker-cpu-affinity":"auto"},"kind":"ConfigMap","metadata":{"annotations":{},"labels":{"app":"ingress-nginx"},"name":"nginx-configuration","namespace":"kube-system"}}
+    creationTimestamp: "2024-08-11T16:42:17Z"
+    labels:
+      app: ingress-nginx
+    name: nginx-configuration
+    namespace: kube-system
+    resourceVersion: "3883062955"
+    uid: 828327d3-8947-4e22-affe-3c47e8d71b8a
+- apiVersion: v1
+  kind: ConfigMap
+  metadata:
+    annotations:
+      kubectl.kubernetes.io/last-applied-configuration: |
+        {"apiVersion":"v1","kind":"ConfigMap","metadata":{"annotations":{},"name":"tcp-services","namespace":"kube-system"}}
+    creationTimestamp: "2024-08-11T16:42:17Z"
+    name: tcp-services
+    namespace: kube-system
+    resourceVersion: "3883062960"
+    uid: 9de0a85c-2c6d-4eba-a679-84fd301b1931
+- apiVersion: v1
+  kind: ConfigMap
+  metadata:
+    annotations:
+      kubectl.kubernetes.io/last-applied-configuration: |
+        {"apiVersion":"v1","kind":"ConfigMap","metadata":{"annotations":{},"name":"udp-services","namespace":"kube-system"}}
+    creationTimestamp: "2024-08-11T16:42:17Z"
+    name: udp-services
+    namespace: kube-system
+    resourceVersion: "3883062963"
+    uid: 1b3fefbf-70da-447b-9e5c-88ecdcdd87be
+kind: List
+metadata:
+  resourceVersion: ""

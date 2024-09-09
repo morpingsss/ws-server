@@ -1,0 +1,255 @@
+apiVersion: v1
+items:
+- apiVersion: rbac.authorization.k8s.io/v1
+  kind: Role
+  metadata:
+    creationTimestamp: "2024-08-20T01:14:45Z"
+    name: aliyun-role-eci-3662eefc-f1dc-4347-8d08-5b57c94af254
+    namespace: ws
+    resourceVersion: "3915386864"
+    uid: 5b02b9ae-ff90-470a-92fb-b040d2623204
+  rules:
+  - apiGroups:
+    - ""
+    resourceNames:
+    - default
+    resources:
+    - serviceaccounts/token
+    verbs:
+    - create
+  - apiGroups:
+    - ""
+    resourceNames:
+    - etcd-0
+    resources:
+    - pods/binding
+    verbs:
+    - create
+  - apiGroups:
+    - ""
+    resourceNames:
+    - etcd-0
+    resources:
+    - pods/status
+    verbs:
+    - patch
+    - update
+  - apiGroups:
+    - ""
+    - events.k8s.io
+    resources:
+    - events
+    verbs:
+    - create
+    - patch
+    - update
+  - apiGroups:
+    - ""
+    resourceNames:
+    - kube-root-ca.crt
+    resources:
+    - configmaps
+    verbs:
+    - get
+    - watch
+    - list
+  - apiGroups:
+    - ""
+    resourceNames:
+    - etcd-0
+    resources:
+    - pods
+    verbs:
+    - get
+    - watch
+- apiVersion: rbac.authorization.k8s.io/v1
+  kind: Role
+  metadata:
+    creationTimestamp: "2024-08-20T01:12:31Z"
+    name: aliyun-role-eci-7fde82fb-0b66-47a4-b372-3fcf1a9b72ff
+    namespace: ws
+    resourceVersion: "3915380697"
+    uid: acf520d4-e38e-4408-87e6-533dda64593b
+  rules:
+  - apiGroups:
+    - ""
+    resourceNames:
+    - default
+    resources:
+    - serviceaccounts/token
+    verbs:
+    - create
+  - apiGroups:
+    - ""
+    resourceNames:
+    - websocket-deployment-5c757775f9-6qnq7
+    resources:
+    - pods/binding
+    verbs:
+    - create
+  - apiGroups:
+    - ""
+    resourceNames:
+    - websocket-deployment-5c757775f9-6qnq7
+    resources:
+    - pods/status
+    verbs:
+    - patch
+    - update
+  - apiGroups:
+    - ""
+    - events.k8s.io
+    resources:
+    - events
+    verbs:
+    - create
+    - patch
+    - update
+  - apiGroups:
+    - ""
+    resourceNames:
+    - kube-root-ca.crt
+    - websocket-config
+    resources:
+    - configmaps
+    verbs:
+    - get
+    - watch
+    - list
+  - apiGroups:
+    - ""
+    resourceNames:
+    - websocket-deployment-5c757775f9-6qnq7
+    resources:
+    - pods
+    verbs:
+    - get
+    - watch
+- apiVersion: rbac.authorization.k8s.io/v1
+  kind: Role
+  metadata:
+    creationTimestamp: "2024-08-20T01:12:09Z"
+    name: aliyun-role-eci-89d850fa-e65f-4f9d-a191-7d383fa50279
+    namespace: ws
+    resourceVersion: "3915379598"
+    uid: 021e9da8-5f90-43e3-9e7e-d55f5257b345
+  rules:
+  - apiGroups:
+    - ""
+    resourceNames:
+    - default
+    resources:
+    - serviceaccounts/token
+    verbs:
+    - create
+  - apiGroups:
+    - ""
+    resourceNames:
+    - websocket-deployment-5c757775f9-7pndf
+    resources:
+    - pods/binding
+    verbs:
+    - create
+  - apiGroups:
+    - ""
+    resourceNames:
+    - websocket-deployment-5c757775f9-7pndf
+    resources:
+    - pods/status
+    verbs:
+    - patch
+    - update
+  - apiGroups:
+    - ""
+    - events.k8s.io
+    resources:
+    - events
+    verbs:
+    - create
+    - patch
+    - update
+  - apiGroups:
+    - ""
+    resourceNames:
+    - kube-root-ca.crt
+    - websocket-config
+    resources:
+    - configmaps
+    verbs:
+    - get
+    - watch
+    - list
+  - apiGroups:
+    - ""
+    resourceNames:
+    - websocket-deployment-5c757775f9-7pndf
+    resources:
+    - pods
+    verbs:
+    - get
+    - watch
+- apiVersion: rbac.authorization.k8s.io/v1
+  kind: Role
+  metadata:
+    creationTimestamp: "2024-08-20T01:14:05Z"
+    name: aliyun-role-eci-cef3cda4-b59b-4fec-98e5-f2dbf68b0300
+    namespace: ws
+    resourceVersion: "3915385017"
+    uid: 952f319a-b289-46ee-8f87-30128191b534
+  rules:
+  - apiGroups:
+    - ""
+    resourceNames:
+    - default
+    resources:
+    - serviceaccounts/token
+    verbs:
+    - create
+  - apiGroups:
+    - ""
+    resourceNames:
+    - etcd-1
+    resources:
+    - pods/binding
+    verbs:
+    - create
+  - apiGroups:
+    - ""
+    resourceNames:
+    - etcd-1
+    resources:
+    - pods/status
+    verbs:
+    - patch
+    - update
+  - apiGroups:
+    - ""
+    - events.k8s.io
+    resources:
+    - events
+    verbs:
+    - create
+    - patch
+    - update
+  - apiGroups:
+    - ""
+    resourceNames:
+    - kube-root-ca.crt
+    resources:
+    - configmaps
+    verbs:
+    - get
+    - watch
+    - list
+  - apiGroups:
+    - ""
+    resourceNames:
+    - etcd-1
+    resources:
+    - pods
+    verbs:
+    - get
+    - watch
+kind: List
+metadata:
+  resourceVersion: ""

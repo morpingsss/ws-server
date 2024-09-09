@@ -1,0 +1,69 @@
+apiVersion: v1
+items:
+- apiVersion: rbac.authorization.k8s.io/v1
+  kind: RoleBinding
+  metadata:
+    creationTimestamp: "2024-08-20T01:14:45Z"
+    name: aliyun-rolebinding-eci-3662eefc-f1dc-4347-8d08-5b57c94af254
+    namespace: ws
+    resourceVersion: "3915386867"
+    uid: 3bc63c3b-641b-4629-a32e-91a99e32e06c
+  roleRef:
+    apiGroup: rbac.authorization.k8s.io
+    kind: Role
+    name: aliyun-role-eci-3662eefc-f1dc-4347-8d08-5b57c94af254
+  subjects:
+  - apiGroup: rbac.authorization.k8s.io
+    kind: User
+    name: eci-aa93aa70-90bd-4f39-ab24-4227ca9a1883
+- apiVersion: rbac.authorization.k8s.io/v1
+  kind: RoleBinding
+  metadata:
+    creationTimestamp: "2024-08-20T01:12:31Z"
+    name: aliyun-rolebinding-eci-7fde82fb-0b66-47a4-b372-3fcf1a9b72ff
+    namespace: ws
+    resourceVersion: "3915380698"
+    uid: 532e8a77-c751-4126-88d2-4382f45638e3
+  roleRef:
+    apiGroup: rbac.authorization.k8s.io
+    kind: Role
+    name: aliyun-role-eci-7fde82fb-0b66-47a4-b372-3fcf1a9b72ff
+  subjects:
+  - apiGroup: rbac.authorization.k8s.io
+    kind: User
+    name: eci-16f43e6b-76a6-4f0f-bc0b-639665f5d5e6
+- apiVersion: rbac.authorization.k8s.io/v1
+  kind: RoleBinding
+  metadata:
+    creationTimestamp: "2024-08-20T01:12:09Z"
+    name: aliyun-rolebinding-eci-89d850fa-e65f-4f9d-a191-7d383fa50279
+    namespace: ws
+    resourceVersion: "3915379600"
+    uid: 1e87fff9-48fb-453d-94d1-4f1ae112779b
+  roleRef:
+    apiGroup: rbac.authorization.k8s.io
+    kind: Role
+    name: aliyun-role-eci-89d850fa-e65f-4f9d-a191-7d383fa50279
+  subjects:
+  - apiGroup: rbac.authorization.k8s.io
+    kind: User
+    name: eci-54f40561-c251-45cf-a858-8c199fadd8db
+- apiVersion: rbac.authorization.k8s.io/v1
+  kind: RoleBinding
+  metadata:
+    creationTimestamp: "2024-08-20T01:14:05Z"
+    name: aliyun-rolebinding-eci-cef3cda4-b59b-4fec-98e5-f2dbf68b0300
+    namespace: ws
+    resourceVersion: "3915385019"
+    uid: f7b2cd6f-b987-4bb7-bb5c-d1c059c75d43
+  roleRef:
+    apiGroup: rbac.authorization.k8s.io
+    kind: Role
+    name: aliyun-role-eci-cef3cda4-b59b-4fec-98e5-f2dbf68b0300
+  subjects:
+  - apiGroup: rbac.authorization.k8s.io
+    kind: User
+    name: eci-59e8fd7a-e30c-486a-8215-40d1401fd951
+kind: List
+metadata:
+  resourceVersion: ""

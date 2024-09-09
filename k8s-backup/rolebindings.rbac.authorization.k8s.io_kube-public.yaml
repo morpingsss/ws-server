@@ -1,0 +1,44 @@
+apiVersion: v1
+items:
+- apiVersion: rbac.authorization.k8s.io/v1
+  kind: RoleBinding
+  metadata:
+    annotations:
+      kubectl.kubernetes.io/last-applied-configuration: |
+        {"apiVersion":"rbac.authorization.k8s.io/v1","kind":"RoleBinding","metadata":{"name":"kubeadm:bootstrap-signer-clusterinfo","namespace":"kube-public"},"roleRef":{"apiGroup":"rbac.authorization.k8s.io","kind":"Role","name":"kubeadm:bootstrap-signer-clusterinfo"},"subjects":[{"apiGroup":"rbac.authorization.k8s.io","kind":"User","name":"system:anonymous"}]}
+    creationTimestamp: "2024-08-10T16:43:20Z"
+    name: kubeadm:bootstrap-signer-clusterinfo
+    namespace: kube-public
+    resourceVersion: "3879212514"
+    uid: e64cd831-9831-4cc6-bd2f-05ced47c025c
+  roleRef:
+    apiGroup: rbac.authorization.k8s.io
+    kind: Role
+    name: kubeadm:bootstrap-signer-clusterinfo
+  subjects:
+  - apiGroup: rbac.authorization.k8s.io
+    kind: User
+    name: system:anonymous
+- apiVersion: rbac.authorization.k8s.io/v1
+  kind: RoleBinding
+  metadata:
+    annotations:
+      rbac.authorization.kubernetes.io/autoupdate: "true"
+    creationTimestamp: "2024-08-10T16:43:06Z"
+    labels:
+      kubernetes.io/bootstrapping: rbac-defaults
+    name: system:controller:bootstrap-signer
+    namespace: kube-public
+    resourceVersion: "3879211894"
+    uid: e08514c1-9058-4713-9381-e72cb13963f1
+  roleRef:
+    apiGroup: rbac.authorization.k8s.io
+    kind: Role
+    name: system:controller:bootstrap-signer
+  subjects:
+  - kind: ServiceAccount
+    name: bootstrap-signer
+    namespace: kube-system
+kind: List
+metadata:
+  resourceVersion: ""

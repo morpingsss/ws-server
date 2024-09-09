@@ -1,0 +1,125 @@
+apiVersion: v1
+items:
+- apiVersion: v1
+  kind: Service
+  metadata:
+    annotations:
+      kubectl.kubernetes.io/last-applied-configuration: |
+        {"apiVersion":"v1","kind":"Service","metadata":{"annotations":{},"name":"ingress-nginx-controller-admission","namespace":"kube-system"},"spec":{"ports":[{"name":"https-webhook","port":443,"targetPort":8443}],"selector":{"app":"ingress-nginx"},"type":"ClusterIP"}}
+    creationTimestamp: "2024-08-11T16:42:17Z"
+    name: ingress-nginx-controller-admission
+    namespace: kube-system
+    resourceVersion: "3883062991"
+    uid: fe5b2629-5ec1-4ffc-b62f-ed78ec048017
+  spec:
+    clusterIP: 172.16.24.239
+    clusterIPs:
+    - 172.16.24.239
+    internalTrafficPolicy: Cluster
+    ipFamilies:
+    - IPv4
+    ipFamilyPolicy: SingleStack
+    ports:
+    - name: https-webhook
+      port: 443
+      protocol: TCP
+      targetPort: 8443
+    selector:
+      app: ingress-nginx
+    sessionAffinity: None
+    type: ClusterIP
+  status:
+    loadBalancer: {}
+- apiVersion: v1
+  kind: Service
+  metadata:
+    annotations:
+      kubectl.kubernetes.io/last-applied-configuration: |
+        {"apiVersion":"v1","kind":"Service","metadata":{"annotations":{"prometheus.io/path":"/metrics","prometheus.io/port":"9153","prometheus.io/scrape":"true"},"labels":{"k8s-app":"kube-dns","kubernetes.io/cluster-service":"true","kubernetes.io/name":"KubeDNS"},"name":"kube-dns","namespace":"kube-system","resourceVersion":"0"},"spec":{"clusterIP":"172.16.0.10","clusterIPs":["172.16.0.10"],"ipFamilies":["IPv4"],"ports":[{"name":"dns","port":53,"protocol":"UDP","targetPort":53},{"name":"dns-tcp","port":53,"protocol":"TCP","targetPort":53},{"name":"metrics","port":9153,"protocol":"TCP","targetPort":9153}],"selector":{"k8s-app":"kube-dns"}}}
+      prometheus.io/path: /metrics
+      prometheus.io/port: "9153"
+      prometheus.io/scrape: "true"
+    creationTimestamp: "2024-08-10T16:44:41Z"
+    labels:
+      k8s-app: kube-dns
+      kubernetes.io/cluster-service: "true"
+      kubernetes.io/name: KubeDNS
+    name: kube-dns
+    namespace: kube-system
+    resourceVersion: "3879216984"
+    uid: 41fe80e9-c9ab-4137-94e3-dde1582bbfa7
+  spec:
+    clusterIP: 172.16.0.10
+    clusterIPs:
+    - 172.16.0.10
+    internalTrafficPolicy: Cluster
+    ipFamilies:
+    - IPv4
+    ipFamilyPolicy: SingleStack
+    ports:
+    - name: dns
+      port: 53
+      protocol: UDP
+      targetPort: 53
+    - name: dns-tcp
+      port: 53
+      protocol: TCP
+      targetPort: 53
+    - name: metrics
+      port: 9153
+      protocol: TCP
+      targetPort: 9153
+    selector:
+      k8s-app: kube-dns
+    sessionAffinity: None
+    type: ClusterIP
+  status:
+    loadBalancer: {}
+- apiVersion: v1
+  kind: Service
+  metadata:
+    creationTimestamp: "2024-08-11T17:07:35Z"
+    finalizers:
+    - service.k8s.alibaba/resources
+    labels:
+      app: nginx-ingress-lb
+      service.beta.kubernetes.io/hash: d326606d013c81e6836cae7f6d1a483a16eca0ad78e3bf711136244f
+      service.k8s.alibaba/loadbalancer-id: lb-wz9pdomv58ife11v6ttuo
+    name: nginx-ingress-lb
+    namespace: kube-system
+    resourceVersion: "3883131747"
+    uid: e21b7eac-6b1d-4b9b-a5e7-fcb1005e5037
+  spec:
+    allocateLoadBalancerNodePorts: true
+    clusterIP: 172.16.159.186
+    clusterIPs:
+    - 172.16.159.186
+    externalTrafficPolicy: Local
+    healthCheckNodePort: 31693
+    internalTrafficPolicy: Cluster
+    ipFamilies:
+    - IPv4
+    ipFamilyPolicy: SingleStack
+    ports:
+    - name: http
+      nodePort: 32390
+      port: 80
+      protocol: TCP
+      targetPort: 80
+    - name: https
+      nodePort: 30889
+      port: 443
+      protocol: TCP
+      targetPort: 443
+    selector:
+      app: ingress-nginx
+    sessionAffinity: None
+    type: LoadBalancer
+  status:
+    loadBalancer:
+      ingress:
+      - ip: 120.79.131.10
+        ipMode: VIP
+kind: List
+metadata:
+  resourceVersion: ""

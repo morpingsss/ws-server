@@ -1,0 +1,200 @@
+apiVersion: v1
+items:
+- apiVersion: coordination.k8s.io/v1
+  kind: Lease
+  metadata:
+    creationTimestamp: "2024-08-10T16:43:04Z"
+    labels:
+      apiserver.kubernetes.io/identity: kube-apiserver
+      kubernetes.io/hostname: controlplane-86bb4bf58b-dx642
+    name: apiserver-6betsjjin5gi4guzmxab5ahnzm
+    namespace: kube-system
+    resourceVersion: "3929454969"
+    uid: 71a11b4e-1d68-4884-a02d-a31e121f6970
+  spec:
+    holderIdentity: apiserver-6betsjjin5gi4guzmxab5ahnzm_7a8a7589-b00c-4265-b359-0284f52d46f5
+    leaseDurationSeconds: 3600
+    renewTime: "2024-08-24T00:45:52.341651Z"
+- apiVersion: coordination.k8s.io/v1
+  kind: Lease
+  metadata:
+    creationTimestamp: "2024-08-10T16:43:04Z"
+    labels:
+      apiserver.kubernetes.io/identity: kube-apiserver
+      kubernetes.io/hostname: controlplane-86bb4bf58b-ct5jt
+    name: apiserver-dom6xzu75iulnvnme4qjwmxnay
+    namespace: kube-system
+    resourceVersion: "3929455279"
+    uid: 50cc3b55-e8d7-49d9-9cbb-4538f22a8333
+  spec:
+    holderIdentity: apiserver-dom6xzu75iulnvnme4qjwmxnay_f4197bd4-f728-40c5-882d-044001cfee3d
+    leaseDurationSeconds: 3600
+    renewTime: "2024-08-24T00:46:00.023780Z"
+- apiVersion: coordination.k8s.io/v1
+  kind: Lease
+  metadata:
+    creationTimestamp: "2024-08-10T16:43:33Z"
+    name: ccm
+    namespace: kube-system
+    resourceVersion: "3929455359"
+    uid: 09237dd5-c9f2-4ebe-8374-8e1cca2dd3b3
+  spec:
+    acquireTime: "2024-08-10T16:43:32.162297Z"
+    holderIdentity: controlplane-ccm-8dc4cb55d-njftc_324efe0d-8c47-48da-9086-4b8ae5eed0bf
+    leaseDurationSeconds: 15
+    leaseTransitions: 0
+    renewTime: "2024-08-24T00:46:01.724588Z"
+- apiVersion: coordination.k8s.io/v1
+  kind: Lease
+  metadata:
+    creationTimestamp: "2024-08-10T17:32:37Z"
+    name: diskplugin-csi-alibabacloud-com
+    namespace: kube-system
+    resourceVersion: "3929455247"
+    uid: 9e7bc193-faa5-4607-bc37-dba769220d6e
+  spec:
+    acquireTime: "2024-08-20T01:03:01.807716Z"
+    holderIdentity: 1724115761367-3096-diskplugin-csi-alibabacloud-com
+    leaseDurationSeconds: 15
+    leaseTransitions: 1
+    renewTime: "2024-08-24T00:45:59.133365Z"
+- apiVersion: coordination.k8s.io/v1
+  kind: Lease
+  metadata:
+    creationTimestamp: "2024-08-10T17:32:37Z"
+    name: external-attacher-leader-diskplugin-csi-alibabacloud-com
+    namespace: kube-system
+    resourceVersion: "3929455342"
+    uid: 5931e994-8972-4ec4-af43-becf209586fe
+  spec:
+    acquireTime: "2024-08-20T01:03:01.141852Z"
+    holderIdentity: csi-provisioner-5bf4d64dcd-hmqcg
+    leaseDurationSeconds: 15
+    leaseTransitions: 1
+    renewTime: "2024-08-24T00:46:01.348876Z"
+- apiVersion: coordination.k8s.io/v1
+  kind: Lease
+  metadata:
+    creationTimestamp: "2024-08-10T17:32:37Z"
+    name: external-resizer-diskplugin-csi-alibabacloud-com
+    namespace: kube-system
+    resourceVersion: "3929455270"
+    uid: 68872a08-146d-48b6-9319-f8d5aa4a5864
+  spec:
+    acquireTime: "2024-08-20T01:03:03.248520Z"
+    holderIdentity: csi-provisioner-5bf4d64dcd-hmqcg
+    leaseDurationSeconds: 15
+    leaseTransitions: 1
+    renewTime: "2024-08-24T00:45:59.812947Z"
+- apiVersion: coordination.k8s.io/v1
+  kind: Lease
+  metadata:
+    creationTimestamp: "2024-08-10T17:32:31Z"
+    name: external-resizer-nasplugin-csi-alibabacloud-com
+    namespace: kube-system
+    resourceVersion: "3929455329"
+    uid: f23851a5-62d7-499e-85bf-7efc4f4bc511
+  spec:
+    acquireTime: "2024-08-20T01:02:56.201394Z"
+    holderIdentity: csi-provisioner-5bf4d64dcd-hmqcg
+    leaseDurationSeconds: 15
+    leaseTransitions: 1
+    renewTime: "2024-08-24T00:46:01.160311Z"
+- apiVersion: coordination.k8s.io/v1
+  kind: Lease
+  metadata:
+    creationTimestamp: "2024-08-10T17:32:37Z"
+    name: external-snapshotter-leader-diskplugin-csi-alibabacloud-com
+    namespace: kube-system
+    resourceVersion: "3929455311"
+    uid: 8f623c28-b642-4040-89e3-9e1b73059a9b
+  spec:
+    acquireTime: "2024-08-20T01:03:02.361356Z"
+    holderIdentity: csi-provisioner-5bf4d64dcd-hmqcg
+    leaseDurationSeconds: 15
+    leaseTransitions: 1
+    renewTime: "2024-08-24T00:46:00.721655Z"
+- apiVersion: coordination.k8s.io/v1
+  kind: Lease
+  metadata:
+    creationTimestamp: "2024-08-11T16:42:50Z"
+    name: ingress-controller-leader-nginx
+    namespace: kube-system
+    resourceVersion: "3929455261"
+    uid: a9e616b3-149a-4030-940a-db9302bc76b4
+  spec:
+    acquireTime: "2024-08-20T01:13:17.680378Z"
+    holderIdentity: nginx-ingress-controller-5d4487b97f-nb4b8
+    leaseDurationSeconds: 30
+    leaseTransitions: 1
+    renewTime: "2024-08-24T00:45:59.566134Z"
+- apiVersion: coordination.k8s.io/v1
+  kind: Lease
+  metadata:
+    creationTimestamp: "2024-08-10T16:43:23Z"
+    name: kube-controller-manager
+    namespace: kube-system
+    resourceVersion: "3929455315"
+    uid: b8429a16-949e-4d31-b1c2-cda0ee223922
+  spec:
+    acquireTime: "2024-08-10T16:43:23.514474Z"
+    holderIdentity: controlplane-kcm-6b9fdfccbf-j8lqf_4cae0913-8597-4dc7-8be9-751d10b9a496
+    leaseDurationSeconds: 15
+    leaseTransitions: 0
+    renewTime: "2024-08-24T00:46:00.824737Z"
+- apiVersion: coordination.k8s.io/v1
+  kind: Lease
+  metadata:
+    creationTimestamp: "2024-08-10T17:32:31Z"
+    name: nasplugin-csi-alibabacloud-com
+    namespace: kube-system
+    resourceVersion: "3929455259"
+    uid: 5424fb2a-869a-4223-b2ba-fe991ab10b0a
+  spec:
+    acquireTime: "2024-08-20T01:02:57.532560Z"
+    holderIdentity: 1724115759331-3967-nasplugin-csi-alibabacloud-com
+    leaseDurationSeconds: 15
+    leaseTransitions: 1
+    renewTime: "2024-08-24T00:45:59.514335Z"
+- apiVersion: coordination.k8s.io/v1
+  kind: Lease
+  metadata:
+    creationTimestamp: "2024-08-10T17:32:28Z"
+    name: snapshot-controller-leader
+    namespace: kube-system
+    resourceVersion: "3929455272"
+    uid: c3360d00-c5b6-45cb-9132-4f8907e64360
+  spec:
+    acquireTime: "2024-08-20T01:02:56.142087Z"
+    holderIdentity: csi-provisioner-5bf4d64dcd-hmqcg
+    leaseDurationSeconds: 15
+    leaseTransitions: 1
+    renewTime: "2024-08-24T00:45:59.901469Z"
+- apiVersion: coordination.k8s.io/v1
+  kind: Lease
+  metadata:
+    creationTimestamp: "2024-08-10T16:43:51Z"
+    name: vk-scaler-leader
+    namespace: kube-system
+    resourceVersion: "3929455300"
+    uid: 5b014e83-6a35-4823-bec6-949fab251acc
+  spec:
+    acquireTime: "2024-08-10T16:43:51.464371Z"
+    holderIdentity: virtual-kubelet-758fbdbc94-lhcv7_15a3f41f-994a-4071-8f58-9bab8ceba102
+    leaseDurationSeconds: 15
+    leaseTransitions: 0
+    renewTime: "2024-08-24T00:46:00.631679Z"
+- apiVersion: coordination.k8s.io/v1
+  kind: Lease
+  metadata:
+    annotations:
+      k8s.aliyun.com/eci-last-active-time: "1724460358213"
+    creationTimestamp: "2024-08-10T16:43:51Z"
+    name: vk-store
+    namespace: kube-system
+    resourceVersion: "3929455199"
+    uid: 35d566c1-0ed3-40b3-a50b-a4400710e701
+  spec: {}
+kind: List
+metadata:
+  resourceVersion: ""

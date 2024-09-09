@@ -1,0 +1,49 @@
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: etcd
+  namespace: ws
+spec:
+  serviceName: "etcd"
+  replicas: 3
+  selector:
+    matchLabels:
+      app: etcd
+  template:
+    metadata:
+      labels:
+        app: etcd
+    spec:
+      containers:
+        - name: etcd
+          image: registry-vpc.cn-shenzhen.aliyuncs.com/morpingsss/etcd:3.5.4
+          command:
+            - /usr/local/bin/etcd
+          args:
+            - --name=$(POD_NAME)
+            - --data-dir=/var/lib/etcd
+            - --listen-client-urls=http://0.0.0.0:2379
+            - --advertise-client-urls=http://$(POD_NAME).etcd.kube-system.svc.cluster.local:2379
+            - --listen-peer-urls=http://0.0.0.0:2380
+            - --initial-advertise-peer-urls=http://$(POD_NAME).etcd.kube-system.svc.cluster.local:2380
+            - --initial-cluster=etcd-0=http://etcd-0.etcd.kube-system.svc.cluster.local:2380,etcd-1=http://etcd-1.etcd.kube-system.svc.cluster.local:2380,etcd-2=http://etcd-2.etcd.kube-system.svc.cluster.local:2380
+            - --initial-cluster-state=new
+          ports:
+            - containerPort: 2379
+              name: client
+            - containerPort: 2380
+              name: peer
+          volumeMounts:
+            - name: disk-ssd
+              mountPath: /data
+  volumeClaimTemplates:
+    - metadata:
+        name: disk-ssd
+      spec:
+        accessModes: [ "ReadWriteOnce" ]
+        storageClassName: "alicloud-disk-alltype"
+        resources:
+          requests:
+            storage: 10Gi
+
+

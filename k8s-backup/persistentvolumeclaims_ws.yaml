@@ -1,0 +1,69 @@
+apiVersion: v1
+items:
+- apiVersion: v1
+  kind: PersistentVolumeClaim
+  metadata:
+    annotations:
+      pv.kubernetes.io/bind-completed: "yes"
+      pv.kubernetes.io/bound-by-controller: "yes"
+      volume.beta.kubernetes.io/storage-provisioner: diskplugin.csi.alibabacloud.com
+      volume.kubernetes.io/storage-provisioner: diskplugin.csi.alibabacloud.com
+    creationTimestamp: "2024-08-10T18:03:25Z"
+    finalizers:
+    - kubernetes.io/pvc-protection
+    labels:
+      app: etcd
+    name: disk-ssd-etcd-0
+    namespace: ws
+    resourceVersion: "3879442171"
+    uid: f81fdd4d-5ea6-479c-8e68-0119f138a284
+  spec:
+    accessModes:
+    - ReadWriteOnce
+    resources:
+      requests:
+        storage: 10Gi
+    storageClassName: alicloud-disk-alltype
+    volumeMode: Filesystem
+    volumeName: d-wz9ezmg0zefzdvivguu5
+  status:
+    accessModes:
+    - ReadWriteOnce
+    capacity:
+      storage: 10Gi
+    phase: Bound
+- apiVersion: v1
+  kind: PersistentVolumeClaim
+  metadata:
+    annotations:
+      pv.kubernetes.io/bind-completed: "yes"
+      pv.kubernetes.io/bound-by-controller: "yes"
+      volume.beta.kubernetes.io/storage-provisioner: diskplugin.csi.alibabacloud.com
+      volume.kubernetes.io/storage-provisioner: diskplugin.csi.alibabacloud.com
+    creationTimestamp: "2024-08-10T18:10:29Z"
+    finalizers:
+    - kubernetes.io/pvc-protection
+    labels:
+      app: etcd
+    name: disk-ssd-etcd-1
+    namespace: ws
+    resourceVersion: "3879479172"
+    uid: 204dd308-be11-46de-9841-5869dba73753
+  spec:
+    accessModes:
+    - ReadWriteOnce
+    resources:
+      requests:
+        storage: 10Gi
+    storageClassName: alicloud-disk-alltype
+    volumeMode: Filesystem
+    volumeName: d-wz94e8rs7n4ex6l9wdll
+  status:
+    accessModes:
+    - ReadWriteOnce
+    capacity:
+      storage: 10Gi
+    phase: Bound
+kind: List
+metadata:
+  resourceVersion: ""

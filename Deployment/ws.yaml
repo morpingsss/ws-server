@@ -1,0 +1,28 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: webapp
+  labels:
+    app: webapp
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: webapp
+  template:
+    metadata:
+      labels:
+        app: webapp
+    spec:
+      containers:
+        - name: ws-server
+          image: registry.cn-shenzhen.aliyuncs.com/morpingsss/ws-server-amd64:1.1.0
+          ports:
+            - containerPort: 6000
+          args:
+            - /data/ws-server/ws-server
+            - -c
+            - /data/ws-server/conf/app.cluster.ini
+          env:
+            - name: ETCD_ENDPOINTS
+              value: "etcd-0.etcd:2379,etcd-1.etcd:2379,etcd-2.etcd:2379"

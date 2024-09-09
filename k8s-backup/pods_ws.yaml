@@ -1,0 +1,685 @@
+apiVersion: v1
+items:
+- apiVersion: v1
+  kind: Pod
+  metadata:
+    annotations:
+      ProviderCreate: done
+      k8s.aliyun.com/cluster-dns: 172.16.0.10
+      k8s.aliyun.com/cluster-domain: cluster.local
+      k8s.aliyun.com/dns-cache-enable: "false"
+      k8s.aliyun.com/eci-client-token: bf2c7a92-67df-467f-8219-24fcbccb9382
+      k8s.aliyun.com/eci-container-exit-priority: '{}'
+      k8s.aliyun.com/eci-created-by-template: "true"
+      k8s.aliyun.com/eci-drop-apiserver-interactive-caps: ""
+      k8s.aliyun.com/eci-instance-cpu: "0.5"
+      k8s.aliyun.com/eci-instance-id: eci-wz9ezqubp4hv14lw1z5o
+      k8s.aliyun.com/eci-instance-mem: "1.0"
+      k8s.aliyun.com/eci-instance-spec: 0.5-1.0Gi
+      k8s.aliyun.com/eci-instance-zone: cn-shenzhen-e
+      k8s.aliyun.com/eci-kube-proxy-enabled: "true"
+      k8s.aliyun.com/eci-matched-image-cache: imc-wz9gtg9ze6fggru9y803
+      k8s.aliyun.com/eci-platform-version: 1.1.0
+      k8s.aliyun.com/eci-request-id: AA4FB4F1-0C79-5730-BDF6-8E797F4F37D5
+      k8s.aliyun.com/eci-schedule-result: finished
+      k8s.aliyun.com/eci-security-group: sg-wz99qqr9drbgsgu4kndk
+      k8s.aliyun.com/eci-vpc: vpc-wz9rf0gfnfruu6j4pseda
+      k8s.aliyun.com/eci-vswitch: vsw-wz9rsj59hpuq9jtg7w9tt
+      k8s.aliyun.com/eni-instance-id: eni-wz99e8c9vv6vm0ajrw8f
+      k8s.aliyun.com/k8s-version: v1.30.1-aliyun.1
+      k8s.aliyun.com/product-on-eci-mode: NA
+      k8s.aliyun.com/vk-version: v2.12.0-2024-08-02-09-53-UTC
+      kubernetes.io/pod-stream-port: "10250"
+    creationTimestamp: "2024-08-20T01:14:45Z"
+    generateName: etcd-
+    labels:
+      app: etcd
+      apps.kubernetes.io/pod-index: "0"
+      controller-revision-hash: etcd-7464b764f8
+      statefulset.kubernetes.io/pod-name: etcd-0
+    name: etcd-0
+    namespace: ws
+    ownerReferences:
+    - apiVersion: apps/v1
+      blockOwnerDeletion: true
+      controller: true
+      kind: StatefulSet
+      name: etcd
+      uid: 8ab18da5-5949-42c4-a2a4-5e111016681e
+    resourceVersion: "3915387800"
+    uid: 3662eefc-f1dc-4347-8d08-5b57c94af254
+  spec:
+    containers:
+    - args:
+      - --name=$(POD_NAME)
+      - --data-dir=/var/lib/etcd
+      - --listen-client-urls=http://0.0.0.0:2379
+      - --advertise-client-urls=http://$(POD_NAME).etcd.ws.svc.cluster.local:2379
+      - --listen-peer-urls=http://0.0.0.0:2380
+      - --initial-advertise-peer-urls=http://$(POD_NAME).etcd.ws.svc.cluster.local:2380
+      - --initial-cluster=etcd-0=http://etcd-0.etcd.ws.svc.cluster.local:2380,etcd-1=http://etcd-1.etcd.ws.svc.cluster.local:2380
+      - --initial-cluster-state=new
+      command:
+      - /usr/local/bin/etcd
+      env:
+      - name: POD_NAME
+        valueFrom:
+          fieldRef:
+            apiVersion: v1
+            fieldPath: metadata.name
+      image: registry-vpc.cn-shenzhen.aliyuncs.com/morpingsss/etcd:3.5.4
+      imagePullPolicy: IfNotPresent
+      name: etcd
+      ports:
+      - containerPort: 2379
+        name: client
+        protocol: TCP
+      - containerPort: 2380
+        name: peer
+        protocol: TCP
+      resources:
+        requests:
+          cpu: 500m
+          memory: 1Gi
+      terminationMessagePath: /dev/termination-log
+      terminationMessagePolicy: File
+      volumeMounts:
+      - mountPath: /var/lib/etcd
+        name: disk-ssd
+      - mountPath: /var/run/secrets/kubernetes.io/serviceaccount
+        name: kube-api-access-fg4pd
+        readOnly: true
+    dnsPolicy: ClusterFirst
+    enableServiceLinks: true
+    hostname: etcd-0
+    nodeName: virtual-kubelet-cn-shenzhen-e
+    preemptionPolicy: PreemptLowerPriority
+    priority: 0
+    restartPolicy: Always
+    schedulerName: default-scheduler
+    securityContext: {}
+    serviceAccount: default
+    serviceAccountName: default
+    subdomain: etcd
+    terminationGracePeriodSeconds: 30
+    tolerations:
+    - effect: NoExecute
+      key: node.kubernetes.io/not-ready
+      operator: Exists
+    - effect: NoExecute
+      key: node.kubernetes.io/unreachable
+      operator: Exists
+    volumes:
+    - name: disk-ssd
+      persistentVolumeClaim:
+        claimName: disk-ssd-etcd-0
+    - name: kube-api-access-fg4pd
+      projected:
+        defaultMode: 420
+        sources:
+        - serviceAccountToken:
+            expirationSeconds: 3607
+            path: token
+        - configMap:
+            items:
+            - key: ca.crt
+              path: ca.crt
+            name: kube-root-ca.crt
+        - downwardAPI:
+            items:
+            - fieldRef:
+                apiVersion: v1
+                fieldPath: metadata.namespace
+              path: namespace
+  status:
+    conditions:
+    - lastProbeTime: null
+      lastTransitionTime: "2024-08-20T01:14:55Z"
+      status: "True"
+      type: ContainerInstanceCreated
+    - lastProbeTime: null
+      lastTransitionTime: "2024-08-20T01:15:05Z"
+      status: "True"
+      type: PodReadyToStartContainers
+    - lastProbeTime: null
+      lastTransitionTime: "2024-08-20T01:15:03Z"
+      status: "True"
+      type: Initialized
+    - lastProbeTime: null
+      lastTransitionTime: "2024-08-20T01:15:05Z"
+      status: "True"
+      type: Ready
+    - lastProbeTime: null
+      lastTransitionTime: "2024-08-20T01:15:05Z"
+      status: "True"
+      type: ContainersReady
+    - lastProbeTime: null
+      lastTransitionTime: "2024-08-20T01:14:56Z"
+      status: "True"
+      type: PodScheduled
+    - lastProbeTime: null
+      lastTransitionTime: "2024-08-20T01:15:03Z"
+      status: "True"
+      type: ContainerHasSufficientDisk
+    containerStatuses:
+    - containerID: containerd://37bbaebb9029cd835ee0b4ea77fa61680a6b584fa363da2f37c296d314f83deb
+      image: registry-vpc.cn-shenzhen.aliyuncs.com/morpingsss/etcd:3.5.4
+      imageID: registry-vpc.cn-shenzhen.aliyuncs.com/morpingsss/etcd@sha256:a67fb152d4c53223e96e818420c37f11d05c2d92cf62c05ca5604066c37295e9
+      lastState: {}
+      name: etcd
+      ready: true
+      restartCount: 0
+      started: true
+      state:
+        running:
+          startedAt: "2024-08-20T01:15:05Z"
+    hostIP: 192.168.5.68
+    phase: Running
+    podIP: 192.168.5.68
+    podIPs:
+    - ip: 192.168.5.68
+    qosClass: Burstable
+    startTime: "2024-08-20T01:15:03Z"
+- apiVersion: v1
+  kind: Pod
+  metadata:
+    annotations:
+      ProviderCreate: done
+      k8s.aliyun.com/cluster-dns: 172.16.0.10
+      k8s.aliyun.com/cluster-domain: cluster.local
+      k8s.aliyun.com/dns-cache-enable: "false"
+      k8s.aliyun.com/eci-client-token: 274b9dc2-7b97-4238-811c-14cebff019b3
+      k8s.aliyun.com/eci-container-exit-priority: '{}'
+      k8s.aliyun.com/eci-created-by-template: "true"
+      k8s.aliyun.com/eci-drop-apiserver-interactive-caps: ""
+      k8s.aliyun.com/eci-instance-cpu: "0.5"
+      k8s.aliyun.com/eci-instance-id: eci-wz98kl281mi7tb0a5nnz
+      k8s.aliyun.com/eci-instance-mem: "1.0"
+      k8s.aliyun.com/eci-instance-spec: 0.5-1.0Gi
+      k8s.aliyun.com/eci-instance-zone: cn-shenzhen-e
+      k8s.aliyun.com/eci-kube-proxy-enabled: "true"
+      k8s.aliyun.com/eci-matched-image-cache: imc-wz9gtg9ze6fggru9y803
+      k8s.aliyun.com/eci-platform-version: 1.1.0
+      k8s.aliyun.com/eci-request-id: 1EB71A25-2B64-5484-883E-C9DF226D3C53
+      k8s.aliyun.com/eci-schedule-result: finished
+      k8s.aliyun.com/eci-security-group: sg-wz99qqr9drbgsgu4kndk
+      k8s.aliyun.com/eci-vpc: vpc-wz9rf0gfnfruu6j4pseda
+      k8s.aliyun.com/eci-vswitch: vsw-wz9rsj59hpuq9jtg7w9tt
+      k8s.aliyun.com/eni-instance-id: eni-wz95hkl0x8zsmdxfneow
+      k8s.aliyun.com/k8s-version: v1.30.1-aliyun.1
+      k8s.aliyun.com/product-on-eci-mode: NA
+      k8s.aliyun.com/vk-version: v2.12.0-2024-08-02-09-53-UTC
+      kubernetes.io/pod-stream-port: "10250"
+    creationTimestamp: "2024-08-20T01:14:05Z"
+    generateName: etcd-
+    labels:
+      app: etcd
+      apps.kubernetes.io/pod-index: "1"
+      controller-revision-hash: etcd-7464b764f8
+      statefulset.kubernetes.io/pod-name: etcd-1
+    name: etcd-1
+    namespace: ws
+    ownerReferences:
+    - apiVersion: apps/v1
+      blockOwnerDeletion: true
+      controller: true
+      kind: StatefulSet
+      name: etcd
+      uid: 8ab18da5-5949-42c4-a2a4-5e111016681e
+    resourceVersion: "3915386243"
+    uid: cef3cda4-b59b-4fec-98e5-f2dbf68b0300
+  spec:
+    containers:
+    - args:
+      - --name=$(POD_NAME)
+      - --data-dir=/var/lib/etcd
+      - --listen-client-urls=http://0.0.0.0:2379
+      - --advertise-client-urls=http://$(POD_NAME).etcd.ws.svc.cluster.local:2379
+      - --listen-peer-urls=http://0.0.0.0:2380
+      - --initial-advertise-peer-urls=http://$(POD_NAME).etcd.ws.svc.cluster.local:2380
+      - --initial-cluster=etcd-0=http://etcd-0.etcd.ws.svc.cluster.local:2380,etcd-1=http://etcd-1.etcd.ws.svc.cluster.local:2380
+      - --initial-cluster-state=new
+      command:
+      - /usr/local/bin/etcd
+      env:
+      - name: POD_NAME
+        valueFrom:
+          fieldRef:
+            apiVersion: v1
+            fieldPath: metadata.name
+      image: registry-vpc.cn-shenzhen.aliyuncs.com/morpingsss/etcd:3.5.4
+      imagePullPolicy: IfNotPresent
+      name: etcd
+      ports:
+      - containerPort: 2379
+        name: client
+        protocol: TCP
+      - containerPort: 2380
+        name: peer
+        protocol: TCP
+      resources:
+        requests:
+          cpu: 500m
+          memory: 1Gi
+      terminationMessagePath: /dev/termination-log
+      terminationMessagePolicy: File
+      volumeMounts:
+      - mountPath: /var/lib/etcd
+        name: disk-ssd
+      - mountPath: /var/run/secrets/kubernetes.io/serviceaccount
+        name: kube-api-access-zs8f9
+        readOnly: true
+    dnsPolicy: ClusterFirst
+    enableServiceLinks: true
+    hostname: etcd-1
+    nodeName: virtual-kubelet-cn-shenzhen-e
+    preemptionPolicy: PreemptLowerPriority
+    priority: 0
+    restartPolicy: Always
+    schedulerName: default-scheduler
+    securityContext: {}
+    serviceAccount: default
+    serviceAccountName: default
+    subdomain: etcd
+    terminationGracePeriodSeconds: 30
+    tolerations:
+    - effect: NoExecute
+      key: node.kubernetes.io/not-ready
+      operator: Exists
+    - effect: NoExecute
+      key: node.kubernetes.io/unreachable
+      operator: Exists
+    volumes:
+    - name: disk-ssd
+      persistentVolumeClaim:
+        claimName: disk-ssd-etcd-1
+    - name: kube-api-access-zs8f9
+      projected:
+        defaultMode: 420
+        sources:
+        - serviceAccountToken:
+            expirationSeconds: 3607
+            path: token
+        - configMap:
+            items:
+            - key: ca.crt
+              path: ca.crt
+            name: kube-root-ca.crt
+        - downwardAPI:
+            items:
+            - fieldRef:
+                apiVersion: v1
+                fieldPath: metadata.namespace
+              path: namespace
+  status:
+    conditions:
+    - lastProbeTime: null
+      lastTransitionTime: "2024-08-20T01:14:18Z"
+      status: "True"
+      type: ContainerInstanceCreated
+    - lastProbeTime: null
+      lastTransitionTime: "2024-08-20T01:14:30Z"
+      status: "True"
+      type: PodReadyToStartContainers
+    - lastProbeTime: null
+      lastTransitionTime: "2024-08-20T01:14:28Z"
+      status: "True"
+      type: Initialized
+    - lastProbeTime: null
+      lastTransitionTime: "2024-08-20T01:14:30Z"
+      status: "True"
+      type: Ready
+    - lastProbeTime: null
+      lastTransitionTime: "2024-08-20T01:14:30Z"
+      status: "True"
+      type: ContainersReady
+    - lastProbeTime: null
+      lastTransitionTime: "2024-08-20T01:14:18Z"
+      status: "True"
+      type: PodScheduled
+    - lastProbeTime: null
+      lastTransitionTime: "2024-08-20T01:14:28Z"
+      status: "True"
+      type: ContainerHasSufficientDisk
+    containerStatuses:
+    - containerID: containerd://e4975e83d79b49a0e10d27bda741ee56dfec201e1496b675543e72e5d82ea9ac
+      image: registry-vpc.cn-shenzhen.aliyuncs.com/morpingsss/etcd:3.5.4
+      imageID: registry-vpc.cn-shenzhen.aliyuncs.com/morpingsss/etcd@sha256:a67fb152d4c53223e96e818420c37f11d05c2d92cf62c05ca5604066c37295e9
+      lastState: {}
+      name: etcd
+      ready: true
+      restartCount: 0
+      started: true
+      state:
+        running:
+          startedAt: "2024-08-20T01:14:29Z"
+    hostIP: 192.168.5.67
+    phase: Running
+    podIP: 192.168.5.67
+    podIPs:
+    - ip: 192.168.5.67
+    qosClass: Burstable
+    startTime: "2024-08-20T01:14:28Z"
+- apiVersion: v1
+  kind: Pod
+  metadata:
+    annotations:
+      ProviderCreate: done
+      k8s.aliyun.com/cluster-dns: 172.16.0.10
+      k8s.aliyun.com/cluster-domain: cluster.local
+      k8s.aliyun.com/dns-cache-enable: "false"
+      k8s.aliyun.com/eci-client-token: 81a9091f-77a4-406e-847a-ee3c97ff19af
+      k8s.aliyun.com/eci-container-exit-priority: '{}'
+      k8s.aliyun.com/eci-created-by-template: "true"
+      k8s.aliyun.com/eci-drop-apiserver-interactive-caps: ""
+      k8s.aliyun.com/eci-instance-cpu: "1.0"
+      k8s.aliyun.com/eci-instance-id: eci-wz9ibswt46962c25sptq
+      k8s.aliyun.com/eci-instance-mem: "2.0"
+      k8s.aliyun.com/eci-instance-spec: 1.0-2.0Gi
+      k8s.aliyun.com/eci-instance-zone: cn-shenzhen-e
+      k8s.aliyun.com/eci-kube-proxy-enabled: "true"
+      k8s.aliyun.com/eci-matched-image-cache: imc-wz9ibswt4694dvr2j0qh
+      k8s.aliyun.com/eci-platform-version: 1.1.0
+      k8s.aliyun.com/eci-request-id: 2D6CFAAF-A72C-534A-89C4-914FEBC5DF36
+      k8s.aliyun.com/eci-schedule-result: finished
+      k8s.aliyun.com/eci-security-group: sg-wz99qqr9drbgsgu4kndk
+      k8s.aliyun.com/eci-vpc: vpc-wz9rf0gfnfruu6j4pseda
+      k8s.aliyun.com/eci-vswitch: vsw-wz9rsj59hpuq9jtg7w9tt
+      k8s.aliyun.com/eni-instance-id: eni-wz9c31iviwlaeu86gld9
+      k8s.aliyun.com/k8s-version: v1.30.1-aliyun.1
+      k8s.aliyun.com/product-on-eci-mode: NA
+      k8s.aliyun.com/vk-version: v2.12.0-2024-08-02-09-53-UTC
+      kubernetes.io/pod-stream-port: "10250"
+    creationTimestamp: "2024-08-20T01:12:31Z"
+    generateName: websocket-deployment-5c757775f9-
+    labels:
+      app: websocket
+      pod-template-hash: 5c757775f9
+    name: websocket-deployment-5c757775f9-6qnq7
+    namespace: ws
+    ownerReferences:
+    - apiVersion: apps/v1
+      blockOwnerDeletion: true
+      controller: true
+      kind: ReplicaSet
+      name: websocket-deployment-5c757775f9
+      uid: 880291d2-234e-4269-9d58-67a74d21db25
+    resourceVersion: "3915381662"
+    uid: 7fde82fb-0b66-47a4-b372-3fcf1a9b72ff
+  spec:
+    containers:
+    - command:
+      - /data/ws-server/ws-server
+      - -c
+      - /config/app.cluster.ini
+      image: registry-vpc.cn-shenzhen.aliyuncs.com/morpingsss/ws-server-amd64:1.1.0
+      imagePullPolicy: IfNotPresent
+      name: websocket-container
+      ports:
+      - containerPort: 6000
+        protocol: TCP
+      resources:
+        requests:
+          cpu: "1"
+          memory: 2Gi
+      terminationMessagePath: /dev/termination-log
+      terminationMessagePolicy: File
+      volumeMounts:
+      - mountPath: /config
+        name: config-volume
+      - mountPath: /var/run/secrets/kubernetes.io/serviceaccount
+        name: kube-api-access-b7tqs
+        readOnly: true
+    dnsPolicy: ClusterFirst
+    enableServiceLinks: true
+    nodeName: virtual-kubelet-cn-shenzhen-e
+    preemptionPolicy: PreemptLowerPriority
+    priority: 0
+    restartPolicy: Always
+    schedulerName: default-scheduler
+    securityContext: {}
+    serviceAccount: default
+    serviceAccountName: default
+    terminationGracePeriodSeconds: 30
+    tolerations:
+    - effect: NoExecute
+      key: node.kubernetes.io/not-ready
+      operator: Exists
+    - effect: NoExecute
+      key: node.kubernetes.io/unreachable
+      operator: Exists
+    volumes:
+    - configMap:
+        defaultMode: 420
+        name: websocket-config
+      name: config-volume
+    - name: kube-api-access-b7tqs
+      projected:
+        defaultMode: 420
+        sources:
+        - serviceAccountToken:
+            expirationSeconds: 3607
+            path: token
+        - configMap:
+            items:
+            - key: ca.crt
+              path: ca.crt
+            name: kube-root-ca.crt
+        - downwardAPI:
+            items:
+            - fieldRef:
+                apiVersion: v1
+                fieldPath: metadata.namespace
+              path: namespace
+  status:
+    conditions:
+    - lastProbeTime: null
+      lastTransitionTime: "2024-08-20T01:12:39Z"
+      status: "True"
+      type: ContainerInstanceCreated
+    - lastProbeTime: null
+      lastTransitionTime: "2024-08-20T01:12:51Z"
+      status: "True"
+      type: PodReadyToStartContainers
+    - lastProbeTime: null
+      lastTransitionTime: "2024-08-20T01:12:49Z"
+      status: "True"
+      type: Initialized
+    - lastProbeTime: null
+      lastTransitionTime: "2024-08-20T01:12:51Z"
+      status: "True"
+      type: Ready
+    - lastProbeTime: null
+      lastTransitionTime: "2024-08-20T01:12:51Z"
+      status: "True"
+      type: ContainersReady
+    - lastProbeTime: null
+      lastTransitionTime: "2024-08-20T01:12:40Z"
+      status: "True"
+      type: PodScheduled
+    - lastProbeTime: null
+      lastTransitionTime: "2024-08-20T01:12:49Z"
+      status: "True"
+      type: ContainerHasSufficientDisk
+    containerStatuses:
+    - containerID: containerd://f4f8ae875086397333ef74e0e975ae49fdf6242d5167537cb4ef47c5dc49c78c
+      image: registry-vpc.cn-shenzhen.aliyuncs.com/morpingsss/ws-server-amd64:1.1.0
+      imageID: registry-vpc.cn-shenzhen.aliyuncs.com/morpingsss/ws-server-amd64@sha256:4356c0ad869e4caa3e42cda5c4ef5866cc29db737971b4d894131f8d88d3ebdd
+      lastState: {}
+      name: websocket-container
+      ready: true
+      restartCount: 0
+      started: true
+      state:
+        running:
+          startedAt: "2024-08-20T01:12:50Z"
+    hostIP: 192.168.5.65
+    phase: Running
+    podIP: 192.168.5.65
+    podIPs:
+    - ip: 192.168.5.65
+    qosClass: Burstable
+    startTime: "2024-08-20T01:12:49Z"
+- apiVersion: v1
+  kind: Pod
+  metadata:
+    annotations:
+      ProviderCreate: done
+      k8s.aliyun.com/cluster-dns: 172.16.0.10
+      k8s.aliyun.com/cluster-domain: cluster.local
+      k8s.aliyun.com/dns-cache-enable: "false"
+      k8s.aliyun.com/eci-client-token: 645b22c3-4e4d-432e-966b-27b4ab11329e
+      k8s.aliyun.com/eci-container-exit-priority: '{}'
+      k8s.aliyun.com/eci-created-by-template: "true"
+      k8s.aliyun.com/eci-drop-apiserver-interactive-caps: ""
+      k8s.aliyun.com/eci-instance-cpu: "1.0"
+      k8s.aliyun.com/eci-instance-id: eci-wz9hi0mgl8p0hc2yx4ue
+      k8s.aliyun.com/eci-instance-mem: "2.0"
+      k8s.aliyun.com/eci-instance-spec: 1.0-2.0Gi
+      k8s.aliyun.com/eci-instance-zone: cn-shenzhen-e
+      k8s.aliyun.com/eci-kube-proxy-enabled: "true"
+      k8s.aliyun.com/eci-matched-image-cache: imc-wz9ibswt4694dvr2j0qh
+      k8s.aliyun.com/eci-platform-version: 1.1.0
+      k8s.aliyun.com/eci-request-id: 8895C25A-5EB2-5EEB-A760-086E06A58B5D
+      k8s.aliyun.com/eci-schedule-result: finished
+      k8s.aliyun.com/eci-security-group: sg-wz99qqr9drbgsgu4kndk
+      k8s.aliyun.com/eci-vpc: vpc-wz9rf0gfnfruu6j4pseda
+      k8s.aliyun.com/eci-vswitch: vsw-wz9rsj59hpuq9jtg7w9tt
+      k8s.aliyun.com/eni-instance-id: eni-wz93qvksowune12n7qxg
+      k8s.aliyun.com/k8s-version: v1.30.1-aliyun.1
+      k8s.aliyun.com/product-on-eci-mode: NA
+      k8s.aliyun.com/vk-version: v2.12.0-2024-08-02-09-53-UTC
+      kubernetes.io/pod-stream-port: "10250"
+    creationTimestamp: "2024-08-20T01:12:09Z"
+    generateName: websocket-deployment-5c757775f9-
+    labels:
+      app: websocket
+      pod-template-hash: 5c757775f9
+    name: websocket-deployment-5c757775f9-7pndf
+    namespace: ws
+    ownerReferences:
+    - apiVersion: apps/v1
+      blockOwnerDeletion: true
+      controller: true
+      kind: ReplicaSet
+      name: websocket-deployment-5c757775f9
+      uid: 880291d2-234e-4269-9d58-67a74d21db25
+    resourceVersion: "3915380674"
+    uid: 89d850fa-e65f-4f9d-a191-7d383fa50279
+  spec:
+    containers:
+    - command:
+      - /data/ws-server/ws-server
+      - -c
+      - /config/app.cluster.ini
+      image: registry-vpc.cn-shenzhen.aliyuncs.com/morpingsss/ws-server-amd64:1.1.0
+      imagePullPolicy: IfNotPresent
+      name: websocket-container
+      ports:
+      - containerPort: 6000
+        protocol: TCP
+      resources:
+        requests:
+          cpu: "1"
+          memory: 2Gi
+      terminationMessagePath: /dev/termination-log
+      terminationMessagePolicy: File
+      volumeMounts:
+      - mountPath: /config
+        name: config-volume
+      - mountPath: /var/run/secrets/kubernetes.io/serviceaccount
+        name: kube-api-access-fv7lb
+        readOnly: true
+    dnsPolicy: ClusterFirst
+    enableServiceLinks: true
+    nodeName: virtual-kubelet-cn-shenzhen-e
+    preemptionPolicy: PreemptLowerPriority
+    priority: 0
+    restartPolicy: Always
+    schedulerName: default-scheduler
+    securityContext: {}
+    serviceAccount: default
+    serviceAccountName: default
+    terminationGracePeriodSeconds: 30
+    tolerations:
+    - effect: NoExecute
+      key: node.kubernetes.io/not-ready
+      operator: Exists
+    - effect: NoExecute
+      key: node.kubernetes.io/unreachable
+      operator: Exists
+    volumes:
+    - configMap:
+        defaultMode: 420
+        name: websocket-config
+      name: config-volume
+    - name: kube-api-access-fv7lb
+      projected:
+        defaultMode: 420
+        sources:
+        - serviceAccountToken:
+            expirationSeconds: 3607
+            path: token
+        - configMap:
+            items:
+            - key: ca.crt
+              path: ca.crt
+            name: kube-root-ca.crt
+        - downwardAPI:
+            items:
+            - fieldRef:
+                apiVersion: v1
+                fieldPath: metadata.namespace
+              path: namespace
+  status:
+    conditions:
+    - lastProbeTime: null
+      lastTransitionTime: "2024-08-20T01:12:15Z"
+      status: "True"
+      type: ContainerInstanceCreated
+    - lastProbeTime: null
+      lastTransitionTime: "2024-08-20T01:12:30Z"
+      status: "True"
+      type: PodReadyToStartContainers
+    - lastProbeTime: null
+      lastTransitionTime: "2024-08-20T01:12:27Z"
+      status: "True"
+      type: Initialized
+    - lastProbeTime: null
+      lastTransitionTime: "2024-08-20T01:12:30Z"
+      status: "True"
+      type: Ready
+    - lastProbeTime: null
+      lastTransitionTime: "2024-08-20T01:12:30Z"
+      status: "True"
+      type: ContainersReady
+    - lastProbeTime: null
+      lastTransitionTime: "2024-08-20T01:12:15Z"
+      status: "True"
+      type: PodScheduled
+    - lastProbeTime: null
+      lastTransitionTime: "2024-08-20T01:12:27Z"
+      status: "True"
+      type: ContainerHasSufficientDisk
+    containerStatuses:
+    - containerID: containerd://fed97c3aae8b5041176fb2057f218e213eb139eaaf1cfacca5c1c62516b5db50
+      image: registry-vpc.cn-shenzhen.aliyuncs.com/morpingsss/ws-server-amd64:1.1.0
+      imageID: registry-vpc.cn-shenzhen.aliyuncs.com/morpingsss/ws-server-amd64@sha256:4356c0ad869e4caa3e42cda5c4ef5866cc29db737971b4d894131f8d88d3ebdd
+      lastState: {}
+      name: websocket-container
+      ready: true
+      restartCount: 0
+      started: true
+      state:
+        running:
+          startedAt: "2024-08-20T01:12:29Z"
+    hostIP: 192.168.5.64
+    phase: Running
+    podIP: 192.168.5.64
+    podIPs:
+    - ip: 192.168.5.64
+    qosClass: Burstable
+    startTime: "2024-08-20T01:12:27Z"
+kind: List
+metadata:
+  resourceVersion: ""

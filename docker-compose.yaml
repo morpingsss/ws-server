@@ -1,0 +1,90 @@
+services:
+  ws_etcd1:
+    image: registry.cn-shenzhen.aliyuncs.com/morpingsss/etcd:3.5.4
+    container_name: ws_etcd1
+    command: etcd -name ws_etcd1 -advertise-client-urls http://0.0.0.0:2379 -listen-client-urls http://0.0.0.0:2379 -listen-peer-urls http://0.0.0.0:2380 -initial-cluster-token etcd-cluster -initial-cluster "ws_etcd1=http://ws_etcd1:2380,ws_etcd2=http://ws_etcd2:2380,ws_etcd3=http://ws_etcd3:2380" -initial-cluster-state new
+    ports:
+      - "23791:2379"
+      - "23801:2380"
+    networks:
+      - ws-net
+
+  ws_etcd2:
+    image: registry.cn-shenzhen.aliyuncs.com/morpingsss/etcd:3.5.4
+    container_name: ws_etcd2
+    command: etcd -name ws_etcd2 -advertise-client-urls http://0.0.0.0:2379 -listen-client-urls http://0.0.0.0:2379 -listen-peer-urls http://0.0.0.0:2380 -initial-cluster-token etcd-cluster -initial-cluster "ws_etcd1=http://ws_etcd1:2380,ws_etcd2=http://ws_etcd2:2380,ws_etcd3=http://ws_etcd3:2380" -initial-cluster-state new
+    ports:
+      - "23792:2379"
+      - "23802:2380"
+    networks:
+      - ws-net
+
+  ws_etcd3:
+    image: registry.cn-shenzhen.aliyuncs.com/morpingsss/etcd:3.5.4
+    container_name: ws_etcd3
+    command: etcd -name ws_etcd3 -advertise-client-urls http://0.0.0.0:2379 -listen-client-urls http://0.0.0.0:2379 -listen-peer-urls http://0.0.0.0:2380 -initial-cluster-token etcd-cluster -initial-cluster "ws_etcd1=http://ws_etcd1:2380,ws_etcd2=http://ws_etcd2:2380,ws_etcd3=http://ws_etcd3:2380" -initial-cluster-state new
+    ports:
+      - "23793:2379"
+      - "23803:2380"
+    networks:
+      - ws-net
+
+  webapp1:
+    container_name: go-websocket1
+    image: registry.cn-shenzhen.aliyuncs.com/morpingsss/ws-server-amd64:1.1.0
+    command: /data/ws-server/ws-server -c /data/ws-server/conf/app.cluster.ini
+    depends_on:
+      - ws_etcd1
+      - ws_etcd2
+      - ws_etcd3
+    ports:
+      - "7801:7800"
+      - "7901:7900"
+    networks:
+      - ws-net
+
+  webapp2:
+    container_name: go-websocket2
+    image: registry.cn-shenzhen.aliyuncs.com/morpingsss/ws-server-amd64:1.1.0
+    command: /data/ws-server/ws-server -c /data/ws-server/conf/app.cluster.ini
+    depends_on:
+      - ws_etcd1
+      - ws_etcd2
+      - ws_etcd3
+    ports:
+      - "7802:7800"
+      - "7902:7900"
+    networks:
+      - ws-net
+
+  webapp3:
+    container_name: go-websocket3
+    image: registry.cn-shenzhen.aliyuncs.com/morpingsss/ws-server-amd64:1.1.0
+    command: /data/ws-server/ws-server -c /data/ws-server/conf/app.cluster.ini
+    depends_on:
+      - ws_etcd1
+      - ws_etcd2
+      - ws_etcd3
+    ports:
+      - "7803:7800"
+      - "7903:7900"
+    networks:
+      - ws-net
+
+  nginx:
+    image: registry.cn-shenzhen.aliyuncs.com/morpingsss/nginx:latest
+    container_name: ws_nginx
+    ports:
+      - "7000:7000"
+    volumes:
+      - ./conf/nginx.conf:/etc/nginx/nginx.conf  # 修改为正确的文件路径
+      - ./logs:/logs  # 使用相对路径
+    networks:
+      - ws-net
+    depends_on:
+      - webapp1
+      - webapp2
+      - webapp3
+networks:
+  ws-net:
+    name: ws-net
